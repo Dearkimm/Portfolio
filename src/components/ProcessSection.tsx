@@ -137,7 +137,7 @@ export default function ProcessSection({
               key={s.number}
               onClick={() => toggle(i)}
               aria-pressed={isActive}
-              className="text-left w-full space-y-3 group cursor-pointer border-0 bg-transparent p-0"
+              className="text-left w-full self-start flex flex-col gap-3 group cursor-pointer border-0 bg-transparent p-0"
             >
               <div className="flex items-baseline gap-3 md:hidden">
                 <span

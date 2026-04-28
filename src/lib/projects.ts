@@ -84,7 +84,7 @@ export const projects: Project[] = [
     tags: ["ERP 운영 데이터", "BI 시스템 구축", "운영 자동화"],
     domain: ["ERP 운영 데이터", "BI 시스템 구축·운영 자동화"],
     summary:
-      "Java 기반 통합정보시스템의 108개 화면을 BI 관점에서 재정의하고, 80여 개 배치 프로시저 자동화와 집계 테이블 기반 아키텍처 전환으로 대시보드 로딩 속도를 절반 이하로 단축한 차세대 ERP BI 구축 프로젝트.",
+      "Java 기반 통합정보시스템의 108개 화면을 BI 관점에서 재정의하고, 80여 개 배치 프로시저 자동화와 집계 테이블 기반 아키텍처 전환으로 대시보드 로딩 속도를 절반 이하로 단축한 차세대 ERP BI 구축 프로젝트",
     thumbnail: {
       bg: "linear-gradient(135deg, #1f2937 0%, #ef4444 100%)",
       fg: "#ffffff",
@@ -318,7 +318,7 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
     tags: ["외국인 소비 분석", "다국가 데이터", "보고서형 대시보드"],
     domain: ["외국인 소비 분석", "다국가 보고·고객 행동 분석"],
     summary:
-      "외국인 관광객 환급 데이터를 국적·상권·업종 관점에서 분석하여 경영진 월간 보고와 상권 기반 마케팅 인사이트 도출을 지원하는 14본 보고서형 글로벌 대시보드 구축 프로젝트.",
+      "외국인 관광객 환급 데이터를 국적·상권·업종 관점에서 분석하여 경영진 월간 보고와 상권 기반 마케팅 인사이트 도출을 지원하는 14본 보고서형 글로벌 대시보드 구축 프로젝트",
     thumbnail: {
       bg: "linear-gradient(135deg, #047857 0%, #34d399 100%)",
       fg: "#ffffff",
@@ -437,7 +437,7 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
     tags: ["리테일 데이터", "이커머스 분석", "마케팅 성과 분석"],
     domain: ["리테일", "이커머스 분석·마케팅 성과 분석"],
     summary:
-      "주 고객층인 2030세대의 구매 행동 특성을 분석하여 타겟 마케팅 및 고객 관리를 위한 마케팅 대시보드를 구축한 프로젝트.",
+      "주 고객층인 2030세대의 구매 행동 특성을 분석하여 타겟 마케팅 및 고객 관리를 위한 마케팅 대시보드를 구축한 프로젝트",
     thumbnail: {
       bg: "linear-gradient(135deg, #1d4ed8 0%, #f97316 100%)",
       fg: "#ffffff",
@@ -564,7 +564,7 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
     data: ["딜러/판매/AS 데이터"],
     tags: ["Automotive", "Dealer Network"],
     summary:
-      "인도 법인의 딜러 네트워크 운영을 위한 DC4M 분석 대시보드. 판매·정비·만족도 지표를 딜러 단위로 추적.",
+      "인도 법인의 딜러 네트워크 운영을 위한 DC4M 분석 대시보드 — 판매·정비·만족도 지표를 딜러 단위로 추적",
     thumbnail: {
       bg: "linear-gradient(135deg, #0f172a 0%, #94a3b8 100%)",
       fg: "#ffffff",
@@ -590,7 +590,7 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
     data: ["생산/품질/물류 데이터"],
     tags: ["Manufacturing", "War Room"],
     summary:
-      "오산 디지털 워룸용 실시간 생산·품질·물류 모니터링 대시보드. 대형 디스플레이에 최적화된 레이아웃.",
+      "오산 디지털 워룸용 실시간 생산·품질·물류 모니터링 대시보드 — 대형 디스플레이에 최적화된 레이아웃",
     thumbnail: {
       bg: "linear-gradient(135deg, #be185d 0%, #f9a8d4 100%)",
       fg: "#ffffff",
@@ -617,7 +617,7 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
     tags: ["건강식품 커머스", "CRM 마케팅", "고객 여정 분석"],
     domain: ["건강기능식품 커머스", "CRM 마케팅·고객 여정 분석"],
     summary:
-      "자사몰·콜센터 기반 마케팅 구조의 분산된 클라우드 데이터를 통합 활용하여 고객 생애 주기 인사이트 도출 및 콜센터 운영 효율 개선을 위한 통합 대시보드 구축 프로젝트.",
+      "자사몰·콜센터 기반 마케팅 구조의 분산된 클라우드 데이터를 통합 활용하여 고객 생애 주기 인사이트 도출 및 콜센터 운영 효율 개선을 위한 통합 대시보드 구축 프로젝트",
     thumbnail: {
       bg: "linear-gradient(135deg, #65a30d 0%, #d9f99d 100%)",
       fg: "#0a0a0a",
@@ -726,45 +726,38 @@ export type PoC = {
 export const pocs: PoC[] = [
   {
     title: "레이어 (LAYER)",
-    category: "PoC · 패션 커머스 트렌드 분석",
+    category: "샘플 · 패션 커머스 트렌드 분석",
     period: "2026.04",
     year: "2026",
-    body: "패션 커머스 트렌드 분석을 위해 무신사·29CM 데이터 크롤링 기반으로 실시간 검색·소비 트렌드 PoC 대시보드 설계 및 시각화.",
+    body: "무신사·29CM 크롤링 데이터 기반 실시간 검색·소비 트렌드 샘플 대시보드 설계",
   },
   {
     title: "LG S&I 코퍼레이션",
-    category: "PoC · 부동산 운영 모니터링",
+    category: "샘플 · 부동산 운영 모니터링",
     period: "2025.04",
     year: "2025",
-    body: "부동산 서비스 운영 데이터 기반 주간 재무·수주 현황 모니터링 PoC 대시보드 설계.",
+    body: "부동산 서비스 운영 데이터 기반 주간 재무·수주 현황 모니터링 샘플 대시보드 설계",
   },
   {
     title: "Samsung Developer",
-    category: "PoC · 개발자 활동 분석",
+    category: "샘플 · 개발자 활동 분석",
     period: "2024.12",
     year: "2024",
-    body: "개발자 활동 데이터(GA + 내부 로그) 기반 캠페인 유입 흐름 및 파일 다운로드 분석 PoC 대시보드 시각화.",
+    body: "개발자 활동 데이터(GA + 내부 로그) 기반 캠페인 유입·파일 다운로드 분석 샘플 대시보드 시각화",
   },
   {
     title: "삼화",
-    category: "PoC · K-뷰티 패키징 영업 KPI",
+    category: "샘플 · K-뷰티 패키징 영업 KPI",
     period: "2024.08",
     year: "2024",
-    body: "K-뷰티 패키징 기업의 영업·출고·매출 데이터 기반 주간 보고용 KPI PoC 대시보드 설계.",
+    body: "K-뷰티 패키징 기업 영업·출고·매출 데이터 기반 주간 보고용 KPI 샘플 대시보드 설계",
   },
   {
     title: "대원미디어 (POP MART)",
-    category: "PoC · 캐릭터 IP 커머스 분석",
+    category: "샘플 · 캐릭터 IP 커머스 분석",
     period: "2023.08",
     year: "2023",
-    body: "캐릭터 IP 기반 커머스 데이터 분석을 위한 KPI 및 캠페인 성과 PoC 대시보드 시각화.",
-  },
-  {
-    title: "굿네이버스",
-    category: "PoC · BI 검증",
-    period: "2023.07",
-    year: "2023",
-    body: "(상세 내용 추가 예정)",
+    body: "캐릭터 IP 기반 커머스 데이터 KPI 및 캠페인 성과 샘플 대시보드 시각화",
   },
 ];
 

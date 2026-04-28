@@ -52,7 +52,7 @@ export default function HomePage() {
                 Proof of Concept
               </p>
               <h2 className="mt-2 text-xl md:text-2xl font-bold tracking-tight">
-                실험과 검증
+                샘플 대시보드
               </h2>
             </div>
             <span className="text-xs text-muted tabular-nums font-medium">

@@ -125,10 +125,9 @@ export default function AboutPage() {
           {capabilities.map((c, i) => (
             <div
               key={c.title}
-              className="group relative grid grid-cols-12 gap-4 md:gap-8 py-10 md:py-14 border-b border-border-subtle hover:bg-subtle/30 transition-colors duration-500"
+              className="group grid grid-cols-12 gap-4 md:gap-8 py-10 md:py-14 border-b border-border-subtle hover:bg-subtle/30 transition-colors duration-500"
             >
-              <span className="absolute left-0 top-0 bottom-0 w-0 bg-accent group-hover:w-1 transition-all duration-500" />
-              <span className="col-span-2 md:col-span-1 text-xs font-bold tabular-nums tracking-[0.18em] pt-2 text-muted">
+              <span className="col-span-2 md:col-span-1 text-xs font-bold tabular-nums tracking-[0.18em] pt-2 text-muted group-hover:text-accent transition-colors">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div className="col-span-10 md:col-span-11">
