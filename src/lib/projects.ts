@@ -305,6 +305,41 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
   },
 ];
 
+export type OtherProject = {
+  title: string;
+  client: string;
+  category: string;
+  period: string;
+  year: string;
+  role: string;
+  team: string;
+  stack: string[];
+  note?: string;
+};
+
+export const otherProjects: OtherProject[] = [
+  {
+    title: "Hyundai India · DC4M",
+    client: "현대자동차 인도 법인",
+    category: "DC4M Tableau 대시보드 구축",
+    period: "2024.05 — 2024.08",
+    year: "2024",
+    role: "Lead",
+    team: "4명",
+    stack: ["Tableau", "Oracle SQL"],
+  },
+  {
+    title: "Amorepacific · Osan",
+    client: "아모레퍼시픽",
+    category: "오산 디지털 워룸 대시보드 개발",
+    period: "2024.02 — 2024.04",
+    year: "2024",
+    role: "Solo",
+    team: "1명",
+    stack: ["Tableau"],
+  },
+];
+
 export function getProject(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);
 }
