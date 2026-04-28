@@ -123,75 +123,78 @@ export default function ProcessSection({
         </div>
       </div>
 
-      <div className="border-t border-foreground pt-10">
-        <div
-          className="grid grid-cols-1 gap-10 md:gap-6"
-          style={{
-            gridTemplateColumns: `repeat(auto-fit, minmax(180px, 1fr))`,
-          }}
-        >
-          {steps.map((s, i) => {
-            const isActive = activeIdx === i;
-            return (
-              <button
-                type="button"
-                key={s.number}
-                onClick={() => toggle(i)}
-                aria-pressed={isActive}
-                className={`text-left w-full space-y-3 group rounded-md p-3 -m-3 transition-all duration-300 cursor-pointer border-0 ${
-                  isActive
-                    ? "bg-accent-soft ring-1 ring-accent"
-                    : "bg-transparent hover:bg-subtle/30"
-                }`}
-              >
-                <div className="flex items-baseline gap-3 md:hidden">
-                  <span
-                    className={`text-xs font-bold tabular-nums tracking-[0.18em] transition-colors ${
-                      isActive ? "text-accent" : "text-muted"
-                    }`}
-                  >
-                    {s.number}
-                  </span>
-                  <span
-                    className={`text-sm font-bold transition-colors ${
-                      isActive ? "text-accent" : ""
-                    }`}
-                  >
-                    {s.stage}
-                  </span>
-                </div>
-                <p
-                  className={`hidden md:block text-[10px] uppercase tracking-[0.22em] font-bold tabular-nums transition-colors ${
+      <div
+        className="grid grid-cols-1 gap-10 md:gap-8"
+        style={{
+          gridTemplateColumns: `repeat(auto-fit, minmax(180px, 1fr))`,
+        }}
+      >
+        {steps.map((s, i) => {
+          const isActive = activeIdx === i;
+          return (
+            <button
+              type="button"
+              key={s.number}
+              onClick={() => toggle(i)}
+              aria-pressed={isActive}
+              className="text-left w-full space-y-3 group cursor-pointer border-0 bg-transparent p-0"
+            >
+              <div className="flex items-baseline gap-3 md:hidden">
+                <span
+                  className={`text-xs font-bold tabular-nums tracking-[0.18em] transition-colors ${
                     isActive ? "text-accent" : "text-muted"
                   }`}
                 >
                   {s.number}
-                </p>
-                {s.detail?.title && (
+                </span>
+                <span
+                  className={`text-sm transition-all ${
+                    isActive ? "text-accent font-extrabold" : "font-bold"
+                  }`}
+                >
+                  {s.stage}
+                </span>
+              </div>
+              <p
+                className={`hidden md:block text-[10px] uppercase tracking-[0.22em] font-bold tabular-nums transition-colors ${
+                  isActive ? "text-accent" : "text-muted"
+                }`}
+              >
+                {s.number}
+              </p>
+              {s.detail?.title && (
+                <div className="space-y-2">
                   <p
-                    className={`text-sm font-bold tracking-tight transition-colors ${
-                      isActive ? "text-accent" : ""
+                    className={`text-sm tracking-tight transition-all ${
+                      isActive
+                        ? "text-accent font-extrabold drop-shadow-[0_1px_4px_rgba(0,113,227,0.35)]"
+                        : "font-bold"
                     }`}
                   >
                     {s.detail.title}
                   </p>
-                )}
-                <ul className="space-y-2 text-xs text-foreground/75 leading-relaxed">
-                  {s.detail?.bullets.map((b, j) => (
-                    <li key={j} className="flex gap-2">
-                      <span
-                        className={`mt-1.5 inline-block h-1 w-1 rounded-full shrink-0 transition-colors ${
-                          isActive ? "bg-accent" : "bg-muted"
-                        }`}
-                      />
-                      <span>{b}</span>
-                    </li>
-                  ))}
-                </ul>
-              </button>
-            );
-          })}
-        </div>
+                  <div
+                    className={`h-[2px] transition-all duration-300 ${
+                      isActive ? "w-10 bg-accent" : "w-0 bg-transparent"
+                    }`}
+                  />
+                </div>
+              )}
+              <ul className="space-y-2 text-xs text-foreground/75 leading-relaxed">
+                {s.detail?.bullets.map((b, j) => (
+                  <li key={j} className="flex gap-2">
+                    <span
+                      className={`mt-1.5 inline-block h-1 w-1 rounded-full shrink-0 transition-colors ${
+                        isActive ? "bg-accent" : "bg-muted"
+                      }`}
+                    />
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
