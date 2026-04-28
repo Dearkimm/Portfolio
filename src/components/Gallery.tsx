@@ -53,9 +53,20 @@ export default function Gallery({ images, eyebrow, title, note }: Props) {
           )}
           {title && <h3 className="text-2xl font-semibold tracking-tight">{title}</h3>}
           {note && (
-            <p className="text-[11px] text-muted leading-relaxed pt-1 break-keep">
-              {note}
-            </p>
+            <div className="pt-1 space-y-0.5 break-keep">
+              {note
+                .split(/(?=※)/)
+                .map((line) => line.trim())
+                .filter(Boolean)
+                .map((line, i) => (
+                  <p
+                    key={i}
+                    className="text-[11px] text-muted leading-relaxed"
+                  >
+                    {line}
+                  </p>
+                ))}
+            </div>
           )}
         </div>
       )}
@@ -73,7 +84,9 @@ export default function Gallery({ images, eyebrow, title, note }: Props) {
               alt={img.alt ?? ""}
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+              className={`object-cover transition-transform duration-700 group-hover:scale-[1.04] ${
+                img.blur ? "blur-md" : ""
+              }`}
             />
             <div className="absolute bottom-3 right-3 h-9 w-9 rounded-full bg-white/90 backdrop-blur flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-sm">
               <span className="text-sm">⤢</span>
@@ -143,7 +156,9 @@ export default function Gallery({ images, eyebrow, title, note }: Props) {
                 alt={images[active].alt ?? ""}
                 width={1920}
                 height={1200}
-                className="rounded-2xl object-contain max-h-[80vh] w-auto h-auto"
+                className={`rounded-2xl object-contain max-h-[80vh] w-auto h-auto ${
+                  images[active].blur ? "blur-xl" : ""
+                }`}
               />
             </div>
             {images[active].caption && (

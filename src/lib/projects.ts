@@ -2,6 +2,7 @@ export type GalleryImage = {
   src: string;
   alt?: string;
   caption?: string;
+  blur?: boolean;
 };
 
 export type Section =
@@ -234,9 +235,9 @@ export const projects: Project[] = [
             caption: "메인 대시보드 디자인 — 생산 주요 관리지표 (임원용)",
           },
           {
-            src: "/projects/ssangyong-ce/04-tabpy-batch.png",
+            src: "/projects/ssangyong-ce/04-tabpy-real.png",
             alt: "TabPy 활용 수동 비정기 적재 대시보드",
-            caption: "TabPy 활용 — 수동 비정기 적재",
+            caption: "TabPy 활용 — 수동 비정기 적재 (실데이터)",
           },
           {
             src: "/projects/ssangyong-ce/05-cement-trend.png",
@@ -391,16 +392,19 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
             src: "/projects/global-tax-free/01-marketing-internal-real.png",
             alt: "내부 분석용 마케팅 보고서",
             caption: "내부 분석용 마케팅 보고서 (실데이터)",
+            blur: true,
           },
           {
             src: "/projects/global-tax-free/02-map-nation-real.png",
             alt: "지도 지표 분석 보고서 — 전국",
             caption: "지도 지표 분석 — 전국 (실데이터)",
+            blur: true,
           },
           {
             src: "/projects/global-tax-free/03-map-region-real.png",
             alt: "지도 지표 분석 보고서 — 지역",
             caption: "지도 지표 분석 — 지역 (실데이터)",
+            blur: true,
           },
           {
             src: "/projects/global-tax-free/04-summary-design.jpg",

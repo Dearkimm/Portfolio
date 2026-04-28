@@ -158,11 +158,11 @@ function SectionRenderer({ section }: { section: Section }) {
           <div className="border-t border-foreground pt-12">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 md:gap-x-16 gap-y-14">
               {section.items.map((k, i) => (
-                <div key={i} className="group relative">
+                <div key={i} className="group relative min-w-0 overflow-hidden">
                   <p className="text-[10px] uppercase tracking-[0.22em] text-muted font-bold tabular-nums mb-4">
                     {String(i + 1).padStart(2, "0")}
                   </p>
-                  <p className="text-[clamp(56px,8vw,108px)] font-extrabold text-foreground tabular-nums tracking-[-0.05em] leading-[0.95] whitespace-nowrap group-hover:text-accent group-hover:tracking-[-0.06em] transition-all duration-500">
+                  <p className="text-[clamp(40px,5.5vw,72px)] font-extrabold text-foreground tabular-nums tracking-[-0.04em] leading-[0.95] break-keep group-hover:text-accent group-hover:tracking-[-0.05em] transition-all duration-500">
                     {k.value}
                   </p>
                   <div className="mt-5 h-[2px] w-12 bg-foreground/30 group-hover:bg-accent group-hover:w-24 transition-all duration-500" />
