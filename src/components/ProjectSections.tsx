@@ -105,10 +105,8 @@ function SectionRenderer({ section }: { section: Section }) {
         />
       );
 
-    /* ─────────────────────────────────────────────────────────
-       CARDS — editorial vertical list (numbered rows + bullets)
-       horizontal hairlines, large title left, bullets right
-       ───────────────────────────────────────────────────────── */
+    /* CARDS — editorial vertical list (no static accent on items)
+       hover-only: title color + left accent bar slides in */
     case "cards":
       return (
         <div>
@@ -126,28 +124,16 @@ function SectionRenderer({ section }: { section: Section }) {
                   className="group relative grid grid-cols-12 gap-4 md:gap-8 py-10 md:py-14 border-b border-border-subtle hover:bg-subtle/30 transition-colors duration-500"
                 >
                   <span className="absolute left-0 top-0 bottom-0 w-0 bg-accent group-hover:w-1 transition-all duration-500" />
-                  <span
-                    className={`col-span-2 md:col-span-1 text-xs font-bold tabular-nums tracking-[0.18em] pt-2 ${
-                      c.accent ? "text-accent" : "text-muted"
-                    }`}
-                  >
+                  <span className="col-span-2 md:col-span-1 text-xs font-bold tabular-nums tracking-[0.18em] pt-2 text-muted">
                     {num}
                   </span>
-                  <h4
-                    className={`col-span-10 md:col-span-5 text-2xl md:text-[clamp(28px,3.2vw,44px)] font-bold tracking-[-0.03em] leading-[1.15] transition-colors duration-300 group-hover:text-accent ${
-                      c.accent ? "text-accent" : ""
-                    }`}
-                  >
+                  <h4 className="col-span-10 md:col-span-5 text-2xl md:text-[clamp(28px,3.2vw,44px)] font-bold tracking-[-0.03em] leading-[1.15] transition-colors duration-300 group-hover:text-accent">
                     {c.title}
                   </h4>
                   <ul className="col-start-3 md:col-start-7 col-span-10 md:col-span-6 space-y-3 self-center">
                     {c.bullets.map((b, j) => (
                       <li key={j} className="flex gap-3 text-sm leading-relaxed">
-                        <span
-                          className={`mt-2 inline-block h-1 w-1 rounded-full shrink-0 ${
-                            c.accent ? "bg-accent" : "bg-muted"
-                          }`}
-                        />
+                        <span className="mt-2 inline-block h-1 w-1 rounded-full bg-muted shrink-0" />
                         <span className="text-foreground/85">{b}</span>
                       </li>
                     ))}
@@ -159,10 +145,7 @@ function SectionRenderer({ section }: { section: Section }) {
         </div>
       );
 
-    /* ─────────────────────────────────────────────────────────
-       KPIS — 2x2 grid with strong emphasis (huge accent numbers)
-       distinct from cards (4-row list) — square block layout
-       ───────────────────────────────────────────────────────── */
+    /* KPIS — 2x2 grid, monochrome numbers, accent only on hover */
     case "kpis":
       return (
         <div>
@@ -178,7 +161,7 @@ function SectionRenderer({ section }: { section: Section }) {
                   <p className="text-[10px] uppercase tracking-[0.22em] text-muted font-bold tabular-nums mb-4">
                     {String(i + 1).padStart(2, "0")}
                   </p>
-                  <p className="text-[clamp(56px,8vw,108px)] font-extrabold text-accent tabular-nums tracking-[-0.05em] leading-[0.95] whitespace-nowrap group-hover:tracking-[-0.06em] transition-all duration-500">
+                  <p className="text-[clamp(56px,8vw,108px)] font-extrabold text-foreground tabular-nums tracking-[-0.05em] leading-[0.95] whitespace-nowrap group-hover:text-accent group-hover:tracking-[-0.06em] transition-all duration-500">
                     {k.value}
                   </p>
                   <div className="mt-5 h-[2px] w-12 bg-foreground/30 group-hover:bg-accent group-hover:w-24 transition-all duration-500" />
@@ -192,10 +175,7 @@ function SectionRenderer({ section }: { section: Section }) {
         </div>
       );
 
-    /* ─────────────────────────────────────────────────────────
-       P-A-R — VERTICAL narrative per case (3 stacked steps with dots)
-       (distinct: vertical flow, dot indicators, color-coded labels inline)
-       ───────────────────────────────────────────────────────── */
+    /* P-A-R — vertical narrative per case, all neutral, accent on case hover */
     case "par":
       return (
         <div>
@@ -211,29 +191,15 @@ function SectionRenderer({ section }: { section: Section }) {
                 className="py-10 md:py-14 border-b border-border-subtle group hover:bg-subtle/30 transition-colors duration-500"
               >
                 <div className="flex items-center gap-3 mb-8">
-                  <span className="text-xs font-bold tabular-nums tracking-[0.18em]">
+                  <span className="text-xs font-bold tabular-nums tracking-[0.18em] group-hover:text-accent transition-colors">
                     Case {String(i + 1).padStart(2, "0")}
                   </span>
                   <div className="h-px flex-1 bg-border-subtle" />
                 </div>
                 <ol className="space-y-7 relative pl-0">
-                  <NarrativeStep
-                    label="Problem"
-                    body={row.problem}
-                    tone="neutral"
-                    showLine
-                  />
-                  <NarrativeStep
-                    label="Action"
-                    body={row.action}
-                    tone="action"
-                    showLine
-                  />
-                  <NarrativeStep
-                    label="Result"
-                    body={row.result}
-                    tone="result"
-                  />
+                  <NarrativeStep label="Problem" body={row.problem} showLine />
+                  <NarrativeStep label="Action" body={row.action} showLine />
+                  <NarrativeStep label="Result" body={row.result} />
                 </ol>
               </div>
             ))}
@@ -241,10 +207,7 @@ function SectionRenderer({ section }: { section: Section }) {
         </div>
       );
 
-    /* ─────────────────────────────────────────────────────────
-       LESSONS — top accent line + Note label, big title, body
-       (distinct from cards/KPI/PAR via short top accent bar)
-       ───────────────────────────────────────────────────────── */
+    /* LESSONS — top short bar + Note label (all muted), accent on hover */
     case "lessons":
       return (
         <div>
@@ -258,8 +221,8 @@ function SectionRenderer({ section }: { section: Section }) {
               {section.items.map((l, i) => (
                 <div key={i} className="group">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="h-[2px] w-10 bg-accent group-hover:w-16 transition-all duration-500" />
-                    <span className="text-[10px] uppercase tracking-[0.22em] text-accent font-bold tabular-nums">
+                    <div className="h-[2px] w-10 bg-foreground/30 group-hover:bg-accent group-hover:w-16 transition-all duration-500" />
+                    <span className="text-[10px] uppercase tracking-[0.22em] text-muted font-bold tabular-nums group-hover:text-accent transition-colors">
                       Note {String(i + 1).padStart(2, "0")}
                     </span>
                   </div>
@@ -281,40 +244,24 @@ function SectionRenderer({ section }: { section: Section }) {
 function NarrativeStep({
   label,
   body,
-  tone,
   showLine = false,
 }: {
   label: string;
   body: string;
-  tone: "neutral" | "action" | "result";
   showLine?: boolean;
 }) {
-  const styles = {
-    neutral: { dot: "bg-muted", label: "text-muted", line: "bg-border-subtle" },
-    action: { dot: "bg-accent", label: "text-accent", line: "bg-accent/30" },
-    result: {
-      dot: "bg-emerald-500",
-      label: "text-emerald-600",
-      line: "bg-emerald-500/30",
-    },
-  } as const;
-  const s = styles[tone];
   return (
     <li className="grid grid-cols-12 gap-4 relative">
       <div className="col-span-12 md:col-span-2 flex md:flex-col gap-3 md:gap-4 items-start relative">
         <div className="flex items-center gap-3">
-          <span
-            className={`inline-block h-2.5 w-2.5 rounded-full ${s.dot} shrink-0`}
-          />
-          <p
-            className={`text-[10px] uppercase tracking-[0.22em] font-bold ${s.label}`}
-          >
+          <span className="inline-block h-2.5 w-2.5 rounded-full bg-foreground/40 shrink-0" />
+          <p className="text-[10px] uppercase tracking-[0.22em] font-bold text-muted">
             {label}
           </p>
         </div>
         {showLine && (
           <div
-            className={`hidden md:block absolute left-1 top-7 h-[calc(100%+1.75rem)] w-px ${s.line}`}
+            className="hidden md:block absolute left-1 top-7 h-[calc(100%+1.75rem)] w-px bg-border-subtle"
             aria-hidden
           />
         )}

@@ -3,8 +3,7 @@ export default function ContactPage() {
     <div className="mx-auto max-w-7xl px-6 py-12 md:py-20">
       <section className="grid grid-cols-12 gap-6 items-end mb-16 fade-in-up">
         <div className="col-span-12 md:col-span-9">
-          <p className="text-sm font-medium text-accent mb-4 flex items-center gap-2">
-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
+          <p className="text-xs uppercase tracking-[0.18em] text-muted font-semibold mb-4">
             Contact
           </p>
           <h1 className="text-[clamp(48px,8vw,112px)] font-semibold leading-[0.95] tracking-[-0.04em]">
@@ -24,8 +23,7 @@ export default function ContactPage() {
           className="group rounded-3xl border border-border-subtle p-8 md:p-10 hover:border-accent transition-all hover:-translate-y-1 fade-in-up"
           style={{ animationDelay: "120ms" }}
         >
-          <p className="text-xs uppercase tracking-[0.18em] text-muted font-semibold mb-4 flex items-center gap-2">
-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
+          <p className="text-xs uppercase tracking-[0.18em] text-muted font-semibold mb-4">
             Email
           </p>
           <p className="text-2xl md:text-3xl font-semibold tracking-tight group-hover:text-accent transition-colors break-all">
@@ -40,8 +38,7 @@ export default function ContactPage() {
         </a>
 
         <div className="rounded-3xl border border-border-subtle p-8 md:p-10 bg-subtle fade-in-up" style={{ animationDelay: "200ms" }}>
-          <p className="text-xs uppercase tracking-[0.18em] text-muted font-semibold mb-4 flex items-center gap-2">
-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-muted" />
+          <p className="text-xs uppercase tracking-[0.18em] text-muted font-semibold mb-4">
             LinkedIn
           </p>
           <p className="text-2xl md:text-3xl font-semibold tracking-tight text-muted">

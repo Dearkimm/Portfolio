@@ -45,9 +45,9 @@ export default async function ProjectDetailPage({
             {project.tags.map((t) => (
               <span
                 key={t}
-                className="px-3.5 py-1.5 rounded-full bg-accent-soft text-accent text-xs font-semibold tracking-tight hover:bg-accent hover:text-white transition-colors cursor-default"
+                className="px-3.5 py-1.5 rounded-full border border-border-subtle bg-white text-foreground/70 text-xs font-semibold tracking-tight hover:border-accent hover:bg-accent-soft hover:text-accent transition-colors cursor-default"
               >
-                <span className="opacity-60 mr-0.5">#</span>
+                <span className="opacity-50 mr-0.5">#</span>
                 {t.replace(/\s+/g, "")}
               </span>
             ))}
@@ -89,8 +89,7 @@ export default async function ProjectDetailPage({
         href={`/projects/${next.slug}`}
         className="block group rounded-3xl border border-border-subtle p-8 md:p-10 hover:border-accent transition-colors mt-20"
       >
-        <p className="text-sm font-medium text-muted mb-2 flex items-center gap-2">
-          <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
+        <p className="text-sm font-medium text-muted mb-2">
           Next project
         </p>
         <div className="flex items-baseline justify-between gap-4">

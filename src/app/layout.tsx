@@ -16,15 +16,26 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
+const SITE_URL = "https://portfolio-pi-cyan-fzcirn5lpo.vercel.app";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Jenna — BI Analyst",
   description: "Tableau dashboards, SQL data marts, BI projects.",
+  openGraph: {
+    title: "Jenna — BI Analyst",
+    description: "Tableau dashboards, SQL data marts, BI projects.",
+    url: SITE_URL,
+    siteName: "Jenna · Portfolio",
+    locale: "ko_KR",
+    type: "website",
+  },
 };
 
 const navItems = [
-  { href: "/", label: "Work", dot: "bg-accent" },
-  { href: "/about", label: "About", dot: "bg-foreground" },
-  { href: "/contact", label: "Contact", dot: "bg-muted" },
+  { href: "/", label: "Work" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export default function RootLayout({
@@ -48,9 +59,8 @@ export default function RootLayout({
           <div className="mx-auto max-w-7xl px-6 py-5 flex items-center justify-between gap-6">
             <Link
               href="/"
-              className="flex items-center gap-2 text-base font-semibold tracking-tight hover:opacity-70"
+              className="text-base font-semibold tracking-tight hover:text-accent transition-colors"
             >
-              <span className="inline-block h-2 w-2 rounded-full bg-accent" />
               Jenna
             </Link>
             <nav className="flex gap-1">
@@ -58,9 +68,8 @@ export default function RootLayout({
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium hover:bg-subtle"
+                  className="px-4 py-2 rounded-full text-sm font-medium hover:bg-subtle hover:text-accent transition-colors"
                 >
-                  <span className={`inline-block h-1.5 w-1.5 rounded-full ${item.dot}`} />
                   {item.label}
                 </Link>
               ))}
@@ -70,10 +79,7 @@ export default function RootLayout({
         <main className="flex-1 w-full">{children}</main>
         <footer className="w-full border-t border-border-subtle mt-24">
           <div className="mx-auto max-w-7xl px-6 py-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-sm text-muted">
-            <div className="flex items-center gap-2">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
-              <span>Jenna · BI Analyst — Seoul, KR</span>
-            </div>
+            <span>Jenna · BI Analyst — Seoul, KR</span>
             <span className="font-medium">© {new Date().getFullYear()}</span>
           </div>
         </footer>

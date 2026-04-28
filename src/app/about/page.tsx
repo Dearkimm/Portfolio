@@ -2,7 +2,6 @@ const capabilities = [
   {
     title: "처음부터 끝까지 직접 구현합니다",
     body: "데이터 정의, SQL, 대시보드 구현, 검증까지 전 과정을 분리하지 않고 직접 수행합니다.",
-    accent: true,
   },
   {
     title: "빠르게 만들고 반복 개선합니다",
@@ -59,16 +58,14 @@ export default function AboutPage() {
     <div className="mx-auto max-w-7xl px-6 py-12 md:py-20 break-keep">
       <section className="grid grid-cols-12 gap-6 md:gap-10 mb-24 md:mb-32 fade-in-up">
         <div className="col-span-12 md:col-span-8 space-y-7">
-          <p className="text-sm font-medium text-accent flex items-center gap-2">
-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
+          <p className="text-xs uppercase tracking-[0.18em] text-muted font-semibold">
             About
           </p>
           <h1 className="text-[clamp(40px,7vw,96px)] font-semibold leading-[0.95] tracking-[-0.04em]">
             김정민<span className="text-muted font-light"> · Jenna</span>
           </h1>
           <h2 className="text-[clamp(32px,5vw,64px)] font-semibold leading-[1.1] tracking-[-0.03em] max-w-3xl">
-            프로젝트를 안정적으로 이끄는{" "}
-            <span className="text-accent">분석가</span>
+            프로젝트를 안정적으로 이끄는 분석가
           </h2>
           <p className="max-w-2xl text-base md:text-lg text-foreground/75 leading-relaxed">
             새로운 환경에서도 필요한 정보를 빠르게 파악하고, 기준에 따라
@@ -131,19 +128,11 @@ export default function AboutPage() {
               className="group relative grid grid-cols-12 gap-4 md:gap-8 py-10 md:py-14 border-b border-border-subtle hover:bg-subtle/30 transition-colors duration-500"
             >
               <span className="absolute left-0 top-0 bottom-0 w-0 bg-accent group-hover:w-1 transition-all duration-500" />
-              <span
-                className={`col-span-2 md:col-span-1 text-xs font-bold tabular-nums tracking-[0.18em] pt-2 ${
-                  c.accent ? "text-accent" : "text-muted"
-                }`}
-              >
+              <span className="col-span-2 md:col-span-1 text-xs font-bold tabular-nums tracking-[0.18em] pt-2 text-muted">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div className="col-span-10 md:col-span-11">
-                <h3
-                  className={`text-2xl md:text-4xl font-bold leading-[1.2] tracking-[-0.02em] max-w-3xl transition-colors duration-300 group-hover:text-accent ${
-                    c.accent ? "text-accent" : ""
-                  }`}
-                >
+                <h3 className="text-2xl md:text-4xl font-bold leading-[1.2] tracking-[-0.02em] max-w-3xl transition-colors duration-300 group-hover:text-accent">
                   {c.title}
                 </h3>
                 <p className="mt-4 max-w-2xl text-base md:text-lg text-foreground/75 leading-relaxed">
@@ -175,10 +164,10 @@ export default function AboutPage() {
                 className="relative pl-7 pb-10 last:pb-0 group"
               >
                 {i < career.length - 1 && (
-                  <div className="absolute left-[5px] top-4 bottom-0 w-px bg-border-subtle group-hover:bg-accent/30 transition-colors" />
+                  <div className="absolute left-[5px] top-4 bottom-0 w-px bg-border-subtle" />
                 )}
-                <div className="absolute left-0 top-2 h-3 w-3 rounded-full bg-white ring-2 ring-accent group-hover:scale-125 transition-transform" />
-                <p className="text-xs text-accent font-semibold tabular-nums tracking-wider">
+                <div className="absolute left-0 top-2 h-3 w-3 rounded-full bg-white ring-2 ring-foreground/30 group-hover:ring-accent group-hover:scale-125 transition-all" />
+                <p className="text-xs text-muted font-semibold tabular-nums tracking-wider group-hover:text-accent transition-colors">
                   {c.period}
                 </p>
                 <p className="mt-2 text-xl font-bold tracking-tight">
