@@ -1,0 +1,57 @@
+export default function ContactPage() {
+  return (
+    <div className="mx-auto max-w-7xl px-6 py-12 md:py-20">
+      <section className="grid grid-cols-12 gap-6 items-end mb-16 fade-in-up">
+        <div className="col-span-12 md:col-span-9">
+          <p className="text-sm font-medium text-accent mb-4 flex items-center gap-2">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
+            Contact
+          </p>
+          <h1 className="text-[clamp(48px,8vw,112px)] font-semibold leading-[0.95] tracking-[-0.04em]">
+            Say
+            <span className="text-muted font-light"> hello.</span>
+          </h1>
+          <p className="mt-6 max-w-2xl text-lg text-muted leading-relaxed">
+            새로운 프로젝트 협업 또는 데이터·BI 관련 문의는 이메일로 연락
+            주세요.
+          </p>
+        </div>
+      </section>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <a
+          href="mailto:auspiciousmin@gmail.com"
+          className="group rounded-3xl border border-border-subtle p-8 md:p-10 hover:border-accent transition-all hover:-translate-y-1 fade-in-up"
+          style={{ animationDelay: "120ms" }}
+        >
+          <p className="text-xs uppercase tracking-[0.18em] text-muted font-semibold mb-4 flex items-center gap-2">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
+            Email
+          </p>
+          <p className="text-2xl md:text-3xl font-semibold tracking-tight group-hover:text-accent transition-colors break-all">
+            auspiciousmin@gmail.com
+          </p>
+          <p className="mt-3 text-sm text-muted flex items-center gap-2">
+            Send an email
+            <span className="inline-block group-hover:translate-x-1 transition-transform">
+              →
+            </span>
+          </p>
+        </a>
+
+        <div className="rounded-3xl border border-border-subtle p-8 md:p-10 bg-subtle fade-in-up" style={{ animationDelay: "200ms" }}>
+          <p className="text-xs uppercase tracking-[0.18em] text-muted font-semibold mb-4 flex items-center gap-2">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-muted" />
+            LinkedIn
+          </p>
+          <p className="text-2xl md:text-3xl font-semibold tracking-tight text-muted">
+            Coming soon
+          </p>
+          <p className="mt-3 text-sm text-muted">
+            프로필 정리 후 공개 예정
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
