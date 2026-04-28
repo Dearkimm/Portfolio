@@ -278,6 +278,58 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
     ],
   },
   {
+    slug: "hyundai-india-dc4m",
+    title: "Hyundai India · DC4M",
+    client: "현대자동차 인도 법인",
+    category: "DC4M 태블로 대시보드 구축",
+    period: "2024.05 — 2024.08",
+    year: "2024",
+    role: "Lead",
+    team: "4명",
+    stack: ["Tableau", "Oracle SQL"],
+    data: ["딜러/판매/AS 데이터"],
+    tags: ["Automotive", "Dealer Network"],
+    summary:
+      "인도 법인의 딜러 네트워크 운영을 위한 DC4M 분석 대시보드. 판매·정비·만족도 지표를 딜러 단위로 추적.",
+    thumbnail: {
+      bg: "linear-gradient(135deg, #0f172a 0%, #94a3b8 100%)",
+      fg: "#ffffff",
+      label: "Hyundai · DC4M",
+    },
+    sections: [
+      {
+        kind: "text",
+        body: "딜러 단위 KPI를 지역·차종·기간으로 드릴다운할 수 있는 구조로 설계. 본사 매니지먼트와 현장 딜러용 뷰를 분리. (상세 내용 추후 추가)",
+      },
+    ],
+  },
+  {
+    slug: "amorepacific-osan-warroom",
+    title: "Amorepacific · Osan",
+    client: "아모레퍼시픽",
+    category: "오산 디지털 워룸 대시보드 개발",
+    period: "2024.02 — 2024.04",
+    year: "2024",
+    role: "Solo",
+    team: "1명",
+    stack: ["Tableau"],
+    data: ["생산/품질/물류 데이터"],
+    tags: ["Manufacturing", "War Room"],
+    summary:
+      "오산 디지털 워룸용 실시간 생산·품질·물류 모니터링 대시보드. 대형 디스플레이에 최적화된 레이아웃.",
+    thumbnail: {
+      bg: "linear-gradient(135deg, #be185d 0%, #f9a8d4 100%)",
+      fg: "#ffffff",
+      label: "Amorepacific",
+    },
+    sections: [
+      {
+        kind: "text",
+        body: "워룸 환경의 멀티 모니터에 최적화된 레이아웃, 실시간 갱신 주기, 알림 영역을 함께 설계. (상세 내용 추후 추가)",
+      },
+    ],
+  },
+  {
     slug: "daesang-welllife",
     title: "Daesang Welllife",
     client: "대상 웰라이프",
@@ -305,39 +357,25 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
   },
 ];
 
-export type OtherProject = {
+export type PoC = {
   title: string;
-  client: string;
   category: string;
-  period: string;
-  year: string;
-  role: string;
-  team: string;
-  stack: string[];
-  note?: string;
+  period?: string;
+  year?: string;
+  stack?: string[];
+  body: string;
 };
 
-export const otherProjects: OtherProject[] = [
-  {
-    title: "Hyundai India · DC4M",
-    client: "현대자동차 인도 법인",
-    category: "DC4M Tableau 대시보드 구축",
-    period: "2024.05 — 2024.08",
-    year: "2024",
-    role: "Lead",
-    team: "4명",
-    stack: ["Tableau", "Oracle SQL"],
-  },
-  {
-    title: "Amorepacific · Osan",
-    client: "아모레퍼시픽",
-    category: "오산 디지털 워룸 대시보드 개발",
-    period: "2024.02 — 2024.04",
-    year: "2024",
-    role: "Solo",
-    team: "1명",
-    stack: ["Tableau"],
-  },
+export const pocs: PoC[] = [
+  // 예시 (Jenna님이 채우실 자리):
+  // {
+  //   title: "Sample PoC",
+  //   category: "분석 자동화 실험",
+  //   period: "2024.07",
+  //   year: "2024",
+  //   stack: ["Python", "TabPy"],
+  //   body: "어떤 PoC였는지 한두 줄로 설명.",
+  // },
 ];
 
 export function getProject(slug: string): Project | undefined {

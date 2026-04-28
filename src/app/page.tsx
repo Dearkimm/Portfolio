@@ -1,5 +1,5 @@
 import ProjectCard from "@/components/ProjectCard";
-import { otherProjects, projects } from "@/lib/projects";
+import { pocs, projects } from "@/lib/projects";
 
 export default function HomePage() {
   return (
@@ -20,7 +20,7 @@ export default function HomePage() {
         </div>
         <div className="col-span-12 md:col-span-3 text-sm text-muted space-y-2 pb-3">
           <div className="flex justify-between border-b border-border-subtle pb-2">
-            <span>Featured</span>
+            <span>Projects</span>
             <span className="tabular-nums font-medium text-foreground">
               {String(projects.length).padStart(2, "0")}
             </span>
@@ -44,43 +44,54 @@ export default function HomePage() {
         ))}
       </section>
 
-      <section className="mt-24 md:mt-32">
-        <div className="flex items-baseline justify-between mb-8">
-          <p className="text-xs uppercase tracking-[0.18em] text-muted font-semibold">
-            Other Work
-          </p>
-          <span className="text-xs text-muted tabular-nums font-medium">
-            {String(otherProjects.length).padStart(2, "0")}
-          </span>
-        </div>
-        <ul className="border-t border-foreground">
-          {otherProjects.map((p, i) => (
-            <li
-              key={p.title}
-              className="group grid grid-cols-12 gap-3 md:gap-6 items-baseline py-6 border-b border-border-subtle hover:bg-subtle/30 transition-colors break-keep"
-            >
-              <span className="col-span-2 md:col-span-1 text-xs font-bold tabular-nums text-muted">
-                {String(projects.length + i + 1).padStart(2, "0")}
-              </span>
-              <p className="col-span-10 md:col-span-2 text-xs text-muted font-medium tabular-nums tracking-wider">
-                {p.period}
+      {pocs.length > 0 && (
+        <section className="mt-24 md:mt-32">
+          <div className="flex items-baseline justify-between mb-8">
+            <div>
+              <p className="text-xs uppercase tracking-[0.18em] text-muted font-semibold">
+                Proof of Concept
               </p>
-              <div className="col-span-12 md:col-span-5">
-                <h3 className="text-base md:text-lg font-semibold tracking-tight">
-                  {p.title}
-                </h3>
-                <p className="text-xs text-muted mt-0.5">{p.category}</p>
-              </div>
-              <p className="col-span-6 md:col-span-2 text-xs text-muted">
-                {p.role} · {p.team}
-              </p>
-              <p className="col-span-6 md:col-span-2 text-xs text-muted text-right">
-                {p.stack.join(" · ")}
-              </p>
-            </li>
-          ))}
-        </ul>
-      </section>
+              <h2 className="mt-2 text-2xl md:text-3xl font-bold tracking-tight">
+                실험과 검증
+              </h2>
+            </div>
+            <span className="text-xs text-muted tabular-nums font-medium">
+              {String(pocs.length).padStart(2, "0")}
+            </span>
+          </div>
+          <ul className="border-t border-foreground">
+            {pocs.map((p, i) => (
+              <li
+                key={p.title}
+                className="group grid grid-cols-12 gap-3 md:gap-6 items-baseline py-7 border-b border-border-subtle hover:bg-subtle/30 transition-colors break-keep"
+              >
+                <span className="col-span-2 md:col-span-1 text-xs font-bold tabular-nums text-muted">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                {p.period && (
+                  <p className="col-span-10 md:col-span-2 text-xs text-muted font-medium tabular-nums tracking-wider">
+                    {p.period}
+                  </p>
+                )}
+                <div className={p.period ? "col-span-12 md:col-span-7" : "col-span-10 md:col-span-9"}>
+                  <h3 className="text-base md:text-lg font-semibold tracking-tight">
+                    {p.title}
+                  </h3>
+                  <p className="text-xs text-muted mt-0.5">{p.category}</p>
+                  <p className="text-sm text-foreground/80 mt-2 leading-relaxed max-w-2xl">
+                    {p.body}
+                  </p>
+                </div>
+                {p.stack && (
+                  <p className="col-span-12 md:col-span-2 text-xs text-muted text-left md:text-right">
+                    {p.stack.join(" · ")}
+                  </p>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
     </div>
   );
 }
