@@ -103,6 +103,7 @@ function SectionRenderer({ section }: { section: Section }) {
           images={section.images}
           eyebrow={section.eyebrow}
           title={section.title}
+          note={section.note}
         />
       );
 

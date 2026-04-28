@@ -9,7 +9,7 @@ export type Section =
   | { kind: "text"; body: string }
   | { kind: "code"; language?: string; filename?: string; body: string }
   | { kind: "image"; src: string; alt?: string; caption?: string }
-  | { kind: "gallery"; eyebrow?: string; title?: string; images: GalleryImage[] }
+  | { kind: "gallery"; eyebrow?: string; title?: string; note?: string; images: GalleryImage[] }
   | {
       kind: "cards";
       eyebrow?: string;
@@ -216,26 +216,32 @@ export const projects: Project[] = [
         kind: "gallery",
         eyebrow: "Reference",
         title: "Dashboard Screens",
+        note: "※ 실데이터는 보안을 위해 블러처리 하였습니다. ※ 일부 이미지는 기획 단계 Figma 시안으로 더미 데이터를 사용하였습니다.",
         images: [
           {
-            src: "/projects/ssangyong-ce/01.svg",
-            alt: "쌍용 C&E 대시보드 1",
-            caption: "메인 대시보드 — 일일 생산 지표",
+            src: "/projects/ssangyong-ce/01-main-production-real.png",
+            alt: "쌍용 C&E 메인 대시보드 — 생산·출하 실적",
+            caption: "메인 대시보드 — 생산·출하 실적 (실데이터)",
           },
           {
-            src: "/projects/ssangyong-ce/02.svg",
-            alt: "쌍용 C&E 대시보드 2",
-            caption: "재고 / 출하 현황",
+            src: "/projects/ssangyong-ce/02-hr-headcount-real.png",
+            alt: "쌍용 C&E 인사총무 인원현황",
+            caption: "인사총무 — 인원현황 (실데이터)",
           },
           {
-            src: "/projects/ssangyong-ce/03.svg",
-            alt: "쌍용 C&E 대시보드 3",
-            caption: "영업물류 모니터링",
+            src: "/projects/ssangyong-ce/03-executive-design.jpg",
+            alt: "쌍용 C&E 메인 대시보드 디자인 — 임원용",
+            caption: "메인 대시보드 디자인 — 생산 주요 관리지표 (임원용)",
           },
           {
-            src: "/projects/ssangyong-ce/04.svg",
-            alt: "쌍용 C&E 대시보드 4",
-            caption: "인사·조직 분석",
+            src: "/projects/ssangyong-ce/04-tabpy-batch.png",
+            alt: "TabPy 활용 수동 비정기 적재 대시보드",
+            caption: "TabPy 활용 — 수동 비정기 적재",
+          },
+          {
+            src: "/projects/ssangyong-ce/05-cement-trend.png",
+            alt: "시멘트 생산 THC·TPC·순환자원 Trend",
+            caption: "시멘트 생산 — THC·TPC·순환자원 Trend",
           },
         ],
       },
@@ -376,6 +382,49 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
         ],
       },
       {
+        kind: "gallery",
+        eyebrow: "Reference",
+        title: "Dashboard Screens",
+        note: "※ 실데이터는 보안을 위해 블러처리 하였습니다. ※ 일부 이미지는 기획 단계 Figma 시안으로 더미 데이터를 사용하였습니다.",
+        images: [
+          {
+            src: "/projects/global-tax-free/01-marketing-internal-real.png",
+            alt: "내부 분석용 마케팅 보고서",
+            caption: "내부 분석용 마케팅 보고서 (실데이터)",
+          },
+          {
+            src: "/projects/global-tax-free/02-map-nation-real.png",
+            alt: "지도 지표 분석 보고서 — 전국",
+            caption: "지도 지표 분석 — 전국 (실데이터)",
+          },
+          {
+            src: "/projects/global-tax-free/03-map-region-real.png",
+            alt: "지도 지표 분석 보고서 — 지역",
+            caption: "지도 지표 분석 — 지역 (실데이터)",
+          },
+          {
+            src: "/projects/global-tax-free/04-summary-design.jpg",
+            alt: "요약 대시보드 디자인",
+            caption: "요약 대시보드",
+          },
+          {
+            src: "/projects/global-tax-free/05-executive-sales-design.jpg",
+            alt: "경영진 매출 동향 디자인",
+            caption: "경영진 매출 동향",
+          },
+          {
+            src: "/projects/global-tax-free/06-marketing-external-design.jpg",
+            alt: "외부 분석용 마케팅 보고서 디자인",
+            caption: "외부 분석용 마케팅 보고서",
+          },
+          {
+            src: "/projects/global-tax-free/07-medical-sales-design.jpg",
+            alt: "의료 매출 보고서 디자인",
+            caption: "의료 매출 보고서",
+          },
+        ],
+      },
+      {
         kind: "par",
         rows: [
           {
@@ -504,6 +553,29 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
         ],
       },
       {
+        kind: "gallery",
+        eyebrow: "Reference",
+        title: "Dashboard Screens",
+        note: "※ 모든 이미지는 기획 단계 Figma 시안으로 더미 데이터를 사용하였습니다.",
+        images: [
+          {
+            src: "/projects/asics-ecommerce/01-arr-analysis.jpg",
+            alt: "A-R-R Analysis 대시보드",
+            caption: "A-R-R Analysis — 신규·재구매 회원 전환 흐름",
+          },
+          {
+            src: "/projects/asics-ecommerce/02-rfm-analysis.jpg",
+            alt: "RFM Analysis 대시보드",
+            caption: "RFM Analysis — 10개 세그먼트 분류",
+          },
+          {
+            src: "/projects/asics-ecommerce/03-sub-categories.jpg",
+            alt: "세부 카테고리 분석",
+            caption: "세부 카테고리 — 교차 구매 TOP 5",
+          },
+        ],
+      },
+      {
         kind: "par",
         rows: [
           {
@@ -574,6 +646,44 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
       {
         kind: "text",
         body: "딜러 단위 KPI를 지역·차종·기간으로 드릴다운할 수 있는 구조로 설계. 본사 매니지먼트와 현장 딜러용 뷰를 분리. (상세 내용 추후 추가)",
+      },
+      {
+        kind: "gallery",
+        eyebrow: "Reference",
+        title: "Dashboard Screens",
+        note: "※ 모든 이미지는 기획 단계 Figma 시안으로 더미 데이터를 사용하였습니다.",
+        images: [
+          {
+            src: "/projects/hyundai-india-dc4m/01-ebr-day-wise.png",
+            alt: "EBR Report — Day-wise dashboard",
+            caption: "EBR Report — Day-wise",
+          },
+          {
+            src: "/projects/hyundai-india-dc4m/02-ebr-source-wise.png",
+            alt: "EBR Report — Source-wise dashboard",
+            caption: "EBR Report — Source-wise",
+          },
+          {
+            src: "/projects/hyundai-india-dc4m/03-survey-overall.png",
+            alt: "Survey Report — Overall Summary",
+            caption: "Survey Report — Overall Summary",
+          },
+          {
+            src: "/projects/hyundai-india-dc4m/04-survey-delight.png",
+            alt: "Survey Report — Delight analysis",
+            caption: "Survey Report — Delight analysis",
+          },
+          {
+            src: "/projects/hyundai-india-dc4m/05-survey-diagnostic.png",
+            alt: "Survey Report — Diagnostic",
+            caption: "Survey Report — Diagnostic",
+          },
+          {
+            src: "/projects/hyundai-india-dc4m/06-survey-rating.png",
+            alt: "Survey Report — Diagnostic (Rating Question)",
+            caption: "Survey Report — Diagnostic (Rating Question)",
+          },
+        ],
       },
     ],
   },
@@ -666,6 +776,49 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
           { value: "3단계 권한", description: "상담원·현업·임원 역할별 접근 범위 분리" },
           { value: "연동 필터링", description: "Tableau '관계' 기능 기반 전 화면 필터 연동 구조" },
           { value: "추가 수주", description: "높은 완성도와 신뢰도로 Tableau 신규 프로젝트 연결" },
+        ],
+      },
+      {
+        kind: "gallery",
+        eyebrow: "Reference",
+        title: "Dashboard Screens",
+        note: "※ 모든 이미지는 기획 단계 Figma 시안으로 더미 데이터를 사용하였습니다.",
+        images: [
+          {
+            src: "/projects/daesang-welllife/01-integrated-customer.jpg",
+            alt: "통합 고객 Profile",
+            caption: "통합 고객 Profile",
+          },
+          {
+            src: "/projects/daesang-welllife/02-mall-customer.jpg",
+            alt: "자사몰 고객 Profile",
+            caption: "자사몰 고객 Profile",
+          },
+          {
+            src: "/projects/daesang-welllife/03-mall-product.jpg",
+            alt: "자사몰 제품 Profile",
+            caption: "자사몰 제품 Profile",
+          },
+          {
+            src: "/projects/daesang-welllife/04-mall-journey.jpg",
+            alt: "자사몰 여정 모니터링 — 방문 분석",
+            caption: "자사몰 여정 모니터링 — 방문 분석",
+          },
+          {
+            src: "/projects/daesang-welllife/05-campaign.jpg",
+            alt: "캠페인 통합 관리",
+            caption: "캠페인 통합 관리",
+          },
+          {
+            src: "/projects/daesang-welllife/06-agent-dashboard.jpg",
+            alt: "상담원 대시보드",
+            caption: "상담원 대시보드",
+          },
+          {
+            src: "/projects/daesang-welllife/07-agent-performance.jpg",
+            alt: "상담원 실적 관리",
+            caption: "상담원 실적 관리",
+          },
         ],
       },
       {

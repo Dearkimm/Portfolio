@@ -8,9 +8,10 @@ type Props = {
   images: GalleryImage[];
   eyebrow?: string;
   title?: string;
+  note?: string;
 };
 
-export default function Gallery({ images, eyebrow, title }: Props) {
+export default function Gallery({ images, eyebrow, title, note }: Props) {
   const [active, setActive] = useState<number | null>(null);
 
   const close = useCallback(() => setActive(null), []);
@@ -43,7 +44,7 @@ export default function Gallery({ images, eyebrow, title }: Props) {
 
   return (
     <div className="space-y-5">
-      {(eyebrow || title) && (
+      {(eyebrow || title || note) && (
         <div className="space-y-1">
           {eyebrow && (
             <p className="text-xs uppercase tracking-[0.18em] text-muted font-semibold">
@@ -51,6 +52,11 @@ export default function Gallery({ images, eyebrow, title }: Props) {
             </p>
           )}
           {title && <h3 className="text-2xl font-semibold tracking-tight">{title}</h3>}
+          {note && (
+            <p className="text-[11px] text-muted leading-relaxed pt-1 break-keep">
+              {note}
+            </p>
+          )}
         </div>
       )}
 
