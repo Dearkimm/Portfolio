@@ -605,18 +605,19 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
   },
   {
     slug: "daesang-welllife",
-    title: "Daesang Welllife",
+    title: "대상 웰라이프",
     client: "대상 웰라이프",
-    category: "영양식 사업 대시보드 구축",
+    category: "건강식품 커머스·CRM 마케팅 통합 대시보드",
     period: "2023.10 — 2024.01",
     year: "2023",
-    role: "Solo",
-    team: "1명",
-    stack: ["Tableau", "MySQL"],
-    data: ["B2B 영업 데이터", "병원 단위 거래"],
-    tags: ["Healthcare", "B2B Sales"],
+    role: "BI Data Analyst",
+    team: "2명",
+    stack: ["Tableau", "PostgreSQL", "Figma", "GA4", "CRM", "SalesOn"],
+    data: ["자사몰 구매 이력", "웹행동 데이터", "고객 상담 이력"],
+    tags: ["건강식품 커머스", "CRM 마케팅", "고객 여정 분석"],
+    domain: ["건강기능식품 커머스", "CRM 마케팅·고객 여정 분석"],
     summary:
-      "환자 영양식 B2B 영업 데이터를 병원·제품·영업담당 단위로 분석하는 대시보드 구축.",
+      "자사몰·콜센터 기반 마케팅 구조의 분산된 클라우드 데이터를 통합 활용하여 고객 생애 주기 인사이트 도출 및 콜센터 운영 효율 개선을 위한 통합 대시보드 구축 프로젝트.",
     thumbnail: {
       bg: "linear-gradient(135deg, #65a30d 0%, #d9f99d 100%)",
       fg: "#0a0a0a",
@@ -624,8 +625,90 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
     },
     sections: [
       {
-        kind: "text",
-        body: "병원 단위 매출, 제품 라인별 점유, 영업담당 KPI를 한 화면에서 추적할 수 있도록 구성. (상세 내용 추후 추가)",
+        kind: "cards",
+        eyebrow: "Project Overview",
+        title: "핵심 역할",
+        items: [
+          {
+            number: "01",
+            title: "기획",
+            bullets: [
+              "글로벌 컨설팅펌과 협업을 통해 Figma 기반 화면 기획안 구체화",
+              "구매 이력부터 장바구니 전환까지 고객 여정 전반을 한 화면에서 파악할 수 있는 구조 설계",
+              "콜센터 직원이 직접 사용하는 조회 화면 / 관리자의 상담원 실적 모니터링 화면 분리 기획",
+            ],
+          },
+          {
+            number: "03",
+            title: "대시보드 개발",
+            bullets: [
+              "총 11본 중 6본 담당 (고객·제품·여정·캠페인·상담원 등 도메인 전 영역)",
+              "상담원·현업·임원 3단계 역할 기반 접근 권한 체계 구현",
+              "각 데이터 원본을 Tableau의 '관계' 기능으로 회원 번호·주문번호 기준 논리적 조인",
+              "특정 지표 클릭 시 전체 화면이 해당 기준으로 연동 필터링되는 인터랙티브 구조 구현",
+            ],
+          },
+          {
+            number: "04",
+            title: "검증 및 커뮤니케이션",
+            bullets: [
+              "단계별 요구사항 협의 및 수정사항 반복 반영",
+              "주요 지표에 대해 SQL 쿼리 작성 후 대시보드 수치와 1:1 대조 검증",
+            ],
+          },
+        ],
+      },
+      {
+        kind: "kpis",
+        label: "Key Output",
+        items: [
+          { value: "6본", description: "고객·제품·콜센터 등 도메인 전 영역 참여" },
+          { value: "3단계 권한", description: "상담원·현업·임원 역할별 접근 범위 분리" },
+          { value: "연동 필터링", description: "Tableau '관계' 기능 기반 전 화면 필터 연동 구조" },
+          { value: "추가 수주", description: "높은 완성도와 신뢰도로 Tableau 신규 프로젝트 연결" },
+        ],
+      },
+      {
+        kind: "par",
+        rows: [
+          {
+            problem:
+              "자사몰·콜센터·GA 등 분산된 데이터 소스로 통합 분석 불가",
+            action:
+              "각 데이터 원본을 Tableau '관계' 기능으로 고객 번호·주문번호 기준 논리적 조인",
+            result:
+              "지표 클릭 시 전체 화면 연동 필터링되는 통합 분석 환경 구축",
+          },
+          {
+            problem:
+              "콜센터 상담원 실적을 데이터 기반으로 관리하는 체계 부재",
+            action:
+              "상담원 전용 고객 조회 화면과 관리자용 실적 모니터링 화면 분리 구축",
+            result:
+              "상담원 업무 편의성 개선 및 관리자의 성과 모니터링 가능",
+          },
+          {
+            problem:
+              "임원부터 현장 직원까지 역할별 정보 접근 범위 통제 필요",
+            action:
+              "상담원·현업·임원 3단계 역할 기반 접근 권한 설계",
+            result:
+              "역할 기반 권한 설계를 통해 개인정보 보호와 업무 효율 동시 확보, 추가 수주로 연결",
+          },
+        ],
+      },
+      {
+        kind: "lessons",
+        items: [
+          {
+            title: "실무 체계 적응",
+            body: "이론으로만 배웠던 WBS, 이슈관리대장 등 프로젝트 관리 체계를 처음으로 실무에 적용하면서 현장에서 어떻게 작동하는지 직접 경험했습니다. 고객사의 도메인 용어와 세세한 로직을 이해하는 데 시간이 걸렸지만, 빠른 구현과 반복적인 리뷰를 통해 완성도를 높이며 실무자로서의 기초를 다질 수 있었습니다.",
+          },
+          {
+            title: "자기주도적 문제 해결",
+            body: "막히는 상황에서 질문에 의존하기보다 스스로 문제를 파악하고 해결 방안을 찾는 과정을 반복하면서, 맡은 영역을 끝까지 책임지고 완성하는 태도를 갖게 된 프로젝트였습니다.",
+          },
+        ],
       },
     ],
   },
@@ -641,15 +724,48 @@ export type PoC = {
 };
 
 export const pocs: PoC[] = [
-  // 예시 (Jenna님이 채우실 자리):
-  // {
-  //   title: "Sample PoC",
-  //   category: "분석 자동화 실험",
-  //   period: "2024.07",
-  //   year: "2024",
-  //   stack: ["Python", "TabPy"],
-  //   body: "어떤 PoC였는지 한두 줄로 설명.",
-  // },
+  {
+    title: "레이어 (LAYER)",
+    category: "PoC · BI 검증",
+    period: "2026.04",
+    year: "2026",
+    body: "(상세 내용 추가 예정)",
+  },
+  {
+    title: "LG S&I 코퍼레이션",
+    category: "PoC · BI 검증",
+    period: "2025.04",
+    year: "2025",
+    body: "(상세 내용 추가 예정)",
+  },
+  {
+    title: "Samsung Developer",
+    category: "PoC · BI 검증",
+    period: "2024.12",
+    year: "2024",
+    body: "(상세 내용 추가 예정)",
+  },
+  {
+    title: "삼화",
+    category: "PoC · BI 검증",
+    period: "2024.08",
+    year: "2024",
+    body: "(상세 내용 추가 예정)",
+  },
+  {
+    title: "대원미디어 (POP MART)",
+    category: "PoC · BI 검증",
+    period: "2023.08",
+    year: "2023",
+    body: "(상세 내용 추가 예정)",
+  },
+  {
+    title: "굿네이버스",
+    category: "PoC · BI 검증",
+    period: "2023.07",
+    year: "2023",
+    body: "(상세 내용 추가 예정)",
+  },
 ];
 
 export function getProject(slug: string): Project | undefined {

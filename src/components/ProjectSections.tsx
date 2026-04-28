@@ -1,6 +1,7 @@
 import Image from "next/image";
 import CodeBlock from "@/components/CodeBlock";
 import Gallery from "@/components/Gallery";
+import ProcessSection from "@/components/ProcessSection";
 import type { Section } from "@/lib/projects";
 
 export default function ProjectSections({ sections }: { sections: Section[] }) {
@@ -207,99 +208,17 @@ function SectionRenderer({ section }: { section: Section }) {
         </div>
       );
 
-    /* PROCESS — horizontal stepper timeline + per-step detail grid below */
+    /* PROCESS — interactive stepper: click step to highlight matching detail */
     case "process":
       return (
-        <div>
-          <SectionHeader
-            eyebrow={section.eyebrow}
-            title={section.title}
-            meta={`${String(section.steps.length).padStart(2, "0")} steps`}
-          />
-          {section.intro && (
-            <p className="text-base text-foreground/75 leading-relaxed mb-10 md:mb-14 max-w-3xl">
-              {section.intro}
-            </p>
-          )}
-
-          <div className="hidden md:block mb-12">
-            <div className="relative">
-              <div
-                className="absolute left-0 right-0 top-2.5 h-px bg-border-subtle"
-                aria-hidden
-              />
-              <div
-                className="grid relative"
-                style={{
-                  gridTemplateColumns: `auto repeat(${section.steps.length}, 1fr) auto`,
-                }}
-              >
-                <div className="flex flex-col items-center pr-3">
-                  <div className="h-1.5 w-1.5 rounded-full bg-foreground/30 mt-2" />
-                  <span className="mt-3 text-[10px] uppercase tracking-[0.2em] text-muted font-semibold">
-                    {section.startLabel ?? "Start"}
-                  </span>
-                </div>
-                {section.steps.map((s) => (
-                  <div
-                    key={s.number}
-                    className="flex flex-col items-center text-center px-2 group"
-                  >
-                    <div className="h-3 w-3 rounded-full bg-white ring-2 ring-foreground group-hover:ring-accent transition-colors" />
-                    <span className="mt-3 text-[10px] uppercase tracking-[0.22em] font-bold tabular-nums text-foreground/60 group-hover:text-accent transition-colors">
-                      {s.number}
-                    </span>
-                    <span className="mt-1 text-xs font-semibold leading-tight max-w-[12ch]">
-                      {s.stage}
-                    </span>
-                  </div>
-                ))}
-                <div className="flex flex-col items-center pl-3">
-                  <div className="h-1.5 w-1.5 rounded-full bg-foreground/30 mt-2" />
-                  <span className="mt-3 text-[10px] uppercase tracking-[0.2em] text-muted font-semibold">
-                    {section.endLabel ?? "Done"}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="border-t border-foreground pt-10">
-            <div
-              className="grid grid-cols-1 gap-10 md:gap-6"
-              style={{
-                gridTemplateColumns: `repeat(auto-fit, minmax(180px, 1fr))`,
-              }}
-            >
-              {section.steps.map((s) => (
-                <div key={s.number} className="space-y-3 group">
-                  <div className="flex items-baseline gap-3 md:hidden">
-                    <span className="text-xs font-bold tabular-nums tracking-[0.18em] text-muted">
-                      {s.number}
-                    </span>
-                    <span className="text-sm font-bold">{s.stage}</span>
-                  </div>
-                  <p className="hidden md:block text-[10px] uppercase tracking-[0.22em] text-muted font-bold tabular-nums">
-                    {s.number}
-                  </p>
-                  {s.detail?.title && (
-                    <p className="text-sm font-bold tracking-tight">
-                      {s.detail.title}
-                    </p>
-                  )}
-                  <ul className="space-y-2 text-xs text-foreground/75 leading-relaxed">
-                    {s.detail?.bullets.map((b, j) => (
-                      <li key={j} className="flex gap-2">
-                        <span className="mt-1.5 inline-block h-1 w-1 rounded-full bg-muted shrink-0" />
-                        <span>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        <ProcessSection
+          eyebrow={section.eyebrow}
+          title={section.title}
+          intro={section.intro}
+          startLabel={section.startLabel}
+          endLabel={section.endLabel}
+          steps={section.steps}
+        />
       );
 
     /* LESSONS — top short bar + Note label (all muted), accent on hover */
