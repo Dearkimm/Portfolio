@@ -74,7 +74,12 @@ export default async function ProjectDetailPage({
             <Meta label="Role" items={[project.role]} />
             <Meta label="Team" items={[project.team]} />
             <Meta label="Stack" items={project.stack} />
-            <Meta label="Domain" items={project.domain ?? project.data} />
+            {project.data && project.data.length > 0 && (
+              <Meta label="Data" items={project.data} />
+            )}
+            {project.domain && project.domain.length > 0 && (
+              <Meta label="Domain" items={project.domain} />
+            )}
           </dl>
         </aside>
         <div className="col-span-12 md:col-span-9 md:col-start-5">

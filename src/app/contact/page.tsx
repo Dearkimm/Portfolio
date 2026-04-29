@@ -37,17 +37,26 @@ export default function ContactPage() {
           </p>
         </a>
 
-        <div className="rounded-3xl border border-border-subtle p-8 md:p-10 bg-subtle fade-in-up" style={{ animationDelay: "200ms" }}>
+        <a
+          href="https://www.linkedin.com/in/%EA%B9%80%EC%A0%95%EB%AF%BCjenna"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group rounded-3xl border border-border-subtle p-8 md:p-10 hover:border-accent transition-all hover:-translate-y-1 fade-in-up"
+          style={{ animationDelay: "200ms" }}
+        >
           <p className="text-xs uppercase tracking-[0.18em] text-muted font-semibold mb-4">
             LinkedIn
           </p>
-          <p className="text-2xl md:text-3xl font-semibold tracking-tight text-muted">
-            Coming soon
+          <p className="text-2xl md:text-3xl font-semibold tracking-tight group-hover:text-accent transition-colors break-all">
+            linkedin.com/in/김정민jenna
           </p>
-          <p className="mt-3 text-sm text-muted">
-            프로필 정리 후 공개 예정
+          <p className="mt-3 text-sm text-muted flex items-center gap-2">
+            Visit profile
+            <span className="inline-block group-hover:translate-x-1 transition-transform">
+              →
+            </span>
           </p>
-        </div>
+        </a>
       </div>
     </div>
   );
