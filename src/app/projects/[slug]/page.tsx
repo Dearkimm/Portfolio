@@ -35,7 +35,7 @@ export default async function ProjectDetailPage({
       >
         <div className="col-span-12 md:col-span-9">
           <p className="text-sm font-medium text-muted mb-3">
-            Project {String(idx + 1).padStart(2, "0")} · {project.client}
+            Project {String(idx + 1).padStart(2, "0")}
           </p>
           <h1 className="text-[clamp(48px,8vw,112px)] font-semibold leading-[0.95] tracking-[-0.04em]">
             {project.title}

@@ -13,19 +13,22 @@ type Props = {
 
 export default function Gallery({ images, eyebrow, title, note }: Props) {
   const [active, setActive] = useState<number | null>(null);
+  const [zoomed, setZoomed] = useState(false);
 
-  const close = useCallback(() => setActive(null), []);
-  const next = useCallback(
-    () => setActive((a) => (a === null ? null : (a + 1) % images.length)),
-    [images.length]
-  );
-  const prev = useCallback(
-    () =>
-      setActive((a) =>
-        a === null ? null : (a - 1 + images.length) % images.length
-      ),
-    [images.length]
-  );
+  const close = useCallback(() => {
+    setActive(null);
+    setZoomed(false);
+  }, []);
+  const next = useCallback(() => {
+    setZoomed(false);
+    setActive((a) => (a === null ? null : (a + 1) % images.length));
+  }, [images.length]);
+  const prev = useCallback(() => {
+    setZoomed(false);
+    setActive((a) =>
+      a === null ? null : (a - 1 + images.length) % images.length
+    );
+  }, [images.length]);
 
   useEffect(() => {
     if (active === null) return;
@@ -150,15 +153,27 @@ export default function Gallery({ images, eyebrow, title, note }: Props) {
             onClick={(e) => e.stopPropagation()}
             className="max-w-6xl w-full max-h-[90vh] flex flex-col items-center gap-4"
           >
-            <div className="relative w-full max-h-[80vh] flex items-center justify-center">
-              <Image
+            <div
+              className={`relative w-full ${
+                zoomed
+                  ? "overflow-auto max-h-[80vh] cursor-zoom-out"
+                  : "max-h-[80vh] flex items-center justify-center cursor-zoom-in"
+              }`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setZoomed((z) => !z);
+              }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src={images[active].src}
                 alt={images[active].alt ?? ""}
-                width={1920}
-                height={1200}
-                className={`rounded-2xl object-contain max-h-[80vh] w-auto h-auto ${
-                  images[active].blur ? "blur-xl" : ""
-                }`}
+                className={`rounded-2xl ${
+                  zoomed
+                    ? "max-w-none"
+                    : "object-contain max-h-[80vh] max-w-full"
+                } ${images[active].blur ? "blur-xl" : ""}`}
+                draggable={false}
               />
             </div>
             {images[active].caption && (
@@ -167,7 +182,7 @@ export default function Gallery({ images, eyebrow, title, note }: Props) {
               </p>
             )}
             <p className="text-xs text-white/50 tabular-nums">
-              {active + 1} / {images.length}
+              {active + 1} / {images.length} · {zoomed ? "클릭하여 축소" : "클릭하여 원본 크기로 확대"}
             </p>
           </div>
         </div>
