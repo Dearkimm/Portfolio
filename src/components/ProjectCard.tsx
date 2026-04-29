@@ -51,7 +51,7 @@ export default function ProjectCard({
           <h3 className="text-lg font-semibold tracking-tight truncate group-hover:text-accent transition-colors">
             {project.title}
           </h3>
-          <p className="text-sm text-muted truncate">{project.category}</p>
+          <p className="text-sm text-muted line-clamp-2 leading-snug">{project.category}</p>
         </div>
         <span className="text-xs text-muted tabular-nums shrink-0">
           {project.period.split(" — ")[0]}

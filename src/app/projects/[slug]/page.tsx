@@ -82,9 +82,22 @@ export default async function ProjectDetailPage({
           </dl>
         </aside>
         <div className="col-span-12 md:col-span-9 md:col-start-5">
-          <p className="text-2xl md:text-3xl font-medium leading-snug tracking-tight mb-12">
-            {project.summary}
-          </p>
+          {(() => {
+            const [headline, ...rest] = project.summary.split(/\s+—\s+/);
+            const lede = rest.join(" — ").trim();
+            return (
+              <div className="mb-12 max-w-3xl space-y-3">
+                <p className="text-2xl md:text-3xl font-medium leading-snug tracking-tight">
+                  {headline}
+                </p>
+                {lede && (
+                  <p className="text-base md:text-lg text-foreground/65 leading-relaxed">
+                    {lede}
+                  </p>
+                )}
+              </div>
+            );
+          })()}
           <ProjectSections sections={project.sections} />
         </div>
       </section>
