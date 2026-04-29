@@ -9,7 +9,7 @@ const capabilities = [
   },
   {
     title: "데이터 레벨에서 검증합니다",
-    body: "지표 결과를 신뢰하지 않고, RAW 데이터 기준으로 직접 비교 검증합니다.",
+    body: "지표 결과를 그대로 받아들이지 않고, RAW 데이터 기준으로 직접 비교 검증합니다.",
   },
   {
     title: "사용 환경까지 고려해 구현합니다",
@@ -22,13 +22,13 @@ const career = [
     period: "2023.06 — 재직중",
     company: "(주)밀버스",
     role: "DX2본부 프로 · BI Analyst",
-    note: "Salesforce 파트너사. 고객사 Tableau 대시보드 설계와 SQL 데이터 마트 개발을 담당.",
+    note: "Salesforce 파트너사. 고객사 Tableau 대시보드 설계와 SQL 데이터 마트 개발을 담당",
   },
   {
     period: "2023.01 — 2023.03",
     company: "(주)메가존클라우드",
     role: "DBC 인턴",
-    note: "Data Engineering 직무 인턴. ETL 파이프라인과 운영 환경의 데이터 흐름을 학습.",
+    note: "Data Engineering 직무 인턴. ETL 파이프라인과 운영 환경의 데이터 흐름을 학습",
   },
 ];
 
@@ -46,7 +46,7 @@ const credentials = [
   "숙명여자대학교 컴퓨터과학과 졸업",
   "Salesforce Certified Tableau Consultant",
   "Salesforce Certified AI Specialist",
-  "경영정보시각화능력 1회차",
+  "경영정보시각화능력 (제1회)",
   "AWS Certified Cloud Practitioner",
   "정보처리기사",
   "TOEIC 900점",
