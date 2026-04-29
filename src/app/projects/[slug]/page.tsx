@@ -71,7 +71,6 @@ export default async function ProjectDetailPage({
         <aside className="col-span-12 md:col-span-3">
           <dl className="space-y-5 md:sticky md:top-24">
             <Meta label="Period" items={[project.period]} />
-            <Meta label="Role" items={[project.role]} />
             <Meta label="Team" items={[project.team]} />
             <Meta label="Stack" items={project.stack} />
             {project.data && project.data.length > 0 && (
