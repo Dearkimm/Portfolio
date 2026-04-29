@@ -392,19 +392,16 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
             src: "/projects/global-tax-free/01-marketing-internal-real.png",
             alt: "내부 분석용 마케팅 보고서",
             caption: "내부 분석용 마케팅 보고서 (실데이터)",
-            blur: true,
           },
           {
             src: "/projects/global-tax-free/02-map-nation-real.png",
             alt: "지도 지표 분석 보고서 — 전국",
             caption: "지도 지표 분석 — 전국 (실데이터)",
-            blur: true,
           },
           {
             src: "/projects/global-tax-free/03-map-region-real.png",
             alt: "지도 지표 분석 보고서 — 지역",
             caption: "지도 지표 분석 — 지역 (실데이터)",
-            blur: true,
           },
           {
             src: "/projects/global-tax-free/04-summary-design.jpg",
@@ -636,11 +633,12 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
     year: "2024",
     role: "Lead",
     team: "4명",
-    stack: ["Tableau", "Oracle SQL"],
-    data: ["딜러/판매/AS 데이터"],
-    tags: ["Automotive", "Dealer Network"],
+    stack: ["Tableau", "Salesforce Data Cloud"],
+    data: ["Sales 데이터", "VoC (Voice of Customer) 데이터"],
+    tags: ["Automotive", "글로벌 BI 자동화"],
+    domain: ["글로벌 자동차 영업·VoC 분석", "Excel → BI 자동화"],
     summary:
-      "인도 법인의 딜러 네트워크 운영을 위한 DC4M 분석 대시보드 — 판매·정비·만족도 지표를 딜러 단위로 추적",
+      "인도 법인 내 분산된 Sales, VoC 데이터를 Salesforce Data Cloud 기반 데이터 마트로 통합하고, Tableau 대시보드 전환을 통해 Excel 중심의 보고 체계를 BI 환경으로 자동화하여 데이터 기반의 글로벌 경영 의사결정 체계를 구축한 프로젝트",
     thumbnail: {
       bg: "linear-gradient(135deg, #0f172a 0%, #94a3b8 100%)",
       fg: "#ffffff",
@@ -648,14 +646,10 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
     },
     sections: [
       {
-        kind: "text",
-        body: "딜러 단위 KPI를 지역·차종·기간으로 드릴다운할 수 있는 구조로 설계. 본사 매니지먼트와 현장 딜러용 뷰를 분리. (상세 내용 추후 추가)",
-      },
-      {
         kind: "gallery",
         eyebrow: "Reference",
         title: "Dashboard Screens",
-        note: "※ 모든 이미지는 기획 단계 Figma 시안으로 더미 데이터를 사용하였습니다.",
+        note: "※ 모든 이미지는 더미 데이터를 사용하였습니다.",
         images: [
           {
             src: "/projects/hyundai-india-dc4m/01-ebr-day-wise.png",

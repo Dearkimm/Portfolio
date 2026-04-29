@@ -275,7 +275,7 @@ function NarrativeStep({
         </div>
         {showLine && (
           <div
-            className="hidden md:block absolute left-1 top-7 h-[calc(100%+1.75rem)] w-px bg-border-subtle"
+            className="hidden md:block absolute left-[4.5px] top-3.5 h-[calc(100%+1rem)] w-px bg-border-subtle"
             aria-hidden
           />
         )}
