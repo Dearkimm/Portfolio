@@ -87,7 +87,7 @@ export const projects: Project[] = [
     summary:
       "Java 기반 통합정보시스템의 108개 화면을 BI 관점에서 재정의하고, 80여 개 배치 프로시저 자동화와 집계 테이블 기반 아키텍처 전환으로 대시보드 로딩 속도를 절반 이하로 단축한 차세대 ERP BI 구축 프로젝트",
     thumbnail: {
-      bg: "linear-gradient(135deg, #1f2937 0%, #ef4444 100%)",
+      bg: "linear-gradient(135deg, #EA3458 0%, #B2B2AA 100%)",
       fg: "#ffffff",
       label: "쌍용 C&E",
     },
@@ -327,7 +327,7 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
     summary:
       "외국인 관광객 환급 데이터를 국적·상권·업종 관점에서 분석하여 경영진 월간 보고와 상권 기반 마케팅 인사이트 도출을 지원하는 14본 보고서형 글로벌 대시보드 구축 프로젝트",
     thumbnail: {
-      bg: "linear-gradient(135deg, #047857 0%, #34d399 100%)",
+      bg: "linear-gradient(135deg, #C45D10 0%, #F47D30 50%, #FBBF87 100%)",
       fg: "#ffffff",
       label: "Global Tax Free",
     },
@@ -489,7 +489,7 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
     summary:
       "주 고객층인 2030세대의 구매 행동 특성을 분석하여 타겟 마케팅 및 고객 관리를 위한 마케팅 대시보드를 구축한 프로젝트",
     thumbnail: {
-      bg: "linear-gradient(135deg, #1d4ed8 0%, #f97316 100%)",
+      bg: "linear-gradient(135deg, #011E62 0%, #2D52B8 100%)",
       fg: "#ffffff",
       label: "ASICS",
     },
@@ -640,7 +640,7 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
     summary:
       "인도 법인 내 분산된 Sales, VoC 데이터를 Salesforce Data Cloud 기반 데이터 마트로 통합하고, Tableau 대시보드 전환을 통해 Excel 중심의 보고 체계를 BI 환경으로 자동화하여 데이터 기반의 글로벌 경영 의사결정 체계를 구축한 프로젝트",
     thumbnail: {
-      bg: "linear-gradient(135deg, #0f172a 0%, #94a3b8 100%)",
+      bg: "linear-gradient(135deg, #002C5F 0%, #2454A0 100%)",
       fg: "#ffffff",
       label: "Hyundai · DC4M",
     },
@@ -721,14 +721,14 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
     role: "BI Data Analyst",
     team: "2명",
     stack: ["Tableau", "PostgreSQL", "Figma"],
-    data: ["GA4", "CRM", "SalesOn"],
+    data: ["GA4", "CRM", "SalesOn", "Salesforce Data Cloud"],
     tags: ["건강식품 커머스", "CRM 마케팅", "고객 여정 분석"],
     domain: ["건강기능식품 커머스", "CRM 마케팅·고객 여정 분석"],
     summary:
       "자사몰·콜센터 기반 마케팅 구조의 분산된 클라우드 데이터를 통합 활용하여 고객 생애 주기 인사이트 도출 및 콜센터 운영 효율 개선을 위한 통합 대시보드 구축 프로젝트",
     thumbnail: {
-      bg: "linear-gradient(135deg, #65a30d 0%, #d9f99d 100%)",
-      fg: "#0a0a0a",
+      bg: "linear-gradient(135deg, #E42313 0%, #F39562 33%, #783F91 67%, #5C5CA6 100%)",
+      fg: "#ffffff",
       label: "대상 웰라이프",
     },
     sections: [
