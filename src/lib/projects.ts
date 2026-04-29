@@ -626,7 +626,7 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
   },
   {
     slug: "hyundai-india-dc4m",
-    title: "Hyundai India · DC4M",
+    title: "현대차 인도 법인",
     client: "현대자동차 인도 법인",
     category: "DC4M 태블로 대시보드 구축",
     period: "2024.05 — 2024.08",
@@ -642,7 +642,7 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
     thumbnail: {
       bg: "linear-gradient(135deg, #002C5F 0%, #2454A0 100%)",
       fg: "#ffffff",
-      label: "Hyundai · DC4M",
+      label: "현대차 인도 법인",
     },
     sections: [
       {
@@ -687,7 +687,7 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
   },
   {
     slug: "amorepacific-osan-warroom",
-    title: "Amorepacific · Osan",
+    title: "아모레퍼시픽 오산",
     client: "아모레퍼시픽",
     category: "오산 디지털 워룸 대시보드 개발",
     period: "2024.02 — 2024.04",
@@ -702,7 +702,7 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
     thumbnail: {
       bg: "linear-gradient(135deg, #be185d 0%, #f9a8d4 100%)",
       fg: "#ffffff",
-      label: "Amorepacific",
+      label: "아모레퍼시픽 오산",
     },
     sections: [
       {
