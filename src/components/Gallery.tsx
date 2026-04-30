@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { GalleryImage } from "@/lib/projects";
 
 type Props = {
@@ -11,20 +11,41 @@ type Props = {
   note?: string;
 };
 
+const ZOOM_MIN = 1;
+const ZOOM_MAX = 5;
+const ZOOM_STEP = 0.2;
+
 export default function Gallery({ images, eyebrow, title, note }: Props) {
   const [active, setActive] = useState<number | null>(null);
-  const [zoomed, setZoomed] = useState(false);
+  const [zoom, setZoom] = useState(1);
+  const [pan, setPan] = useState({ x: 0, y: 0 });
+  const [dragging, setDragging] = useState(false);
+  const dragStart = useRef<{
+    x: number;
+    y: number;
+    panX: number;
+    panY: number;
+  } | null>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+
+  const resetView = () => {
+    setZoom(1);
+    setPan({ x: 0, y: 0 });
+  };
 
   const close = useCallback(() => {
     setActive(null);
-    setZoomed(false);
+    setZoom(1);
+    setPan({ x: 0, y: 0 });
   }, []);
   const next = useCallback(() => {
-    setZoomed(false);
+    setZoom(1);
+    setPan({ x: 0, y: 0 });
     setActive((a) => (a === null ? null : (a + 1) % images.length));
   }, [images.length]);
   const prev = useCallback(() => {
-    setZoomed(false);
+    setZoom(1);
+    setPan({ x: 0, y: 0 });
     setActive((a) =>
       a === null ? null : (a - 1 + images.length) % images.length
     );
@@ -44,6 +65,49 @@ export default function Gallery({ images, eyebrow, title, note }: Props) {
       window.removeEventListener("keydown", onKey);
     };
   }, [active, close, next, prev]);
+
+  // Wheel zoom — needs passive: false so we can preventDefault
+  useEffect(() => {
+    if (active === null) return;
+    const el = stageRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const delta = e.deltaY > 0 ? -ZOOM_STEP : ZOOM_STEP;
+      setZoom((z) => {
+        const nz = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, z + delta));
+        if (nz === ZOOM_MIN) setPan({ x: 0, y: 0 });
+        return nz;
+      });
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, [active]);
+
+  const onMouseDown = (e: React.MouseEvent) => {
+    if (zoom <= 1) return;
+    e.preventDefault();
+    dragStart.current = {
+      x: e.clientX,
+      y: e.clientY,
+      panX: pan.x,
+      panY: pan.y,
+    };
+    setDragging(true);
+  };
+
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (!dragStart.current) return;
+    setPan({
+      x: dragStart.current.panX + (e.clientX - dragStart.current.x),
+      y: dragStart.current.panY + (e.clientY - dragStart.current.y),
+    });
+  };
+
+  const endDrag = () => {
+    dragStart.current = null;
+    setDragging(false);
+  };
 
   return (
     <div className="space-y-5">
@@ -154,25 +218,30 @@ export default function Gallery({ images, eyebrow, title, note }: Props) {
             className="max-w-6xl w-full max-h-[90vh] flex flex-col items-center gap-4"
           >
             <div
-              className={`relative w-full ${
-                zoomed
-                  ? "overflow-auto max-h-[80vh] cursor-zoom-out"
-                  : "max-h-[80vh] flex items-center justify-center cursor-zoom-in"
-              }`}
-              onClick={(e) => {
-                e.stopPropagation();
-                setZoomed((z) => !z);
+              ref={stageRef}
+              className="relative w-full max-h-[80vh] overflow-hidden flex items-center justify-center select-none"
+              onMouseDown={onMouseDown}
+              onMouseMove={onMouseMove}
+              onMouseUp={endDrag}
+              onMouseLeave={endDrag}
+              onDoubleClick={resetView}
+              style={{
+                cursor:
+                  zoom > 1 ? (dragging ? "grabbing" : "grab") : "default",
               }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={images[active].src}
                 alt={images[active].alt ?? ""}
-                className={`rounded-2xl ${
-                  zoomed
-                    ? "max-w-none"
-                    : "object-contain max-h-[80vh] max-w-full"
-                } ${images[active].blur ? "blur-xl" : ""}`}
+                className={`rounded-2xl object-contain max-h-[80vh] max-w-full ${
+                  images[active].blur ? "blur-xl" : ""
+                }`}
+                style={{
+                  transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`,
+                  transformOrigin: "center center",
+                  transition: dragging ? "none" : "transform 0.12s ease-out",
+                }}
                 draggable={false}
               />
             </div>
@@ -182,7 +251,10 @@ export default function Gallery({ images, eyebrow, title, note }: Props) {
               </p>
             )}
             <p className="text-xs text-white/50 tabular-nums">
-              {active + 1} / {images.length} · {zoomed ? "클릭하여 축소" : "클릭하여 원본 크기로 확대"}
+              {active + 1} / {images.length} ·{" "}
+              {zoom > 1
+                ? `${Math.round(zoom * 100)}% · 더블클릭으로 초기화`
+                : "마우스 휠로 확대"}
             </p>
           </div>
         </div>
