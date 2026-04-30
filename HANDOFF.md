@@ -223,5 +223,61 @@ fcb3531  Add real dashboard images + galleries with security disclaimers
 
 ---
 
-**문서 버전**: 2026-04-30 / commit `a37bbd2` 시점.
-이후 큰 변경 있으면 이 문서도 같이 업데이트해주세요 (특히 7번 프로젝트별 현황 + 9번 사용자 선호도 + 12번 commit 하이라이트).
+## 14. 커리어 컨텍스트 + 사이트 진화 방향
+
+> **2026-04-30 추가**. 사용자와 별도 커리어 대화에서 구체화된 컨텍스트.
+> 이후 사이트 카피/구조 변경 시 이 섹션 참고. **자동 적용 금지 — 제안만 하고 사용자 결정 받기.**
+
+### 14-1. 커리어 포지셔닝 (현재 → 목표)
+
+- **현재 자기인식**: "BI Data Analyst" / SI 컨설팅 백그라운드 3년차
+- **목표 포지셔닝**: **Analytics Engineer** (한국 시장 부상 직무)
+  - 이유: pure DS 트랙(통계/ML 깊이) 안 감. SQL + 모델링 + 시각화 + 비즈니스 번역 hybrid가 사용자 강점과 정확히 매칭
+  - 매칭 회사: 쿠팡, 토스, 당근, 카카오뱅크, 우아한형제들, **CJ 올리브영 (현재 자소서 작성 중인 타깃)**, SK텔레콤 등
+- **이직 타임라인**: 6개월 내 1차 응시 시도 목표
+- **DA/DS 트랙은 후순위** — 통계/ML/A-B 테스트 깊이 없는 거 알고 있고, AE 트랙으로 우회하기로 사용자가 결정
+
+### 14-2. LLM 시대 방어 키워드 (사이트에 의도적으로 노출하면 좋음)
+
+LLM이 "차트 그리기"를 commodify 중. 사용자의 defensible 영역 5가지:
+
+1. **데이터 모델링** — 마트 설계, PK·인덱스 최적화 (이미 강함, 사이트에 노출됨)
+2. **데이터 정합성 검증** — PAR/Lessons에 이미 빈번
+3. **거버넌스 / 권한 / 보안** — 대상 3단계 권한 사례
+4. **Stakeholder 번역** — 모호 요구 → 분석 구조로 정의
+5. **Cost / Performance engineering** — 4.8→1.3초 사례
+
+이미 사이트에 다 있는데, **명시적인 키워드로 elevate**하면 Analytics Engineer 트랙 매칭 ↑.
+
+### 14-3. 사이트 변경 후보 (사용자 동의 후 적용)
+
+새 Claude가 사용자에게 **제안만**할 것. 우선순위 순:
+
+1. **About Skills 확장** — 현재 7개 (Tableau, Oracle Database, MySQL, TabPy, Python, Figma, Notion). 추가 후보:
+   - **PostgreSQL, AWS (S3/RDS/Glue), Databricks, Airflow (학습), Tableau Prep, pandas**
+   - 근거: 메가존 인턴(AWS Glue, S3, RDS) + 여기어때 PoC(Databricks) + 밀버스 Airflow 강의 + 대상 PostgreSQL — **본인 이력에 다 있는데 스킬 섹션에서만 빠짐**
+2. **PoC 리스트에 메가존 시절 케이스 추가** — 현재 PoC는 밀버스 클라이언트 샘플 5개. 메가존 PoC 2건이 누락:
+   - **클라우드 데이터 파이프라인 구축 실습** (AWS S3·RDS·Glue + Tableau, 2023.03)
+   - **여기어때 PoC** (Databricks + EDA + 상관관계 분석, 2023.02–03)
+   - 이 2개 추가 시 **데이터 엔지니어링 base** 노출 → Analytics Engineer 매칭 강화
+3. **Contact 페이지에 GitHub 카드 추가** — 현재 Email + LinkedIn 2개. **GitHub `https://github.com/Dearkimm`** 추가. 포트폴리오 repo 자체가 기술 시그널이고, AE/테크 직무 채용담당자는 GitHub를 봄
+4. **About Capability #3 ("데이터 레벨에서 검증") elevate** — Analytics Engineer 트랙에서 가장 방어적 키워드. 폰트/구조로 강조하거나 "테스트 가능한 BI" 부연 추가 검토
+5. **About hero tagline reframing 검토 (사용자 선호 우선)** — 현재 "프로젝트를 안정적으로 이끄는 분석가". LLM 방어 톤 옵션:
+   - "데이터 신뢰성에 책임지는 분석가"
+   - "비즈니스 맥락을 데이터 구조로 번역하는 분석가"
+   - 사용자가 현재 tagline에 애착 있을 수 있으니 **반드시 미리보기 + 동의** 후 적용
+
+### 14-4. 이력서와의 align (별도 작업)
+
+- 사용자는 경력 이력서 PDF 별도 보유. 이번 커리어 대화 직후 **이력서 수정 예정**.
+- **이력서 수정 후** 사이트 카피와 톤 일관성 확인 권장:
+  - 이력서 자기소개 첫 문장 ↔ About hero tagline
+  - 이력서 스킬 섹션 ↔ About Skills
+  - 이력서 프로젝트 카피 ↔ 사이트 프로젝트 summary
+- **사이트가 이력서 링크로 노출되는 destination** 이라는 사실 인식 (Vercel URL이 이력서에 들어갈 예정)
+- **이력서에 들어갈 사이트 URL은 Vercel 또는 커스텀 도메인** — Figma URL은 빼고 사이트 URL 사용 권장
+
+---
+
+**문서 버전**: 2026-04-30 / 마지막 commit `324755e` (HANDOFF.md 신설) + 본 14번 섹션 추가.
+이후 큰 변경 있으면 이 문서도 같이 업데이트해주세요 (특히 7번 프로젝트별 현황 + 9번 사용자 선호도 + 12번 commit 하이라이트 + 14번 커리어 후보).
