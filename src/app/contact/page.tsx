@@ -58,7 +58,7 @@ export default function ContactPage() {
           </p>
         </a>
         <a
-          href="https://github.com/Dearkimm"
+          href="https://github.com/Dearkimm/Portfolio"
           target="_blank"
           rel="noopener noreferrer"
           className="group rounded-3xl border border-border-subtle p-8 md:p-10 hover:border-accent transition-all hover:-translate-y-1 fade-in-up"
@@ -68,7 +68,7 @@ export default function ContactPage() {
             GitHub
           </p>
           <p className="text-2xl md:text-3xl font-semibold tracking-tight group-hover:text-accent transition-colors break-all">
-            github.com/Dearkimm
+            github.com/Dearkimm/Portfolio
           </p>
           <p className="mt-3 text-sm text-muted flex items-center gap-2">
             View repositories
