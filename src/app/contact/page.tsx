@@ -57,6 +57,26 @@ export default function ContactPage() {
             </span>
           </p>
         </a>
+        <a
+          href="https://github.com/Dearkimm"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group rounded-3xl border border-border-subtle p-8 md:p-10 hover:border-accent transition-all hover:-translate-y-1 fade-in-up"
+          style={{ animationDelay: "280ms" }}
+        >
+          <p className="text-xs uppercase tracking-[0.18em] text-muted font-semibold mb-4">
+            GitHub
+          </p>
+          <p className="text-2xl md:text-3xl font-semibold tracking-tight group-hover:text-accent transition-colors break-all">
+            github.com/Dearkimm
+          </p>
+          <p className="mt-3 text-sm text-muted flex items-center gap-2">
+            View repositories
+            <span className="inline-block group-hover:translate-x-1 transition-transform">
+              →
+            </span>
+          </p>
+        </a>
       </div>
     </div>
   );

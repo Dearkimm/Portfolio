@@ -35,11 +35,9 @@ const career = [
 const skills = [
   "Tableau",
   "Oracle Database",
-  "MySQL",
-  "TabPy",
+  "SQL",
   "Python",
-  "Figma",
-  "Notion",
+  "TabPy",
 ];
 
 const credentials = [
