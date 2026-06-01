@@ -72,6 +72,123 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "worldvision-agenticanalytics",
+    title: "월드비전 코리아",
+    client: "월드비전 코리아",
+    category: "월드비전 에이전트 데모",
+    period: "2026.05 — 2026.06",
+    year: "2026",
+    role: "BI Data Analyst",
+    team: "개인",
+    stack: ["Python", "Flask", "Cloud Run", "BigQuery", "Gemini API"],
+    data: ["HR/F2F 샘플 데이터"],
+    tags: ["NGO", "AI 에이전트", "NL→SQL", "BigQuery"],
+    domain: ["NGO 인사·후원 데이터 분석", "생성형 AI · 데이터 에이전트"],
+    summary:
+      "월드비전 HR·F2F 데이터를 자연어로 분석하는 AI 에이전트 개인 데모 — Gemini API와 BigQuery를 연결해 NL→SQL 자동화와 할루시네이션 방지 체계를 직접 설계·구현",
+    thumbnail: {
+      bg: "linear-gradient(135deg, #1A73E8 0%, #12B3A8 100%)",
+      fg: "#ffffff",
+      label: "월드비전 코리아",
+    },
+    sections: [
+      {
+        kind: "cards",
+        eyebrow: "Project Overview",
+        title: "핵심 역할",
+        items: [
+          {
+            number: "01",
+            title: "AI 파이프라인 설계",
+            bullets: [
+              "자연어 질문 → SQL 생성 → BigQuery 실행 → 분석 보고서까지 전체 흐름 단독 설계·구현",
+              "Flask REST API + Cloud Run 서버리스 배포로 라이브 데모 환경 구성",
+              "Gemini API 프롬프트 엔지니어링으로 마크다운 보고서와 Chart.js 시각화 JSON 동시 생성",
+            ],
+          },
+          {
+            number: "02",
+            title: "할루시네이션 방지 체계",
+            accent: true,
+            bullets: [
+              "INFORMATION_SCHEMA로 실제 BQ 스키마를 프롬프트에 주입해 존재하지 않는 컬럼·테이블 참조 차단",
+              "허용 테이블 화이트리스트로 의도하지 않은 테이블 접근 원천 차단",
+              "카테고리 컬럼의 DISTINCT 값을 enum으로 자동 주입해 값 오탈자로 인한 빈 결과 방지",
+            ],
+          },
+          {
+            number: "03",
+            title: "멀티도메인 아키텍처",
+            bullets: [
+              "질문 내용을 분석해 HR 인사·급여 도메인과 F2F 후원·캠페인 도메인을 자동 라우팅",
+              "도메인별 에이전트 설정·스키마·프롬프트를 분리해 도메인 혼용 오류 방지",
+              "에이전트 설정·스키마를 인메모리 캐싱해 반복 API 호출 비용 절감",
+            ],
+          },
+        ],
+      },
+      {
+        kind: "kpis",
+        label: "Key Output",
+        items: [
+          { value: "5개 테이블", description: "HR 3개 + F2F 2개 BigQuery 테이블 연동" },
+          { value: "2개 도메인", description: "HR·F2F 자동 라우팅 에이전트 분기 구조" },
+          { value: "3-Layer 방어", description: "스키마 주입 + 화이트리스트 + enum으로 SQL 오류 방지" },
+          { value: "단독 풀스택", description: "기획·개발·GCP 배포·UI 구현 1인 완결" },
+        ],
+      },
+      {
+        kind: "par",
+        rows: [
+          {
+            problem:
+              "LLM이 실제 스키마 없이 SQL을 생성하면 존재하지 않는 컬럼·테이블을 참조하는 할루시네이션이 발생해 쿼리 실행 자체가 불가",
+            action:
+              "INFORMATION_SCHEMA로 실제 컬럼명·타입을 프롬프트에 주입하고, 화이트리스트로 접근 가능 테이블을 제한하며, 카테고리 컬럼의 DISTINCT 값을 자동 enum화해 컨텍스트로 제공",
+            result:
+              "잘못된 SQL 생성이 현저히 감소하고 BigQuery가 직접 실행 가능한 쿼리를 안정적으로 산출. 스키마 설계 지식이 AI 정확도에 직결됨을 실증",
+          },
+        ],
+      },
+      {
+        kind: "lessons",
+        items: [
+          {
+            title: "AI 정확도는 컨텍스트 설계가 결정한다",
+            body: "모델 성능보다 스키마·enum·도메인 가이드라인을 얼마나 정확하게 프롬프트에 넣느냐가 결과 품질을 갈랐다. BI에서 데이터 모델링이 대시보드 품질을 결정하듯, AI 에이전트에서도 컨텍스트 설계가 핵심 엔지니어링 역량임을 체감했다.",
+          },
+          {
+            title: "프로덕션 수준 설계가 데모의 신뢰도를 만든다",
+            body: "도메인 라우팅·인메모리 캐싱·에러 처리·Cloud Run 배포까지 구현하자 단순히 작동하는 코드와 실제 운영 가능한 서비스의 차이가 명확해졌다. 개인 프로젝트에도 실제 서비스 기준을 적용하는 것이 포트폴리오 신뢰도를 높인다.",
+          },
+        ],
+      },
+      {
+        kind: "gallery",
+        eyebrow: "Reference",
+        title: "서비스 화면",
+        note: "※ 샘플 데이터를 기반으로 구축한 개인 데모 프로젝트입니다.",
+        images: [
+          {
+            src: "/projects/worldvision-agenticanalytics/screen-landing.png",
+            alt: "홈 화면 — 분석 시작 페이지",
+            caption: "홈 화면 — 분석 시작 페이지",
+          },
+          {
+            src: "/projects/worldvision-agenticanalytics/screen-analysis.png",
+            alt: "분석 결과 화면 — 차트 및 보고서 출력",
+            caption: "분석 결과 화면 — 차트 및 보고서 출력",
+          },
+          {
+            src: "/projects/worldvision-agenticanalytics/screen-architecture.png",
+            alt: "시스템 아키텍처 — AI 에이전트 플로우",
+            caption: "시스템 아키텍처 — AI 에이전트 플로우",
+          },
+        ],
+      },
+    ],
+  },
+  {
     slug: "ssangyong-ce",
     title: "쌍용 C&E",
     client: "쌍용 C&E",
@@ -682,32 +799,6 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
             caption: "Survey Report — Diagnostic (Rating Question)",
           },
         ],
-      },
-    ],
-  },
-  {
-    slug: "amorepacific-osan-warroom",
-    title: "아모레퍼시픽",
-    client: "아모레퍼시픽",
-    category: "오산 디지털 워룸 대시보드 개발",
-    period: "2024.02 — 2024.04",
-    year: "2024",
-    role: "BI Data Analyst",
-    team: "2명",
-    stack: ["Tableau", "Tableau Prep"],
-    data: ["생산/품질/물류 데이터"],
-    tags: ["Manufacturing", "War Room"],
-    summary:
-      "오산 디지털 워룸용 실시간 생산·품질·물류 모니터링 대시보드 — 대형 디스플레이에 최적화된 레이아웃",
-    thumbnail: {
-      bg: "linear-gradient(135deg, #be185d 0%, #f9a8d4 100%)",
-      fg: "#ffffff",
-      label: "아모레퍼시픽",
-    },
-    sections: [
-      {
-        kind: "text",
-        body: "워룸 환경의 멀티 모니터에 최적화된 레이아웃, 실시간 갱신 주기, 알림 영역을 함께 설계. (상세 내용 추후 추가)",
       },
     ],
   },
