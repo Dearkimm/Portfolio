@@ -217,6 +217,7 @@ function SectionRenderer({ section }: { section: Section }) {
           note={section.note}
           participants={section.participants}
           messages={section.messages}
+          groupBox={section.groupBox}
         />
       );
 

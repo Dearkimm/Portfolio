@@ -35,8 +35,9 @@ export type Section =
       eyebrow?: string;
       title?: string;
       note?: string;
-      participants: { id: string; label: string; sublabel?: string }[];
+      participants: { id: string; label: string; sublabel?: string; color?: string }[];
       messages: { num: number; from: string; to: string; label: string; dashed?: boolean }[];
+      groupBox?: { label: string; fromNum: number; toNum: number; participantId: string };
     }
   | {
       kind: "process";
@@ -145,11 +146,12 @@ export const projects: Project[] = [
         note: "※ 자연어 질문부터 분석 보고서 출력까지 서비스 간 API 호출 흐름",
         participants: [
           { id: "UI", label: "웹 UI", sublabel: "index.html" },
-          { id: "CR", label: "Cloud Run", sublabel: "Backend API" },
-          { id: "Meta", label: "GCP 외부 API", sublabel: "Agent / Schema" },
-          { id: "Gemini", label: "Gemini API", sublabel: "Gemini 3.5 Flash" },
-          { id: "BQ", label: "BigQuery" },
+          { id: "CR", label: "Cloud Run", sublabel: "Backend API", color: "#1A73E8" },
+          { id: "Meta", label: "GCP 외부 API", sublabel: "Agent / Schema", color: "#12B3A8" },
+          { id: "Gemini", label: "Gemini API", sublabel: "Gemini 3.5 Flash", color: "#1A73E8" },
+          { id: "BQ", label: "BigQuery", color: "#12B3A8" },
         ],
+        groupBox: { label: "백엔드 내부 처리", fromNum: 2, toNum: 3, participantId: "CR" },
         messages: [
           { num: 1, from: "UI", to: "CR", label: "분석 질문 전송 (POST /chat)" },
           { num: 2, from: "CR", to: "CR", label: "도메인 자동 판별 (detect_domain)" },
