@@ -2,6 +2,7 @@ import Image from "next/image";
 import CodeBlock from "@/components/CodeBlock";
 import Gallery from "@/components/Gallery";
 import ProcessSection from "@/components/ProcessSection";
+import SequenceDiagram from "@/components/SequenceDiagram";
 import type { Section } from "@/lib/projects";
 
 export default function ProjectSections({ sections }: { sections: Section[] }) {
@@ -206,6 +207,17 @@ function SectionRenderer({ section }: { section: Section }) {
             ))}
           </div>
         </div>
+      );
+
+    case "sequence-diagram":
+      return (
+        <SequenceDiagram
+          eyebrow={section.eyebrow}
+          title={section.title}
+          note={section.note}
+          participants={section.participants}
+          messages={section.messages}
+        />
       );
 
     /* PROCESS — interactive stepper: click step to highlight matching detail */

@@ -31,6 +31,14 @@ export type Section =
       items: { title: string; body: string }[];
     }
   | {
+      kind: "sequence-diagram";
+      eyebrow?: string;
+      title?: string;
+      note?: string;
+      participants: { id: string; label: string; sublabel?: string }[];
+      messages: { num: number; from: string; to: string; label: string; dashed?: boolean }[];
+    }
+  | {
       kind: "process";
       eyebrow?: string;
       title?: string;
@@ -131,73 +139,31 @@ export const projects: Project[] = [
         ],
       },
       {
-        kind: "process",
+        kind: "sequence-diagram",
         eyebrow: "System Architecture",
         title: "AI 에이전트 처리 플로우",
-        intro: "자연어 질문부터 분석 보고서 출력까지 — 웹 UI, Cloud Run, Gemini API, BigQuery 간 5단계 처리 흐름",
-        startLabel: "질문",
-        endLabel: "결과",
-        steps: [
-          {
-            number: "01",
-            stage: "질문 수신",
-            detail: {
-              title: "웹 UI → Cloud Run",
-              bullets: [
-                "자연어 질문 입력 수신",
-                "detect_domain 함수로 HR / F2F 도메인 자동 분기",
-                "도메인별 에이전트 설정·허용 테이블 분리 로드",
-              ],
-            },
-          },
-          {
-            number: "02",
-            stage: "컨텍스트 준비",
-            detail: {
-              title: "캐시 → BigQuery",
-              bullets: [
-                "인메모리 캐시(스키마 1h / enum 1h) 확인",
-                "캐시 miss 시 INFORMATION_SCHEMA로 실제 컬럼·타입 조회",
-                "카테고리 컬럼 DISTINCT값 자동 enum화",
-              ],
-            },
-          },
-          {
-            number: "03",
-            stage: "SQL 생성",
-            detail: {
-              title: "Cloud Run → Gemini API",
-              bullets: [
-                "실제 스키마 + enum + 화이트리스트를 프롬프트에 주입",
-                "컬럼 alias 소문자 스네이크케이스 강제로 파싱 오류 차단",
-                "Gemini가 실행 가능한 BigQuery SQL 반환",
-              ],
-            },
-          },
-          {
-            number: "04",
-            stage: "데이터 조회",
-            detail: {
-              title: "Cloud Run → BigQuery",
-              bullets: [
-                "생성된 SQL을 BigQuery에 직접 실행",
-                "쿼리 결과(행·컬럼) 반환",
-                "SQL 텍스트 UI 노출로 실행 쿼리 확인 가능",
-              ],
-            },
-          },
-          {
-            number: "05",
-            stage: "보고서 생성",
-            detail: {
-              title: "Cloud Run → Gemini → 웹 UI",
-              bullets: [
-                "쿼리 결과를 Gemini에 전달해 마크다운 보고서 생성",
-                "Chart.js 시각화 JSON + 후속 질문 동시 출력",
-                "웹 UI에서 차트 렌더링 및 PDF 원클릭 내보내기 제공",
-              ],
-            },
-          },
+        note: "※ 자연어 질문부터 분석 보고서 출력까지 서비스 간 API 호출 흐름",
+        participants: [
+          { id: "UI", label: "웹 UI", sublabel: "index.html" },
+          { id: "CR", label: "Cloud Run", sublabel: "Backend API" },
+          { id: "Meta", label: "GCP 외부 API", sublabel: "Agent / Schema" },
+          { id: "Gemini", label: "Gemini API", sublabel: "Gemini 3.5 Flash" },
+          { id: "BQ", label: "BigQuery" },
+        ],
+        messages: [
+          { num: 1, from: "UI", to: "CR", label: "분석 질문 전송 (POST /chat)" },
+          { num: 2, from: "CR", to: "CR", label: "도메인 자동 판별 (detect_domain)" },
+          { num: 3, from: "CR", to: "CR", label: "에이전트 설정 로드" },
+          { num: 4, from: "CR", to: "Meta", label: "분석 가이드라인 · 스키마 조회 요청" },
+          { num: 5, from: "Meta", to: "CR", label: "시스템 프롬프트 + 스키마 정보 반환", dashed: true },
+          { num: 6, from: "CR", to: "Gemini", label: "SQL 생성 요청 (스키마 + 질문)" },
+          { num: 7, from: "Gemini", to: "CR", label: "최적화된 SQL 쿼리 반환", dashed: true },
+          { num: 8, from: "CR", to: "BQ", label: "SQL 쿼리 실행 요청" },
+          { num: 9, from: "BQ", to: "CR", label: "쿼리 결과 데이터(JSON) 반환", dashed: true },
+          { num: 10, from: "CR", to: "Gemini", label: "분석 보고서 · 차트 생성 요청" },
+          { num: 11, from: "Gemini", to: "CR", label: "마크다운 리포트 + 시각화 JSON 반환", dashed: true },
+          { num: 12, from: "CR", to: "UI", label: "최종 응답 전송 (분석결과 + SQL + 차트)" },
+          { num: 13, from: "UI", to: "UI", label: "결과 렌더링 및 PDF 내보내기" },
         ],
       },
       {
@@ -208,6 +174,27 @@ export const projects: Project[] = [
           { value: "5개 테이블", description: "HR 3개(기본·인사발령·급여) + F2F 2개(캠페인·정기후원) 연동" },
           { value: "3-Layer 방어", description: "스키마 주입 + 화이트리스트 + enum으로 SQL 할루시네이션 방지" },
           { value: "외부 API 0회", description: "인메모리 캐싱으로 매 요청마다 반복 호출 완전 제거" },
+        ],
+      },
+      {
+        kind: "par",
+        rows: [
+          {
+            problem:
+              "LLM이 실제 스키마 없이 SQL을 생성하면 존재하지 않는 컬럼·테이블을 참조하는 할루시네이션이 발생해 쿼리 실행 자체가 불가",
+            action:
+              "INFORMATION_SCHEMA로 실제 컬럼명·타입을 프롬프트에 주입하고, 허용 테이블 화이트리스트로 접근 범위를 제한하며, 카테고리 컬럼의 DISTINCT 값을 자동 enum화해 컨텍스트로 제공",
+            result:
+              "SQL 파싱 오류가 크게 줄었고 BigQuery가 실행 가능한 쿼리를 안정적으로 출력. 어떤 컨텍스트를 주입하느냐가 AI 출력 품질에 직접 영향을 줌을 확인",
+          },
+          {
+            problem:
+              "배포용 서비스에 신규 기능을 직접 추가하면 실제 데모 중 장애가 발생할 위험이 있어 안전한 실험 환경이 필요",
+            action:
+              "AGENTS_COLLECTION 환경변수 하나로 배포용(하드코딩 에이전트)·테스트용(Firestore 동적 에이전트) 경로를 분기. 테스트 Cloud Run 서비스에서 검증된 코드만 배포용으로 승격하는 명시적 배포 규칙 수립",
+            result:
+              "배포용 서비스는 기능 완성 후 승격 전까지 변경하지 않는 원칙을 적용하면서 Firestore 연동 등 신규 기능을 안전하게 실험 가능한 구조 구성",
+          },
         ],
       },
       {
