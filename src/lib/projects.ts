@@ -131,14 +131,72 @@ export const projects: Project[] = [
         ],
       },
       {
-        kind: "gallery",
+        kind: "process",
         eyebrow: "System Architecture",
         title: "AI 에이전트 처리 플로우",
-        note: "※ 자연어 질문부터 분석 보고서 출력까지 서비스 간 API 호출 흐름을 표현한 시퀀스 다이어그램입니다.",
-        images: [
+        intro: "자연어 질문부터 분석 보고서 출력까지 — 웹 UI, Cloud Run, Gemini API, BigQuery 간 5단계 처리 흐름",
+        startLabel: "질문",
+        endLabel: "결과",
+        steps: [
           {
-            src: "/projects/worldvision-agenticanalytics/arch-sequence.svg",
-            alt: "AI 에이전트 시스템 아키텍처 — 13단계 처리 시퀀스",
+            number: "01",
+            stage: "질문 수신",
+            detail: {
+              title: "웹 UI → Cloud Run",
+              bullets: [
+                "자연어 질문 입력 수신",
+                "detect_domain 함수로 HR / F2F 도메인 자동 분기",
+                "도메인별 에이전트 설정·허용 테이블 분리 로드",
+              ],
+            },
+          },
+          {
+            number: "02",
+            stage: "컨텍스트 준비",
+            detail: {
+              title: "캐시 → BigQuery",
+              bullets: [
+                "인메모리 캐시(스키마 1h / enum 1h) 확인",
+                "캐시 miss 시 INFORMATION_SCHEMA로 실제 컬럼·타입 조회",
+                "카테고리 컬럼 DISTINCT값 자동 enum화",
+              ],
+            },
+          },
+          {
+            number: "03",
+            stage: "SQL 생성",
+            detail: {
+              title: "Cloud Run → Gemini API",
+              bullets: [
+                "실제 스키마 + enum + 화이트리스트를 프롬프트에 주입",
+                "컬럼 alias 소문자 스네이크케이스 강제로 파싱 오류 차단",
+                "Gemini가 실행 가능한 BigQuery SQL 반환",
+              ],
+            },
+          },
+          {
+            number: "04",
+            stage: "데이터 조회",
+            detail: {
+              title: "Cloud Run → BigQuery",
+              bullets: [
+                "생성된 SQL을 BigQuery에 직접 실행",
+                "쿼리 결과(행·컬럼) 반환",
+                "SQL 텍스트 UI 노출로 실행 쿼리 확인 가능",
+              ],
+            },
+          },
+          {
+            number: "05",
+            stage: "보고서 생성",
+            detail: {
+              title: "Cloud Run → Gemini → 웹 UI",
+              bullets: [
+                "쿼리 결과를 Gemini에 전달해 마크다운 보고서 생성",
+                "Chart.js 시각화 JSON + 후속 질문 동시 출력",
+                "웹 UI에서 차트 렌더링 및 PDF 원클릭 내보내기 제공",
+              ],
+            },
           },
         ],
       },
@@ -150,43 +208,6 @@ export const projects: Project[] = [
           { value: "5개 테이블", description: "HR 3개(기본·인사발령·급여) + F2F 2개(캠페인·정기후원) 연동" },
           { value: "3-Layer 방어", description: "스키마 주입 + 화이트리스트 + enum으로 SQL 할루시네이션 방지" },
           { value: "외부 API 0회", description: "인메모리 캐싱으로 매 요청마다 반복 호출 완전 제거" },
-        ],
-      },
-      {
-        kind: "par",
-        rows: [
-          {
-            problem:
-              "LLM이 실제 스키마 없이 SQL을 생성하면 존재하지 않는 컬럼·테이블을 참조하는 할루시네이션이 발생해 쿼리 실행 자체가 불가",
-            action:
-              "INFORMATION_SCHEMA로 실제 컬럼명·타입을 프롬프트에 주입하고, 화이트리스트로 접근 가능 테이블을 제한하며, 카테고리 컬럼의 DISTINCT 값을 자동 enum화해 컨텍스트로 제공",
-            result:
-              "SQL 파싱 오류가 크게 줄었고 BigQuery가 실행 가능한 쿼리를 안정적으로 출력. 컨텍스트 설계 방식이 AI 정확도에 직접 영향을 줌을 확인",
-          },
-          {
-            problem:
-              "HR·F2F 데이터가 혼재할 때 엉뚱한 도메인 테이블로 SQL이 생성되어 의미 없는 결과가 반환되는 크로스 도메인 오류 발생",
-            action:
-              "질문 키워드를 분석하는 detect_domain 함수로 도메인을 자동 분기하고, 도메인별로 에이전트 설정·스키마·허용 테이블을 완전 분리. 단일 코드베이스에서 환경변수 하나로 두 가지 라우팅 방식(자동 감지 / 드롭다운 선택)을 운영",
-            result:
-              "HR 질문이 F2F 테이블을 참조하거나 그 반대가 되는 크로스 도메인 오류가 완전히 차단됨. 배포용·테스트 서비스를 동일 코드로 독립 운영하는 구조 완성",
-          },
-          {
-            problem:
-              "Cloud Run 콜드스타트 환경에서 매 요청마다 BQ Analytics Agent API·INFORMATION_SCHEMA를 호출하면 응답 지연이 중첩되어 UX가 저하됨",
-            action:
-              "Python dict 인메모리 캐시를 적용해 스키마 조회 결과(1시간 TTL)·에이전트 설정(5분 TTL)·enum 값을 프로세스 생존 기간 동안 유지",
-            result:
-              "캐시 적중 후 외부 API 재호출 0회. 불필요한 네트워크 비용을 완전히 제거하고 응답 시간을 SQL 생성·BQ 실행 구간에만 집중시킴",
-          },
-          {
-            problem:
-              "배포용 서비스에 신규 기능을 직접 추가하면 실제 데모 중 장애가 발생할 위험이 있어 안전한 실험 환경이 필요",
-            action:
-              "AGENTS_COLLECTION 환경변수 하나로 배포용(하드코딩 에이전트)·테스트용(Firestore 동적 에이전트) 경로를 분기. 테스트 Cloud Run 서비스에서 검증된 코드만 배포용으로 승격하는 명시적 배포 규칙 수립",
-            result:
-              "배포용 서비스는 기능 완성 후 승격 전까지 변경하지 않는 원칙을 적용하면서 Firestore 연동 등 신규 기능을 안전하게 실험 가능한 구조 구성",
-          },
         ],
       },
       {
