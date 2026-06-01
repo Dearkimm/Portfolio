@@ -101,10 +101,10 @@ export const projects: Project[] = [
             number: "01",
             title: "AI 파이프라인 설계",
             bullets: [
-              "자연어 질문 → 도메인 판별 → SQL 생성 → BigQuery 실행 → 분석 보고서까지 전체 흐름 단독 설계·구현",
+              "자연어 질문 → 도메인 판별 → SQL 생성 → BigQuery 실행 → 분석 보고서까지 전체 처리 흐름 설계 및 구성",
               "Flask REST API + Docker + Cloud Run 서버리스 배포로 라이브 데모 환경 구성",
               "Gemini API 프롬프트 엔지니어링으로 마크다운 보고서·Chart.js 시각화 JSON·후속 질문을 한 번에 생성",
-              "분석 결과 PDF 원클릭 내보내기(html2canvas + jsPDF) 및 SQL 쿼리 확인 기능 구현",
+              "분석 결과 PDF 원클릭 내보내기(html2canvas + jsPDF) 및 SQL 쿼리 확인 기능 구성",
             ],
           },
           {
@@ -131,50 +131,14 @@ export const projects: Project[] = [
         ],
       },
       {
-        kind: "process",
-        eyebrow: "System Flow",
-        title: "AI 에이전트 처리 흐름",
-        startLabel: "질문 입력",
-        endLabel: "결과 렌더링",
-        steps: [
+        kind: "gallery",
+        eyebrow: "System Architecture",
+        title: "AI 에이전트 처리 플로우",
+        note: "※ 자연어 질문부터 분석 보고서 출력까지 서비스 간 API 호출 흐름을 표현한 시퀀스 다이어그램입니다.",
+        images: [
           {
-            number: "01",
-            stage: "도메인 판별",
-            detail: {
-              bullets: ["키워드 기반 HR / F2F 자동 감지", "배포용: 자동 감지 / 테스트: 드롭다운 선택"],
-            },
-          },
-          {
-            number: "02",
-            stage: "컨텍스트 수집",
-            detail: {
-              bullets: [
-                "BQ Analytics Agent에서 도메인 가이드라인 조회",
-                "INFORMATION_SCHEMA로 실제 테이블 스키마 조회",
-              ],
-            },
-          },
-          {
-            number: "03",
-            stage: "SQL 생성",
-            detail: {
-              bullets: ["Gemini API에 스키마 + enum + 가이드라인 주입", "실행 가능한 BigQuery SQL 생성"],
-            },
-          },
-          {
-            number: "04",
-            stage: "쿼리 실행",
-            detail: { bullets: ["BigQuery에 SQL 실행", "결과 데이터 반환"] },
-          },
-          {
-            number: "05",
-            stage: "보고서 생성",
-            detail: {
-              bullets: [
-                "Gemini API로 분석 보고서 + 차트 JSON + 후속 질문 동시 생성",
-                "UI에 마크다운·Chart.js·칩 렌더링",
-              ],
-            },
+            src: "/projects/worldvision-agenticanalytics/arch-sequence.svg",
+            alt: "AI 에이전트 시스템 아키텍처 — 13단계 처리 시퀀스",
           },
         ],
       },
@@ -197,7 +161,7 @@ export const projects: Project[] = [
             action:
               "INFORMATION_SCHEMA로 실제 컬럼명·타입을 프롬프트에 주입하고, 화이트리스트로 접근 가능 테이블을 제한하며, 카테고리 컬럼의 DISTINCT 값을 자동 enum화해 컨텍스트로 제공",
             result:
-              "잘못된 SQL 생성이 현저히 감소하고 BigQuery가 직접 실행 가능한 쿼리를 안정적으로 산출. 스키마 설계 지식이 AI 정확도에 직결됨을 실증",
+              "SQL 파싱 오류가 크게 줄었고 BigQuery가 실행 가능한 쿼리를 안정적으로 출력. 컨텍스트 설계 방식이 AI 정확도에 직접 영향을 줌을 확인",
           },
           {
             problem:
@@ -221,7 +185,7 @@ export const projects: Project[] = [
             action:
               "AGENTS_COLLECTION 환경변수 하나로 배포용(하드코딩 에이전트)·테스트용(Firestore 동적 에이전트) 경로를 분기. 테스트 Cloud Run 서비스에서 검증된 코드만 배포용으로 승격하는 명시적 배포 규칙 수립",
             result:
-              "배포용 서비스는 기능 완성 후 승격 전까지 절대 변경하지 않는 원칙을 유지하면서 Firestore 연동 등 신규 기능을 안전하게 실험 가능한 구조 구현",
+              "배포용 서비스는 기능 완성 후 승격 전까지 변경하지 않는 원칙을 적용하면서 Firestore 연동 등 신규 기능을 안전하게 실험 가능한 구조 구성",
           },
         ],
       },
@@ -230,11 +194,11 @@ export const projects: Project[] = [
         items: [
           {
             title: "AI 정확도는 컨텍스트 설계가 결정한다",
-            body: "모델 성능보다 스키마·enum·도메인 가이드라인을 얼마나 정확하게 프롬프트에 넣느냐가 결과 품질을 갈랐다. BI에서 데이터 모델링이 대시보드 품질을 결정하듯, AI 에이전트에서도 컨텍스트 설계가 핵심 엔지니어링 역량임을 체감했다.",
+            body: "모델 성능보다 스키마·enum·도메인 가이드라인을 얼마나 정확하게 프롬프트에 넣느냐가 결과 품질을 좌우했다. BI에서 데이터 모델링이 대시보드 품질에 영향을 주듯, AI 에이전트에서도 어떤 컨텍스트를 주입하느냐가 출력 정확도에 직결된다는 걸 직접 확인했다.",
           },
           {
             title: "프로덕션 수준 설계가 데모의 신뢰도를 만든다",
-            body: "도메인 라우팅·인메모리 캐싱·에러 처리·Cloud Run 배포까지 구현하자 단순히 작동하는 코드와 실제 운영 가능한 서비스의 차이가 명확해졌다. 개인 프로젝트에도 실제 서비스 기준을 적용하는 것이 포트폴리오 신뢰도를 높인다.",
+            body: "도메인 라우팅·캐싱·에러 처리·Cloud Run 배포까지 구성하면서 단순히 작동하는 코드와 실제로 운영 가능한 서비스 사이의 차이를 체감했다. 데모 수준이라도 실제 서비스 설계 기준을 의식하고 구성하면 결과물의 완성도가 달라진다.",
           },
         ],
       },
@@ -253,11 +217,6 @@ export const projects: Project[] = [
             src: "/projects/worldvision-agenticanalytics/screen-analysis.png",
             alt: "분석 결과 화면 — 차트 및 보고서 출력",
             caption: "분석 결과 화면 — 차트 및 보고서 출력",
-          },
-          {
-            src: "/projects/worldvision-agenticanalytics/screen-architecture.png",
-            alt: "시스템 아키텍처 — AI 에이전트 플로우",
-            caption: "시스템 아키텍처 — AI 에이전트 플로우",
           },
         ],
       },
