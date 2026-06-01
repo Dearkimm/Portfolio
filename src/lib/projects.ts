@@ -101,9 +101,10 @@ export const projects: Project[] = [
             number: "01",
             title: "AI 파이프라인 설계",
             bullets: [
-              "자연어 질문 → SQL 생성 → BigQuery 실행 → 분석 보고서까지 전체 흐름 단독 설계·구현",
-              "Flask REST API + Cloud Run 서버리스 배포로 라이브 데모 환경 구성",
-              "Gemini API 프롬프트 엔지니어링으로 마크다운 보고서와 Chart.js 시각화 JSON 동시 생성",
+              "자연어 질문 → 도메인 판별 → SQL 생성 → BigQuery 실행 → 분석 보고서까지 전체 흐름 단독 설계·구현",
+              "Flask REST API + Docker + Cloud Run 서버리스 배포로 라이브 데모 환경 구성",
+              "Gemini API 프롬프트 엔지니어링으로 마크다운 보고서·Chart.js 시각화 JSON·후속 질문을 한 번에 생성",
+              "분석 결과 PDF 원클릭 내보내기(html2canvas + jsPDF) 및 SQL 쿼리 확인 기능 구현",
             ],
           },
           {
@@ -111,19 +112,69 @@ export const projects: Project[] = [
             title: "할루시네이션 방지 체계",
             accent: true,
             bullets: [
-              "INFORMATION_SCHEMA로 실제 BQ 스키마를 프롬프트에 주입해 존재하지 않는 컬럼·테이블 참조 차단",
-              "허용 테이블 화이트리스트로 의도하지 않은 테이블 접근 원천 차단",
-              "카테고리 컬럼의 DISTINCT 값을 enum으로 자동 주입해 값 오탈자로 인한 빈 결과 방지",
+              "INFORMATION_SCHEMA로 실제 BQ 스키마를 런타임에 조회해 프롬프트에 주입 — 존재하지 않는 컬럼·테이블 참조 차단",
+              "허용 테이블 화이트리스트 명시로 의도하지 않은 테이블 접근 원천 차단",
+              "카테고리 컬럼의 DISTINCT 값을 자동 enum화해 WHERE 절 오탈자로 인한 빈 결과 방지",
+              "컬럼 alias 소문자 스네이크케이스 강제로 한글·공백 포함 시 BigQuery 파싱 오류 차단",
             ],
           },
           {
             number: "03",
             title: "멀티도메인 아키텍처",
             bullets: [
-              "질문 내용을 분석해 HR 인사·급여 도메인과 F2F 후원·캠페인 도메인을 자동 라우팅",
-              "도메인별 에이전트 설정·스키마·프롬프트를 분리해 도메인 혼용 오류 방지",
-              "에이전트 설정·스키마를 인메모리 캐싱해 반복 API 호출 비용 절감",
+              "질문 키워드를 분석해 HR 인사·급여 / F2F 후원·캠페인 도메인을 자동 라우팅",
+              "도메인별 에이전트 설정·스키마·프롬프트를 완전 분리해 도메인 혼용 오류 방지",
+              "스키마·에이전트 설정을 인메모리 캐싱(스키마 1시간, 에이전트 5분)해 외부 API 재호출 0회",
+              "단일 코드베이스에서 환경변수 하나로 배포용·테스트 서비스를 독립 운영",
             ],
+          },
+        ],
+      },
+      {
+        kind: "process",
+        eyebrow: "System Flow",
+        title: "AI 에이전트 처리 흐름",
+        startLabel: "질문 입력",
+        endLabel: "결과 렌더링",
+        steps: [
+          {
+            number: "01",
+            stage: "도메인 판별",
+            detail: {
+              bullets: ["키워드 기반 HR / F2F 자동 감지", "배포용: 자동 감지 / 테스트: 드롭다운 선택"],
+            },
+          },
+          {
+            number: "02",
+            stage: "컨텍스트 수집",
+            detail: {
+              bullets: [
+                "BQ Analytics Agent에서 도메인 가이드라인 조회",
+                "INFORMATION_SCHEMA로 실제 테이블 스키마 조회",
+              ],
+            },
+          },
+          {
+            number: "03",
+            stage: "SQL 생성",
+            detail: {
+              bullets: ["Gemini API에 스키마 + enum + 가이드라인 주입", "실행 가능한 BigQuery SQL 생성"],
+            },
+          },
+          {
+            number: "04",
+            stage: "쿼리 실행",
+            detail: { bullets: ["BigQuery에 SQL 실행", "결과 데이터 반환"] },
+          },
+          {
+            number: "05",
+            stage: "보고서 생성",
+            detail: {
+              bullets: [
+                "Gemini API로 분석 보고서 + 차트 JSON + 후속 질문 동시 생성",
+                "UI에 마크다운·Chart.js·칩 렌더링",
+              ],
+            },
           },
         ],
       },
@@ -131,10 +182,10 @@ export const projects: Project[] = [
         kind: "kpis",
         label: "Key Output",
         items: [
-          { value: "5개 테이블", description: "HR 3개 + F2F 2개 BigQuery 테이블 연동" },
-          { value: "2개 도메인", description: "HR·F2F 자동 라우팅 에이전트 분기 구조" },
-          { value: "3-Layer 방어", description: "스키마 주입 + 화이트리스트 + enum으로 SQL 오류 방지" },
-          { value: "단독 풀스택", description: "기획·개발·GCP 배포·UI 구현 1인 완결" },
+          { value: "3~6초", description: "SQL 생성 + BQ 실행 + 분석 보고서 생성 포함 평균 응답 시간" },
+          { value: "5개 테이블", description: "HR 3개(기본·인사발령·급여) + F2F 2개(캠페인·정기후원) 연동" },
+          { value: "3-Layer 방어", description: "스키마 주입 + 화이트리스트 + enum으로 SQL 할루시네이션 방지" },
+          { value: "외부 API 0회", description: "인메모리 캐싱으로 매 요청마다 반복 호출 완전 제거" },
         ],
       },
       {
@@ -147,6 +198,30 @@ export const projects: Project[] = [
               "INFORMATION_SCHEMA로 실제 컬럼명·타입을 프롬프트에 주입하고, 화이트리스트로 접근 가능 테이블을 제한하며, 카테고리 컬럼의 DISTINCT 값을 자동 enum화해 컨텍스트로 제공",
             result:
               "잘못된 SQL 생성이 현저히 감소하고 BigQuery가 직접 실행 가능한 쿼리를 안정적으로 산출. 스키마 설계 지식이 AI 정확도에 직결됨을 실증",
+          },
+          {
+            problem:
+              "HR·F2F 데이터가 혼재할 때 엉뚱한 도메인 테이블로 SQL이 생성되어 의미 없는 결과가 반환되는 크로스 도메인 오류 발생",
+            action:
+              "질문 키워드를 분석하는 detect_domain 함수로 도메인을 자동 분기하고, 도메인별로 에이전트 설정·스키마·허용 테이블을 완전 분리. 단일 코드베이스에서 환경변수 하나로 두 가지 라우팅 방식(자동 감지 / 드롭다운 선택)을 운영",
+            result:
+              "HR 질문이 F2F 테이블을 참조하거나 그 반대가 되는 크로스 도메인 오류가 완전히 차단됨. 배포용·테스트 서비스를 동일 코드로 독립 운영하는 구조 완성",
+          },
+          {
+            problem:
+              "Cloud Run 콜드스타트 환경에서 매 요청마다 BQ Analytics Agent API·INFORMATION_SCHEMA를 호출하면 응답 지연이 중첩되어 UX가 저하됨",
+            action:
+              "Python dict 인메모리 캐시를 적용해 스키마 조회 결과(1시간 TTL)·에이전트 설정(5분 TTL)·enum 값을 프로세스 생존 기간 동안 유지",
+            result:
+              "캐시 적중 후 외부 API 재호출 0회. 불필요한 네트워크 비용을 완전히 제거하고 응답 시간을 SQL 생성·BQ 실행 구간에만 집중시킴",
+          },
+          {
+            problem:
+              "배포용 서비스에 신규 기능을 직접 추가하면 실제 데모 중 장애가 발생할 위험이 있어 안전한 실험 환경이 필요",
+            action:
+              "AGENTS_COLLECTION 환경변수 하나로 배포용(하드코딩 에이전트)·테스트용(Firestore 동적 에이전트) 경로를 분기. 테스트 Cloud Run 서비스에서 검증된 코드만 배포용으로 승격하는 명시적 배포 규칙 수립",
+            result:
+              "배포용 서비스는 기능 완성 후 승격 전까지 절대 변경하지 않는 원칙을 유지하면서 Firestore 연동 등 신규 기능을 안전하게 실험 가능한 구조 구현",
           },
         ],
       },
