@@ -278,7 +278,7 @@ function NarrativeStep({
   showLine?: boolean;
 }) {
   return (
-    <li className="grid grid-cols-12 gap-4 relative">
+    <li className="grid grid-cols-12 gap-4 relative items-start">
       <div className="col-span-12 md:col-span-2 flex md:flex-col gap-3 md:gap-4 items-start relative">
         <div className="flex items-center gap-3">
           <span className="inline-block h-2.5 w-2.5 rounded-full bg-foreground/40 shrink-0" />

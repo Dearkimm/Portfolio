@@ -363,14 +363,15 @@ export default function SequenceDiagram({
       {/* Expanded modal */}
       {expanded && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-3"
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm overflow-y-auto"
           onClick={() => setExpanded(false)}
         >
           <div
-            className="bg-white rounded-2xl shadow-2xl overflow-auto max-w-[96vw] max-h-[94vh]"
+            className="my-[6vh] mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden"
+            style={{ width: "min(95vw, 1400px)" }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between px-6 pt-5 pb-1 border-b border-gray-100">
+            <div className="flex items-center justify-between px-6 pt-5 pb-3 border-b border-gray-100">
               {title && (
                 <p className="text-sm font-semibold tracking-tight text-gray-800">{title}</p>
               )}
@@ -382,11 +383,11 @@ export default function SequenceDiagram({
                 닫기 ×
               </button>
             </div>
-            <div className="p-6" style={{ minWidth: "min(1220px, 90vw)" }}>
+            <div className="overflow-x-auto p-6">
               <svg
                 viewBox={viewBox}
                 xmlns="http://www.w3.org/2000/svg"
-                style={{ width: "100%", height: "auto", display: "block", fontFamily: "inherit" }}
+                style={{ width: "1600px", height: "auto", display: "block", fontFamily: "inherit" }}
               >
                 {inner}
               </svg>
