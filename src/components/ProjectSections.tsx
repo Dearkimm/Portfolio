@@ -199,8 +199,8 @@ function SectionRenderer({ section }: { section: Section }) {
                   <div className="h-px flex-1 bg-border-subtle" />
                 </div>
                 <ol className="space-y-7 relative pl-0">
-                  <NarrativeStep label="Problem" body={row.problem} />
-                  <NarrativeStep label="Action" body={row.action} />
+                  <NarrativeStep label="Problem" body={row.problem} showLine />
+                  <NarrativeStep label="Action" body={row.action} showLine />
                   <NarrativeStep label="Result" body={row.result} />
                 </ol>
               </div>
@@ -268,14 +268,22 @@ function SectionRenderer({ section }: { section: Section }) {
   }
 }
 
-function NarrativeStep({ label, body }: { label: string; body: string }) {
+function NarrativeStep({ label, body, showLine }: { label: string; body: string; showLine?: boolean }) {
   return (
     <li className="grid grid-cols-12 gap-4 items-center">
-      <div className="col-span-12 md:col-span-2 flex items-center gap-3">
-        <span className="inline-block h-2.5 w-2.5 rounded-full bg-foreground/40 shrink-0" />
-        <p className="text-[10px] uppercase tracking-[0.22em] font-bold text-muted">
-          {label}
-        </p>
+      <div className="col-span-12 md:col-span-2 self-stretch relative flex flex-col justify-center">
+        <div className="flex items-center gap-3">
+          <span className="inline-block h-2.5 w-2.5 rounded-full bg-foreground/40 shrink-0" />
+          <p className="text-[10px] uppercase tracking-[0.22em] font-bold text-muted">
+            {label}
+          </p>
+        </div>
+        {showLine && (
+          <div
+            className="absolute left-[4px] top-[calc(50%+7px)] bottom-[-28px] w-px"
+            style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.15), transparent)" }}
+          />
+        )}
       </div>
       <p className="col-span-12 md:col-span-10 text-base leading-relaxed text-foreground/85 max-w-3xl">
         {body}
