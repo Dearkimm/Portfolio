@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 type Participant = { id: string; label: string; sublabel?: string; color?: string };
 type Message = { num: number; from: string; to: string; label: string; dashed?: boolean };
@@ -34,14 +34,28 @@ export default function SequenceDiagram({
   groupBox,
 }: Props) {
   const [expanded, setExpanded] = useState(false);
+  const [zoom, setZoom] = useState(1);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!expanded) return;
+    if (!expanded) { setZoom(1); return; }
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") setExpanded(false);
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
+  }, [expanded]);
+
+  useEffect(() => {
+    if (!expanded) return;
+    const el = scrollRef.current;
+    if (!el) return;
+    const handler = (e: WheelEvent) => {
+      e.preventDefault();
+      setZoom((prev) => Math.max(0.5, Math.min(4, prev + (e.deltaY < 0 ? 0.1 : -0.1))));
+    };
+    el.addEventListener("wheel", handler, { passive: false });
+    return () => el.removeEventListener("wheel", handler);
   }, [expanded]);
 
   const colW = W / participants.length;
@@ -367,27 +381,32 @@ export default function SequenceDiagram({
           onClick={() => setExpanded(false)}
         >
           <div
-            className="my-[6vh] mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden"
-            style={{ width: "min(95vw, 1400px)" }}
+            className="my-[5vh] mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden"
+            style={{ width: "min(95vw, 1300px)" }}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between px-6 pt-5 pb-3 border-b border-gray-100">
               {title && (
                 <p className="text-sm font-semibold tracking-tight text-gray-800">{title}</p>
               )}
-              <button
-                type="button"
-                onClick={() => setExpanded(false)}
-                className="ml-auto text-xs text-gray-400 hover:text-gray-700 transition-colors px-2 py-1"
-              >
-                닫기 ×
-              </button>
+              <div className="ml-auto flex items-center gap-3">
+                <span className="text-xs text-gray-400 tabular-nums select-none">
+                  {Math.round(zoom * 100)}% · 휠로 확대/축소
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setExpanded(false)}
+                  className="text-xs text-gray-400 hover:text-gray-700 transition-colors px-2 py-1"
+                >
+                  닫기 ×
+                </button>
+              </div>
             </div>
-            <div className="overflow-x-auto p-6">
+            <div ref={scrollRef} className="overflow-auto p-6 cursor-crosshair">
               <svg
                 viewBox={viewBox}
                 xmlns="http://www.w3.org/2000/svg"
-                style={{ width: "1600px", height: "auto", display: "block", fontFamily: "inherit" }}
+                style={{ width: `${1200 * zoom}px`, height: "auto", display: "block", fontFamily: "inherit" }}
               >
                 {inner}
               </svg>

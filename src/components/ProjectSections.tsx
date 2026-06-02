@@ -126,10 +126,10 @@ function SectionRenderer({ section }: { section: Section }) {
                   key={i}
                   className="group grid grid-cols-12 gap-4 md:gap-8 py-10 md:py-14 border-b border-border-subtle hover:bg-subtle/30 transition-colors duration-500"
                 >
-                  <span className="col-span-2 md:col-span-1 text-xs font-bold tabular-nums tracking-[0.18em] pt-2 text-muted group-hover:text-accent transition-colors">
+                  <span className="col-span-2 md:col-span-1 text-xs font-bold tabular-nums tracking-[0.18em] text-muted group-hover:text-accent transition-colors self-center">
                     {num}
                   </span>
-                  <h4 className="col-span-10 md:col-span-5 text-2xl md:text-[clamp(28px,3.2vw,44px)] font-bold tracking-[-0.03em] leading-[1.15] transition-colors duration-300 group-hover:text-accent">
+                  <h4 className="col-span-10 md:col-span-5 text-2xl md:text-[clamp(28px,3.2vw,44px)] font-bold tracking-[-0.03em] leading-[1.15] transition-colors duration-300 group-hover:text-accent self-center">
                     {c.title}
                   </h4>
                   <ul className="col-start-3 md:col-start-7 col-span-10 md:col-span-6 space-y-3 self-center">
@@ -199,8 +199,8 @@ function SectionRenderer({ section }: { section: Section }) {
                   <div className="h-px flex-1 bg-border-subtle" />
                 </div>
                 <ol className="space-y-7 relative pl-0">
-                  <NarrativeStep label="Problem" body={row.problem} showLine />
-                  <NarrativeStep label="Action" body={row.action} showLine />
+                  <NarrativeStep label="Problem" body={row.problem} />
+                  <NarrativeStep label="Action" body={row.action} />
                   <NarrativeStep label="Result" body={row.result} />
                 </ol>
               </div>
@@ -268,30 +268,14 @@ function SectionRenderer({ section }: { section: Section }) {
   }
 }
 
-function NarrativeStep({
-  label,
-  body,
-  showLine = false,
-}: {
-  label: string;
-  body: string;
-  showLine?: boolean;
-}) {
+function NarrativeStep({ label, body }: { label: string; body: string }) {
   return (
-    <li className="grid grid-cols-12 gap-4 relative items-start">
-      <div className="col-span-12 md:col-span-2 flex md:flex-col gap-3 md:gap-4 items-start relative">
-        <div className="flex items-center gap-3">
-          <span className="inline-block h-2.5 w-2.5 rounded-full bg-foreground/40 shrink-0" />
-          <p className="text-[10px] uppercase tracking-[0.22em] font-bold text-muted">
-            {label}
-          </p>
-        </div>
-        {showLine && (
-          <div
-            className="hidden md:block absolute left-[4.5px] top-3.5 h-[calc(100%+1rem)] w-px bg-border-subtle"
-            aria-hidden
-          />
-        )}
+    <li className="grid grid-cols-12 gap-4 items-center">
+      <div className="col-span-12 md:col-span-2 flex items-center gap-3">
+        <span className="inline-block h-2.5 w-2.5 rounded-full bg-foreground/40 shrink-0" />
+        <p className="text-[10px] uppercase tracking-[0.22em] font-bold text-muted">
+          {label}
+        </p>
       </div>
       <p className="col-span-12 md:col-span-10 text-base leading-relaxed text-foreground/85 max-w-3xl">
         {body}
