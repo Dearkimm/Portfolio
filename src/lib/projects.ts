@@ -72,6 +72,94 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "worldvision-agenticanalytics",
+    title: "WorldVision",
+    client: "WorldVision Korea (파일럿 데모)",
+    category: "AI 데이터 분석 어시스턴트",
+    period: "2026.04 — 2026.05",
+    year: "2026",
+    role: "기획·설계·개발",
+    team: "1인",
+    stack: ["Python", "Flask", "BigQuery", "Gemini API", "Cloud Run", "Chart.js"],
+    data: ["BigQuery (HR / F2F / Donor)", "내부 시뮬레이션 데이터"],
+    tags: ["AI 데모", "GCP", "자연어 SQL"],
+    domain: ["HR 인사", "F2F 후원 모금", "Donor 후원자"],
+    summary:
+      "자연어 질문으로 HR·F2F 데이터를 즉시 조회하는 AI 분석 어시스턴트 데모 — GCP(Cloud Run·BigQuery·Vertex AI) 1인 파일럿 구현",
+    thumbnail: {
+      bg: "linear-gradient(135deg, #7c2d12 0%, #E8680A 100%)",
+      fg: "#ffffff",
+      label: "WorldVision",
+    },
+    sections: [
+      {
+        kind: "gallery",
+        eyebrow: "Demo Screenshots",
+        title: "서비스 화면",
+        images: [
+          {
+            src: "/projects/worldvision-agenticanalytics/screen-main.png",
+            alt: "메인 화면",
+          },
+          {
+            src: "/projects/worldvision-agenticanalytics/screen-query.png",
+            alt: "질문 입력 화면",
+          },
+          {
+            src: "/projects/worldvision-agenticanalytics/screen-answer.png",
+            alt: "분석 결과 화면",
+          },
+        ],
+      },
+      {
+        kind: "cards",
+        eyebrow: "핵심 역할",
+        title: "수행 영역",
+        items: [
+          {
+            number: "01",
+            title: "AI 에이전트 설계 및 도메인 검증",
+            bullets: [
+              "도메인별(HR/F2F/Donor) 독립 시스템 프롬프트를 설계하고 테이블 스키마·기준값을 메타데이터로 구조화",
+              "자연어 질문의 키워드를 분석해 에이전트를 자동 라우팅하는 도메인 감지 로직 구현",
+              "Gemini가 생성한 SQL을 실제 컬럼 기준값 기준으로 직접 검증해 Hallucination 최소화",
+            ],
+          },
+          {
+            number: "02",
+            title: "Cloud Run 운영 및 장애 대응",
+            bullets: [
+              "데모용과 실험용 Cloud Run 서비스를 분리해 신규 기능 추가가 데모 안정성에 영향 없도록 구성",
+              "테스트 코드 혼입으로 배포용 서비스 장애 발생 시 트래픽 라우팅으로 이전 리비전으로 즉시 롤백",
+            ],
+          },
+        ],
+      },
+      {
+        kind: "kpis",
+        items: [
+          { value: "3개", description: "분석 지원 도메인 (HR · F2F · Donor)" },
+          { value: "6개", description: "BigQuery 테이블, 약 12만 행 규모" },
+          { value: "2개", description: "Cloud Run 서비스 (데모 / 실험 분리)" },
+          { value: "1인", description: "기획·설계·개발 전 과정 단독 수행" },
+        ],
+      },
+      {
+        kind: "lessons",
+        items: [
+          {
+            title: "운영과 실험은 처음부터 분리",
+            body: "Firestore 기반 신규 기능 코드가 데모용 서비스에 혼입되어 장애가 발생했다. 환경 분리를 처음부터 명확히 설계하면 사고 범위를 최소화할 수 있다는 것을 직접 경험했다.",
+          },
+          {
+            title: "AI 출력의 신뢰는 도메인 기준에서 나온다",
+            body: "Gemini가 생성한 SQL이 문법적으로 올바르더라도 실제 컬럼 기준값(work_status='재직' 등)과 다른 값을 사용하면 결과가 틀린다. 검증의 기준은 모델이 아니라 데이터다.",
+          },
+        ],
+      },
+    ],
+  },
+  {
     slug: "ssangyong-ce",
     title: "쌍용 C&E",
     client: "쌍용 C&E",
