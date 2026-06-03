@@ -31,6 +31,15 @@ export type Section =
       items: { title: string; body: string }[];
     }
   | {
+      kind: "sequence-diagram";
+      eyebrow?: string;
+      title?: string;
+      note?: string;
+      participants: { id: string; label: string; sublabel?: string; color?: string }[];
+      messages: { num: number; from: string; to: string; label: string; dashed?: boolean }[];
+      groupBox?: { label: string; fromNum: number; toNum: number; participantId: string };
+    }
+  | {
       kind: "process";
       eyebrow?: string;
       title?: string;
@@ -73,87 +82,124 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: "worldvision-agenticanalytics",
-    title: "WorldVision",
-    client: "WorldVision Korea (파일럿 데모)",
-    category: "AI 데이터 분석 어시스턴트",
-    period: "2026.04 — 2026.05",
+    title: "월드비전 코리아",
+    client: "월드비전 코리아",
+    category: "월드비전 에이전트 데모",
+    period: "2026.05 — 2026.06",
     year: "2026",
-    role: "기획·설계·개발",
-    team: "1인",
-    stack: ["Python", "Flask", "BigQuery", "Gemini API", "Cloud Run", "Chart.js"],
-    data: ["BigQuery (HR / F2F / Donor)", "내부 시뮬레이션 데이터"],
-    tags: ["AI 데모", "GCP", "자연어 SQL"],
-    domain: ["HR 인사", "F2F 후원 모금", "Donor 후원자"],
+    role: "BI Data Analyst",
+    team: "개인",
+    stack: ["Python", "Flask", "Cloud Run", "BigQuery", "Gemini API"],
+    data: ["HR/F2F 샘플 데이터"],
+    tags: ["NGO", "AI 에이전트", "NL→SQL", "BigQuery"],
+    domain: ["NGO 인사·후원 데이터 분석", "생성형 AI · 데이터 에이전트"],
     summary:
-      "자연어 질문으로 HR·F2F 데이터를 즉시 조회하는 AI 분석 어시스턴트 데모 — GCP(Cloud Run·BigQuery·Vertex AI) 1인 파일럿 구현",
+      "월드비전 HR·F2F 데이터를 자연어로 분석하는 AI 에이전트 개인 데모 — Gemini API와 BigQuery를 연결해 NL→SQL 자동화와 할루시네이션 방지 체계를 직접 설계·구현",
     thumbnail: {
-      bg: "linear-gradient(135deg, #7c2d12 0%, #E8680A 100%)",
+      bg: "linear-gradient(135deg, #1A73E8 0%, #12B3A8 100%)",
       fg: "#ffffff",
-      label: "WorldVision",
+      label: "월드비전 코리아",
     },
     sections: [
       {
-        kind: "gallery",
-        eyebrow: "Demo Screenshots",
-        title: "서비스 화면",
-        images: [
-          {
-            src: "/projects/worldvision-agenticanalytics/screen-main.png",
-            alt: "메인 화면",
-          },
-          {
-            src: "/projects/worldvision-agenticanalytics/screen-query.png",
-            alt: "질문 입력 화면",
-          },
-          {
-            src: "/projects/worldvision-agenticanalytics/screen-answer.png",
-            alt: "분석 결과 화면",
-          },
-        ],
-      },
-      {
         kind: "cards",
-        eyebrow: "핵심 역할",
-        title: "수행 영역",
+        eyebrow: "Project Overview",
+        title: "핵심 역할",
         items: [
           {
             number: "01",
-            title: "AI 에이전트 설계 및 도메인 검증",
+            title: "AI 파이프라인 설계",
             bullets: [
-              "도메인별(HR/F2F/Donor) 독립 시스템 프롬프트를 설계하고 테이블 스키마·기준값을 메타데이터로 구조화",
-              "자연어 질문의 키워드를 분석해 에이전트를 자동 라우팅하는 도메인 감지 로직 구현",
-              "Gemini가 생성한 SQL을 실제 컬럼 기준값 기준으로 직접 검증해 Hallucination 최소화",
+              "자연어 질문 → 도메인 판별 → SQL 생성 → BigQuery 실행 → 분석 보고서까지 전체 처리 흐름 설계",
+              "마크다운 리포트·차트·PDF 내보내기를 한 화면에서 확인할 수 있도록 결과 표시 구조 구성",
             ],
           },
           {
             number: "02",
-            title: "Cloud Run 운영 및 장애 대응",
+            title: "할루시네이션 방지 체계",
+            accent: true,
             bullets: [
-              "데모용과 실험용 Cloud Run 서비스를 분리해 신규 기능 추가가 데모 안정성에 영향 없도록 구성",
-              "테스트 코드 혼입으로 배포용 서비스 장애 발생 시 트래픽 라우팅으로 이전 리비전으로 즉시 롤백",
+              "실제 BQ 스키마를 프롬프트에 주입해 존재하지 않는 컬럼·테이블 참조를 차단하는 3단계 방어 구조 설계",
+              "허용 테이블 화이트리스트와 카테고리 enum 자동화로 SQL 실행 오류율 감소",
+            ],
+          },
+          {
+            number: "03",
+            title: "멀티도메인 구조",
+            bullets: [
+              "질문 키워드 기반으로 HR 인사·급여 / F2F 후원·캠페인 도메인을 자동 라우팅",
+              "환경변수 하나로 배포용·테스트 서비스를 분리 운영하는 안전한 실험 환경 구성",
             ],
           },
         ],
       },
       {
+        kind: "sequence-diagram",
+        eyebrow: "System Architecture",
+        title: "AI 에이전트 처리 플로우",
+        note: "※ 자연어 질문부터 분석 보고서 출력까지 서비스 간 API 호출 흐름",
+        participants: [
+          { id: "UI", label: "웹 UI", sublabel: "index.html" },
+          { id: "CR", label: "Cloud Run", sublabel: "Backend API", color: "#1A73E8" },
+          { id: "Meta", label: "GCP 외부 API", sublabel: "Agent / Schema", color: "#12B3A8" },
+          { id: "Gemini", label: "Gemini API", sublabel: "Gemini 3.5 Flash", color: "#1A73E8" },
+          { id: "BQ", label: "BigQuery", color: "#12B3A8" },
+        ],
+        groupBox: { label: "백엔드 내부 처리", fromNum: 2, toNum: 3, participantId: "CR" },
+        messages: [
+          { num: 1, from: "UI", to: "CR", label: "분석 질문 전송 (POST /chat)" },
+          { num: 2, from: "CR", to: "CR", label: "도메인 자동 판별 (detect_domain)" },
+          { num: 3, from: "CR", to: "CR", label: "에이전트 설정 로드" },
+          { num: 4, from: "CR", to: "Meta", label: "분석 가이드라인 · 스키마 조회 요청" },
+          { num: 5, from: "Meta", to: "CR", label: "시스템 프롬프트 + 스키마 정보 반환", dashed: true },
+          { num: 6, from: "CR", to: "Gemini", label: "SQL 생성 요청 (스키마 + 질문)" },
+          { num: 7, from: "Gemini", to: "CR", label: "최적화된 SQL 쿼리 반환", dashed: true },
+          { num: 8, from: "CR", to: "BQ", label: "SQL 쿼리 실행 요청" },
+          { num: 9, from: "BQ", to: "CR", label: "쿼리 결과 데이터(JSON) 반환", dashed: true },
+          { num: 10, from: "CR", to: "Gemini", label: "분석 보고서 · 차트 생성 요청" },
+          { num: 11, from: "Gemini", to: "CR", label: "마크다운 리포트 + 시각화 JSON 반환", dashed: true },
+          { num: 12, from: "CR", to: "UI", label: "최종 응답 전송 (분석결과 + SQL + 차트)" },
+          { num: 13, from: "UI", to: "UI", label: "결과 렌더링 및 PDF 내보내기" },
+        ],
+      },
+      {
         kind: "kpis",
+        label: "Key Output",
         items: [
-          { value: "3개", description: "분석 지원 도메인 (HR · F2F · Donor)" },
-          { value: "6개", description: "BigQuery 테이블, 약 12만 행 규모" },
-          { value: "2개", description: "Cloud Run 서비스 (데모 / 실험 분리)" },
-          { value: "1인", description: "기획·설계·개발 전 과정 단독 수행" },
+          { value: "3~6초", description: "SQL 생성 + BQ 실행 + 분석 보고서 생성 포함 평균 응답 시간" },
+          { value: "5개 테이블", description: "HR 3개(기본·인사발령·급여) + F2F 2개(캠페인·정기후원) 연동" },
+          { value: "3-Layer 방어", description: "스키마 주입 + 화이트리스트 + enum으로 SQL 할루시네이션 방지" },
+          { value: "외부 API 0회", description: "인메모리 캐싱으로 매 요청마다 반복 호출 완전 제거" },
         ],
       },
       {
         kind: "lessons",
         items: [
           {
-            title: "운영과 실험은 처음부터 분리",
-            body: "Firestore 기반 신규 기능 코드가 데모용 서비스에 혼입되어 장애가 발생했다. 환경 분리를 처음부터 명확히 설계하면 사고 범위를 최소화할 수 있다는 것을 직접 경험했다.",
+            title: "AI 정확도는 컨텍스트 설계가 결정한다",
+            body: "모델 성능보다 스키마·enum·도메인 가이드라인을 얼마나 정확하게 프롬프트에 넣느냐가 결과 품질을 좌우했다. BI에서 데이터 모델링이 대시보드 품질에 영향을 주듯, AI 에이전트에서도 어떤 컨텍스트를 주입하느냐가 출력 정확도에 직결된다는 걸 직접 확인했다.",
           },
           {
-            title: "AI 출력의 신뢰는 도메인 기준에서 나온다",
-            body: "Gemini가 생성한 SQL이 문법적으로 올바르더라도 실제 컬럼 기준값(work_status='재직' 등)과 다른 값을 사용하면 결과가 틀린다. 검증의 기준은 모델이 아니라 데이터다.",
+            title: "프로덕션 수준 설계가 데모의 신뢰도를 만든다",
+            body: "도메인 라우팅·캐싱·에러 처리·Cloud Run 배포까지 구성하면서 단순히 작동하는 코드와 실제로 운영 가능한 서비스 사이의 차이를 체감했다. 데모 수준이라도 실제 서비스 설계 기준을 의식하고 구성하면 결과물의 완성도가 달라진다.",
+          },
+        ],
+      },
+      {
+        kind: "gallery",
+        eyebrow: "Reference",
+        title: "서비스 화면",
+        note: "※ 샘플 데이터를 기반으로 구축한 개인 데모 프로젝트입니다.",
+        images: [
+          {
+            src: "/projects/worldvision-agenticanalytics/screen-landing.png",
+            alt: "홈 화면 — 분석 시작 페이지",
+            caption: "홈 화면 — 분석 시작 페이지",
+          },
+          {
+            src: "/projects/worldvision-agenticanalytics/screen-analysis.png",
+            alt: "분석 결과 화면 — 차트 및 보고서 출력",
+            caption: "분석 결과 화면 — 차트 및 보고서 출력",
           },
         ],
       },
@@ -770,32 +816,6 @@ GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
             caption: "Survey Report — Diagnostic (Rating Question)",
           },
         ],
-      },
-    ],
-  },
-  {
-    slug: "amorepacific-osan-warroom",
-    title: "아모레퍼시픽",
-    client: "아모레퍼시픽",
-    category: "오산 디지털 워룸 대시보드 개발",
-    period: "2024.02 — 2024.04",
-    year: "2024",
-    role: "BI Data Analyst",
-    team: "2명",
-    stack: ["Tableau", "Tableau Prep"],
-    data: ["생산/품질/물류 데이터"],
-    tags: ["Manufacturing", "War Room"],
-    summary:
-      "오산 디지털 워룸용 실시간 생산·품질·물류 모니터링 대시보드 — 대형 디스플레이에 최적화된 레이아웃",
-    thumbnail: {
-      bg: "linear-gradient(135deg, #be185d 0%, #f9a8d4 100%)",
-      fg: "#ffffff",
-      label: "아모레퍼시픽",
-    },
-    sections: [
-      {
-        kind: "text",
-        body: "워룸 환경의 멀티 모니터에 최적화된 레이아웃, 실시간 갱신 주기, 알림 영역을 함께 설계. (상세 내용 추후 추가)",
       },
     ],
   },

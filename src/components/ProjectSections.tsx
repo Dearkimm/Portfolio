@@ -2,6 +2,7 @@ import Image from "next/image";
 import CodeBlock from "@/components/CodeBlock";
 import Gallery from "@/components/Gallery";
 import ProcessSection from "@/components/ProcessSection";
+import SequenceDiagram from "@/components/SequenceDiagram";
 import type { Section } from "@/lib/projects";
 
 export default function ProjectSections({ sections }: { sections: Section[] }) {
@@ -125,10 +126,10 @@ function SectionRenderer({ section }: { section: Section }) {
                   key={i}
                   className="group grid grid-cols-12 gap-4 md:gap-8 py-10 md:py-14 border-b border-border-subtle hover:bg-subtle/30 transition-colors duration-500"
                 >
-                  <span className="col-span-2 md:col-span-1 text-xs font-bold tabular-nums tracking-[0.18em] pt-2 text-muted group-hover:text-accent transition-colors">
+                  <span className="col-span-2 md:col-span-1 text-xs font-bold tabular-nums tracking-[0.18em] text-muted group-hover:text-accent transition-colors self-center">
                     {num}
                   </span>
-                  <h4 className="col-span-10 md:col-span-5 text-2xl md:text-[clamp(28px,3.2vw,44px)] font-bold tracking-[-0.03em] leading-[1.15] transition-colors duration-300 group-hover:text-accent">
+                  <h4 className="col-span-10 md:col-span-5 text-2xl md:text-[clamp(28px,3.2vw,44px)] font-bold tracking-[-0.03em] leading-[1.15] transition-colors duration-300 group-hover:text-accent self-center">
                     {c.title}
                   </h4>
                   <ul className="col-start-3 md:col-start-7 col-span-10 md:col-span-6 space-y-3 self-center">
@@ -208,6 +209,18 @@ function SectionRenderer({ section }: { section: Section }) {
         </div>
       );
 
+    case "sequence-diagram":
+      return (
+        <SequenceDiagram
+          eyebrow={section.eyebrow}
+          title={section.title}
+          note={section.note}
+          participants={section.participants}
+          messages={section.messages}
+          groupBox={section.groupBox}
+        />
+      );
+
     /* PROCESS — interactive stepper: click step to highlight matching detail */
     case "process":
       return (
@@ -255,18 +268,10 @@ function SectionRenderer({ section }: { section: Section }) {
   }
 }
 
-function NarrativeStep({
-  label,
-  body,
-  showLine = false,
-}: {
-  label: string;
-  body: string;
-  showLine?: boolean;
-}) {
+function NarrativeStep({ label, body, showLine }: { label: string; body: string; showLine?: boolean }) {
   return (
-    <li className="grid grid-cols-12 gap-4 relative">
-      <div className="col-span-12 md:col-span-2 flex md:flex-col gap-3 md:gap-4 items-start relative">
+    <li className="grid grid-cols-12 gap-4 items-center">
+      <div className="col-span-12 md:col-span-2 self-stretch relative flex flex-col justify-center">
         <div className="flex items-center gap-3">
           <span className="inline-block h-2.5 w-2.5 rounded-full bg-foreground/40 shrink-0" />
           <p className="text-[10px] uppercase tracking-[0.22em] font-bold text-muted">
@@ -275,8 +280,8 @@ function NarrativeStep({
         </div>
         {showLine && (
           <div
-            className="hidden md:block absolute left-[4.5px] top-3.5 h-[calc(100%+1rem)] w-px bg-border-subtle"
-            aria-hidden
+            className="absolute left-[4px] top-[calc(50%+7px)] bottom-[-28px] w-px"
+            style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.15), transparent)" }}
           />
         )}
       </div>
