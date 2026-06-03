@@ -192,12 +192,17 @@ export const projects: Project[] = [
         note: "※ 샘플 데이터를 기반으로 구축한 개인 데모 프로젝트입니다.",
         images: [
           {
-            src: "/projects/worldvision-agenticanalytics/screen-landing.png",
+            src: "/projects/worldvision-agenticanalytics/screen-main.png",
             alt: "홈 화면 — 분석 시작 페이지",
             caption: "홈 화면 — 분석 시작 페이지",
           },
           {
-            src: "/projects/worldvision-agenticanalytics/screen-analysis.png",
+            src: "/projects/worldvision-agenticanalytics/screen-query.png",
+            alt: "질문 입력 화면 — 자연어 질문 입력",
+            caption: "질문 입력 화면 — 자연어 질문 입력",
+          },
+          {
+            src: "/projects/worldvision-agenticanalytics/screen-answer.png",
             alt: "분석 결과 화면 — 차트 및 보고서 출력",
             caption: "분석 결과 화면 — 차트 및 보고서 출력",
           },
