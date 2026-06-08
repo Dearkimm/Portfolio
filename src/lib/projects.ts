@@ -391,9 +391,9 @@ export const projects: Project[] = [
         language: "sql",
         filename: "export_sales_unified.sql",
         body: `-- SAP 전환(2025-11) 전후 데이터를 단일 뷰로 통합
--- Tableau 파라미터로 월 범위 조회: P_TARGET_DT 입력 시 해당 월 전체 조회
--- 기존: AND SALE_DT BETWEEN \${DT_FROM} AND \${DT_TO}  → Tableau 미인식
--- 변경: AND SALE_DT BETWEEN P_TARGET_DT||'01' AND P_TARGET_DT||'31'
+-- P_TARGET_DT: Oracle 프로시저 입력 파라미터 (Oracle Scheduler가 월별 호출)
+-- 기존 쿼리는 \${DT_FROM}/\${DT_TO} 방식 → Tableau 커스텀 SQL 미인식
+-- 프로시저로 재작성하여 마트 적재 후 Tableau가 마트 테이블을 조회하는 구조로 전환
 
 SELECT A.SALE_DT, A.SITE_NM, A.PROD_NM,
        A.SALE_QTY, A.SALE_AMT, A.RCPT_AMT,
