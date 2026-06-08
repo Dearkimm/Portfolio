@@ -389,19 +389,49 @@ export const projects: Project[] = [
       {
         kind: "code",
         language: "sql",
-        filename: "mart_daily_revenue.sql",
-        body: `-- 일별 매출/판매 마트 (집계 테이블 기반)
-SELECT
-  TRUNC(s.sale_dt)               AS sale_d,
-  s.region_cd,
-  p.product_grp,
-  SUM(s.amount)                  AS revenue,
-  SUM(s.qty)                     AS qty,
-  COUNT(DISTINCT s.customer_id)  AS customers
-FROM   sales s
-JOIN   products p ON p.product_id = s.product_id
-WHERE  s.sale_dt >= TRUNC(SYSDATE) - 365
-GROUP  BY TRUNC(s.sale_dt), s.region_cd, p.product_grp;`,
+        filename: "export_sales_unified.sql",
+        body: `-- SAP 전환(2025-11) 전후 데이터를 단일 뷰로 통합
+-- Tableau 파라미터로 월 범위 조회: P_TARGET_DT 입력 시 해당 월 전체 조회
+-- 기존: AND SALE_DT BETWEEN \${DT_FROM} AND \${DT_TO}  → Tableau 미인식
+-- 변경: AND SALE_DT BETWEEN P_TARGET_DT||'01' AND P_TARGET_DT||'31'
+
+SELECT A.SALE_DT, A.SITE_NM, A.PROD_NM,
+       A.SALE_QTY, A.SALE_AMT, A.RCPT_AMT,
+       -- SAP 전환 후 환차손익은 분개 테이블에서 별도 집계
+       NVL(A.FX_GAIN_AMT, 0) + NVL(A.FX_LOSS_AMT, 0) AS FX_AMT
+FROM (
+
+  -- ① 기존 ERP 데이터 (~ 2025-10)
+  SELECT T2.SALE_DT, T1.SITE_NM, T1.PROD_NM,
+         T2.SALE_QTY, T2.SALE_AMT,
+         NVL(T4.RCPT_AMT, 0) AS RCPT_AMT,
+         0 AS FX_GAIN_AMT, 0 AS FX_LOSS_AMT
+  FROM   ERP.SALES_REQ T1
+         INNER JOIN ERP.SALES_DETAIL T2
+                 ON T1.REQ_NO = T2.REQ_NO
+                AND T2.SALE_DT < '20251101'
+                AND T2.SALE_DT BETWEEN P_TARGET_DT||'01' AND P_TARGET_DT||'31'
+         LEFT JOIN ERP.RECEIPT T4 ON T1.OFFER_NO = T4.OFFER_NO
+
+  UNION ALL
+
+  -- ② SAP 전환 데이터 (2025-11 ~)
+  --    JOIN 키 변경: REQ_NO → SAP_REQ_NO
+  --    환차손익: SAP 분개 테이블(T5)에서 계정코드 기준 별도 집계
+  SELECT T2.SALE_DT, T1.SITE_NM, T1.PROD_NM,
+         T2.SALE_QTY, T2.SALE_AMT,
+         0 AS RCPT_AMT,
+         NVL(T5.FX_GAIN_AMT, 0), NVL(T5.FX_LOSS_AMT, 0)
+  FROM   ERP.SALES_REQ T1
+         INNER JOIN SAP.SALES_DETAIL T2
+                 ON T1.SAP_REQ_NO = T2.SAP_REQ_NO
+                AND T2.SALE_DT >= '20251101'
+                AND T2.SALE_DT BETWEEN P_TARGET_DT||'01' AND P_TARGET_DT||'31'
+         LEFT JOIN SAP.FX_LEDGER T5
+                ON T4.RCPT_DT = T5.SLIP_DT
+                AND T5.ACCT_CD IN ('11030151', '55310101', '67450101')
+
+) A`,
       },
       {
         kind: "par",
