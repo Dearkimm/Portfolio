@@ -119,8 +119,9 @@ export const projects: Project[] = [
             title: "할루시네이션 방지 체계",
             accent: true,
             bullets: [
-              "실제 BQ 스키마를 프롬프트에 주입해 존재하지 않는 컬럼·테이블 참조를 차단하는 3단계 방어 구조 설계",
-              "허용 테이블 화이트리스트와 카테고리 컬럼 DISTINCT 값 자동 수집으로 SQL 실행 오류율 감소",
+              "스키마 주입·카테고리 고유값 자동 수집·자기교정 3단계 방어 구조로 SQL 할루시네이션 방지",
+              "STRING 컬럼 고유값 자동 수집 후 프롬프트 주입으로 값 불일치 오류 예방",
+              "SQL 결과 0건 시 실제 DB 값으로 WHERE 조건 자동 교정하는 자기교정 루프 구현",
             ],
           },
           {
@@ -168,8 +169,8 @@ export const projects: Project[] = [
         items: [
           { value: "3~6초", description: "SQL 생성 + BQ 실행 + 분석 보고서 생성 포함 평균 응답 시간" },
           { value: "5개 테이블", description: "HR 3개(기본·인사발령·급여) + F2F 2개(캠페인·정기후원) 연동" },
-          { value: "3-Layer 방어", description: "스키마 주입 + 화이트리스트 + DISTINCT 값 주입으로 SQL 할루시네이션 방지" },
-          { value: "외부 API 0회", description: "인메모리 캐싱으로 매 요청마다 반복 호출 완전 제거" },
+          { value: "3-Layer 방어", description: "스키마 주입 + 카테고리 고유값 자동 감지 + 0건 자기교정 재시도로 SQL 할루시네이션 방지" },
+          { value: "외부 API 0회", description: "스키마·카테고리 값 1h 인메모리 캐싱으로 반복 BQ 메타 조회 제거" },
         ],
       },
       {
