@@ -169,7 +169,7 @@ export const projects: Project[] = [
         items: [
           { value: "3~6초", description: "SQL 생성 + BQ 실행 + 분석 보고서 생성 포함 평균 응답 시간" },
           { value: "5개 테이블", description: "HR 3개(기본·인사발령·급여) + F2F 2개(캠페인·정기후원) 연동" },
-          { value: "3-Layer 방어", description: "스키마 주입 + 카테고리 고유값 자동 감지 + 0건 자기교정 재시도로 SQL 할루시네이션 방지" },
+          { value: "3-Layer 방어", description: "스키마 주입 + 카테고리 고유값 자동 감지 + 결과 0행 자기교정으로 SQL 할루시네이션 방지" },
           { value: "1h 캐싱", description: "스키마·카테고리 값 인메모리 캐싱으로 반복 BQ 메타 조회 제거" },
         ],
       },
