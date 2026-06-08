@@ -390,10 +390,9 @@ export const projects: Project[] = [
         kind: "code",
         language: "sql",
         filename: "export_sales_unified.sql",
-        body: `-- SAP 전환(2025-11) 전후 데이터를 단일 뷰로 통합
--- P_TARGET_DT: Oracle 프로시저 입력 파라미터 (Oracle Scheduler가 월별 호출)
--- 기존 쿼리는 \${DT_FROM}/\${DT_TO} 방식 → Tableau 커스텀 SQL 미인식
--- 프로시저로 재작성하여 마트 적재 후 Tableau가 마트 테이블을 조회하는 구조로 전환
+        body: `-- SAP 전환(2025-11) 전후 데이터를 단일 마트로 통합 적재
+-- P_TARGET_DT: Oracle Scheduler가 호출하는 프로시저 입력 파라미터 (월별/일별 적재)
+-- 전환 시점 기준으로 In-House · SAP Oracle 테이블을 UNION ALL로 결합
 
 SELECT A.SALE_DT, A.SITE_NM, A.PROD_NM,
        A.SALE_QTY, A.SALE_AMT, A.RCPT_AMT,
