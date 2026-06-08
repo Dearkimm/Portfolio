@@ -94,7 +94,7 @@ export const projects: Project[] = [
     tags: ["NGO", "AI 에이전트", "NL→SQL", "BigQuery"],
     domain: ["NGO 인사·후원 데이터 분석", "생성형 AI · 데이터 에이전트"],
     summary:
-      "월드비전 HR·F2F 데이터를 자연어로 분석하는 AI 에이전트 개인 데모 — Gemini API와 BigQuery를 연결해 NL→SQL 자동화와 할루시네이션 방지 체계를 직접 설계·구현",
+      "월드비전 HR·F2F 데이터를 자연어로 분석하는 AI 에이전트 개인 데모 — Gemini API와 BigQuery를 연결해 자연어→SQL 자동화와 할루시네이션 방지 체계를 직접 설계·구현",
     thumbnail: {
       bg: "linear-gradient(135deg, #1A73E8 0%, #12B3A8 100%)",
       fg: "#ffffff",
@@ -170,7 +170,7 @@ export const projects: Project[] = [
           { value: "3~6초", description: "SQL 생성 + BQ 실행 + 분석 보고서 생성 포함 평균 응답 시간" },
           { value: "5개 테이블", description: "HR 3개(기본·인사발령·급여) + F2F 2개(캠페인·정기후원) 연동" },
           { value: "3-Layer 방어", description: "스키마 주입 + 카테고리 고유값 자동 감지 + 0건 자기교정 재시도로 SQL 할루시네이션 방지" },
-          { value: "외부 API 0회", description: "스키마·카테고리 값 1h 인메모리 캐싱으로 반복 BQ 메타 조회 제거" },
+          { value: "1h 캐싱", description: "스키마·카테고리 값 인메모리 캐싱으로 반복 BQ 메타 조회 제거" },
         ],
       },
       {
