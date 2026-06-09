@@ -63,19 +63,22 @@ function scoreJob(title, tags = [], extra = '') {
   const hasDAKeyword = DA_WORK.some(kw => allText.includes(kw));
   const hasBonus = BONUS.some(kw => allText.includes(kw));
 
-  // ★★★: Analytics Engineer / BI Engineer - Jenna의 정확한 타겟 포지션
+  // ★★★: 데이터 분석가 / BI 분석가 - 핵심 타겟
   const tier3 = [
-    'analytics engineer', 'data analytics engineer',
-    'bi 엔지니어', 'bi engineer', 'bi analyst', 'bi 분석가', 'bi developer', 'bi 개발자',
+    '데이터 분석가', 'data analyst', '비즈니스 분석가',
+    'bi analyst', 'bi 분석가', '비즈니스 인텔리전스',
   ];
-  if (tier3.some(kw => allText.includes(kw))) return 7;
-
-  // ★★: Tableau/BI툴 명시된 데이터 분석가
-  const tier2 = ['데이터 분석가', 'data analyst', '비즈니스 분석가', '비즈니스 인텔리전스'];
-  if (tier2.some(kw => allText.includes(kw))) {
-    if (hasBITool || hasDAKeyword || hasBonus) return 4;
-    return 1; // BI툴 미표기 → ★
+  if (tier3.some(kw => allText.includes(kw))) {
+    if (hasBITool || hasDAKeyword || hasBonus) return 7;
+    return 4; // BI툴 미표기도 ★★★ (분석가 직함 자체가 핵심)
   }
+
+  // ★★: Analytics Engineer / BI Engineer - 분석 역량 요구하는 엔지니어링 포지션
+  const tier2 = [
+    'analytics engineer', 'data analytics engineer',
+    'bi 엔지니어', 'bi engineer', 'bi developer', 'bi 개발자',
+  ];
+  if (tier2.some(kw => allText.includes(kw))) return 3;
 
   // ★: TARGET_ROLES에 포함되는 기타 분석 관련 직무
   if (TARGET_ROLES.some(kw => allText.includes(kw))) return 1;
@@ -84,9 +87,9 @@ function scoreJob(title, tags = [], extra = '') {
 }
 
 function getStars(score) {
-  if (score >= 7) return '★★★'; // Analytics Engineer / BI Engineer
-  if (score >= 4) return '★★';  // BI툴 명시된 데이터 분석가
-  if (score >= 1) return '★';   // 데이터 분석 관련 (BI툴 카드 미표기)
+  if (score >= 4) return '★★★'; // 데이터 분석가 / BI 분석가
+  if (score >= 3) return '★★';  // Analytics Engineer / BI Engineer
+  if (score >= 1) return '★';   // 기타 분석 관련
   return null;
 }
 function isExpired(deadlineText) {
