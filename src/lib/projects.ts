@@ -108,7 +108,7 @@ export const projects: Project[] = [
         items: [
           {
             number: "01",
-            title: "AI 파이프라인 설계",
+            title: "분석 파이프라인",
             bullets: [
               "자연어 질문 → 도메인 판별 → SQL 생성 → BigQuery 실행 → 분석 보고서까지 전체 처리 흐름 설계",
               "내부 용어·규정 기반 프롬프트 설계로 조직 맞춤형 분석 환경 구현",
@@ -117,7 +117,7 @@ export const projects: Project[] = [
           },
           {
             number: "02",
-            title: "할루시네이션 방지 체계",
+            title: "프롬프트 설계",
             accent: true,
             bullets: [
               "스키마 주입·카테고리 고유값 자동 수집·자기교정 3단계 방어 구조로 SQL 할루시네이션 방지",
@@ -127,7 +127,7 @@ export const projects: Project[] = [
           },
           {
             number: "03",
-            title: "멀티도메인 구조",
+            title: "서비스 구조",
             bullets: [
               "질문 키워드 기반으로 HR 인사·급여 / F2F 후원·캠페인 도메인을 자동 라우팅",
               "환경변수 하나로 배포용·테스트 서비스를 분리 운영하는 안전한 실험 환경 구성",
