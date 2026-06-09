@@ -168,7 +168,7 @@ export const projects: Project[] = [
         kind: "kpis",
         label: "Key Output",
         items: [
-          { value: "5개 테이블", description: "HR 3개(기본·인사발령·급여) + F2F 2개(캠페인·정기후원) 연동" },
+          { value: "파일럿 수주", description: "AI 에이전트 데모 제안을 통해 후속 파일럿 프로젝트 선정" },
           { value: "3-Layer 방어", description: "스키마 주입 + 카테고리 고유값 자동 감지 + 0행 반환 시 자기교정으로 SQL 할루시네이션 방지" },
           { value: "1h 캐싱", description: "스키마·카테고리 값 인메모리 캐싱으로 반복 BQ 메타 조회 제거" },
         ],
