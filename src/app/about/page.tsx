@@ -63,7 +63,7 @@ export default function AboutPage() {
             김정민<span className="text-muted font-light"> · Jenna</span>
           </h1>
           <h2 className="text-[clamp(32px,5vw,64px)] font-semibold leading-[1.1] tracking-[-0.03em] max-w-3xl">
-            프로젝트를 안정적으로 이끄는 분석가
+            아이디어를 구조화해 실행으로 연결하는 분석가
           </h2>
           <p className="max-w-2xl text-base md:text-lg text-foreground/75 leading-relaxed">
             새로운 환경에서도 필요한 정보를 빠르게 파악하고, 기준에 따라
