@@ -1,4 +1,4 @@
-// scripts/job-search.js
+﻿// scripts/job-search.js
 // 사용법: node scripts/job-search.js
 // 결과: scripts/job-report.html (브라우저 자동 오픈)
 
@@ -6,6 +6,7 @@ const { chromium } = require('playwright-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const fs = require('fs');
 const path = require('path');
+const https = require('https');
 const { exec } = require('child_process');
 
 chromium.use(StealthPlugin());
@@ -13,47 +14,81 @@ chromium.use(StealthPlugin());
 const TODAY = new Date();
 TODAY.setHours(0, 0, 0, 0);
 
-// ── Jenna 프로필 스코어링 ──────────────────────────────────────────────────
-const MUST_KEYWORDS = [
-  'bi 엔지니어', 'bi engineer', 'analytics engineer',
-  '비즈니스 인텔리전스', 'bi 개발자', 'bi developer',
-  'data analytics engineer', '데이터 분석가', 'bi analyst',
+// -- Jenna 직무 적합도 스코어링 --
+// 기준: 데이터 분석가 + BI툴(Tableau) 사용 포지션
+// DE 파이프라인/인프라 구축 업무는 가산점 없음
+
+// 대상 직무 (이 중 하나라도 있어야 통과)
+const TARGET_ROLES = [
+  'bi 분석가', 'bi analyst', 'bi 엔지니어', 'bi engineer',
+  'analytics engineer', 'data analytics engineer',
+  '데이터 분석가', 'data analyst', '비즈니스 분석가',
+  '비즈니스 인텔리전스', '데이터 분석',
 ];
-const STRONG_KEYWORDS = [
-  'tableau', 'sql', 'python', 'data mart', '데이터 마트',
-  'dw', 'data warehouse', '데이터 웨어하우스', 'etl', 'elt',
-  'dashboard', '대시보드', 'looker', 'power bi',
+
+// BI 툴 (Tableau = 핵심, 나머지도 가산)
+const BI_TOOLS_PRIMARY = ['tableau'];
+const BI_TOOLS_SECONDARY = ['power bi', 'looker', 'superset', 'metabase', 'qlik', 'microstrategy'];
+
+// DA 실무 키워드 (분석가가 실제로 하는 일)
+const DA_WORK = [
+  'dashboard', '대시보드', '시각화', 'visualization',
+  'kpi', '지표', 'reporting', '보고서', '리포트',
+  '인사이트', 'insight', '비즈니스 분석', 'sql',
+  'a/b test', 'ab테스트', '통계', '데이터 기반',
 ];
-const BONUS_KEYWORDS = [
-  'aws', 'databricks', 'airflow', 'postgresql', 'tableau prep',
-  'salesforce', 'bigquery', 'redshift', 'dbt',
+
+// 보너스 (Jenna 경험과 겹침)
+const BONUS = [
+  'tableau prep', 'tabpy', 'python',
+  'salesforce', 'ga4', 'google analytics', 'crm', 'erp',
+  'data mart', '데이터 마트',
 ];
+
+// 제외 (명확하게 다른 직군)
 const EXCLUDE_KEYWORDS = [
-  '신입 전용', '인턴', '머신러닝 엔지니어', 'ml engineer',
-  '프론트엔드 개발', '백엔드 개발', '안드로이드', 'ios 개발',
-  '인프라 엔지니어', '보안 엔지니어', '네트워크 엔지니어',
+  '신입 전용', '인턴',
+  '머신러닝 엔지니어', 'ml engineer', 'ai 엔지니어',
+  '프론트엔드', '백엔드', '안드로이드', 'ios',
+  '인프라 엔지니어', '보안', '네트워크 엔지니어',
+  'devops', 'mlops',
 ];
 
 function scoreJob(title, tags = [], extra = '') {
   const text = [title, ...tags, extra].join(' ').toLowerCase();
   if (EXCLUDE_KEYWORDS.some(kw => text.includes(kw))) return 0;
-  if (!MUST_KEYWORDS.some(kw => text.includes(kw))) return 0;
-  let score = 2;
-  if (text.includes('tableau')) score += 3;
-  if (text.includes('analytics engineer')) score += 2;
-  STRONG_KEYWORDS.forEach(kw => { if (text.includes(kw)) score += 1; });
-  BONUS_KEYWORDS.forEach(kw => { if (text.includes(kw)) score += 0.5; });
-  return score;
+
+  const allText = text;
+  const hasBITool = [...BI_TOOLS_PRIMARY, ...BI_TOOLS_SECONDARY].some(kw => allText.includes(kw));
+  const hasDAKeyword = DA_WORK.some(kw => allText.includes(kw));
+  const hasBonus = BONUS.some(kw => allText.includes(kw));
+
+  // ★★★: Analytics Engineer / BI Engineer - Jenna의 정확한 타겟 포지션
+  const tier3 = [
+    'analytics engineer', 'data analytics engineer',
+    'bi 엔지니어', 'bi engineer', 'bi analyst', 'bi 분석가', 'bi developer', 'bi 개발자',
+  ];
+  if (tier3.some(kw => allText.includes(kw))) return 7;
+
+  // ★★: Tableau/BI툴 명시된 데이터 분석가
+  const tier2 = ['데이터 분석가', 'data analyst', '비즈니스 분석가', '비즈니스 인텔리전스'];
+  if (tier2.some(kw => allText.includes(kw))) {
+    if (hasBITool || hasDAKeyword || hasBonus) return 4;
+    return 1; // BI툴 미표기 → ★
+  }
+
+  // ★: TARGET_ROLES에 포함되는 기타 분석 관련 직무
+  if (TARGET_ROLES.some(kw => allText.includes(kw))) return 1;
+
+  return 0;
 }
 
 function getStars(score) {
-  if (score >= 7) return '★★★';
-  if (score >= 4) return '★★';
-  if (score >= 2) return '★';
+  if (score >= 7) return '★★★'; // Analytics Engineer / BI Engineer
+  if (score >= 4) return '★★';  // BI툴 명시된 데이터 분석가
+  if (score >= 1) return '★';   // 데이터 분석 관련 (BI툴 카드 미표기)
   return null;
 }
-
-// ── 마감일 파싱 ────────────────────────────────────────────────────────────
 function isExpired(deadlineText) {
   if (!deadlineText) return false;
   const t = deadlineText.trim();
@@ -314,6 +349,77 @@ async function scrapeJobkorea(browser) {
   return dedup(results);
 }
 
+// ── 리멤버 (직접 API 호출, Playwright 불필요) ───────────────────────────────
+async function scrapeRemember() {
+  // 데이터 분석가 카테고리 ID: 345
+  // sort=starts_at_desc → 최신순, 2페이지 × 50건 = 100건
+  async function fetchPage(page) {
+    return new Promise((resolve) => {
+      const body = JSON.stringify({
+        sort: 'starts_at_desc',
+        search: { include_applied_job_posting: false, job_category_ids: [345] },
+        page, per: 50,
+        meta: { device_uid: 'aa112233-bb44-cc55-dd66-ee7788990011' },
+      });
+      const options = {
+        hostname: 'career-api.rememberapp.co.kr',
+        path: '/job_postings/search',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json, text/plain, */*',
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+          'Referer': 'https://career.rememberapp.co.kr/',
+          'Content-Length': Buffer.byteLength(body),
+        },
+      };
+      const req = https.request(options, res => {
+        let data = '';
+        res.on('data', c => (data += c));
+        res.on('end', () => {
+          try { resolve(JSON.parse(data)); }
+          catch { resolve(null); }
+        });
+      });
+      req.on('error', () => resolve(null));
+      req.write(body);
+      req.end();
+    });
+  }
+
+  const results = [];
+  for (const pg of [1, 2]) {
+    const r = await fetchPage(pg);
+    const items = r?.data || r?.job_postings || [];
+    for (const j of items) {
+      const company = j.organization?.name || j.company?.name || '';
+      const title = j.title || '';
+      if (!title || !company) continue;
+
+      // ISO deadline → YYYY.MM.DD (isExpired 함수 호환)
+      let deadline = '상시채용';
+      if (j.ends_at) {
+        const d = new Date(j.ends_at);
+        if (!isNaN(d)) {
+          deadline = `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+        }
+      }
+
+      results.push({
+        title,
+        company,
+        deadline,
+        link: `https://career.rememberapp.co.kr/job/postings/${j.id}`,
+        tags: (j.job_categories || []).map(c => c.level2).filter(Boolean),
+        location: (j.addresses || []).map(a => a.city || a.district).filter(Boolean).join(' ') || '',
+      });
+    }
+    if (items.length < 50) break; // 마지막 페이지면 중단
+  }
+
+  return dedup(results);
+}
+
 // ── HTML 출력 ─────────────────────────────────────────────────────────────
 function cardHTML(j) {
   const deadlineClass = /상시|채용시|수시|미정/.test(j.deadline || '') ? 'deadline-always' : 'deadline-date';
@@ -345,7 +451,7 @@ function sectionHTML(jobs, stars, label) {
 </section>`;
 }
 
-function generateHTML(t3, t2, t1, w, s, jk, scored, dateStr) {
+function generateHTML(t3, t2, t1, w, s, jk, rm, scored, dateStr) {
   return `<!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -392,6 +498,7 @@ function generateHTML(t3, t2, t1, w, s, jk, scored, dateStr) {
     <span class="badge">원티드 <strong>${w.length}</strong>건</span>
     <span class="badge">사람인 <strong>${s.length}</strong>건</span>
     <span class="badge">잡코리아 <strong>${jk.length}</strong>건</span>
+    <span class="badge">리멤버 <strong>${rm.length}</strong>건</span>
     <span class="badge">유효 <strong>${scored.length}</strong>건</span>
   </div>
 </header>
@@ -410,10 +517,11 @@ ${sectionHTML(t1, 1, '참고')}
 
   const browser = await launchBrowser();
 
-  const [w, s, jk] = await Promise.all([
+  const [w, s, jk, rm] = await Promise.all([
     scrapeWanted(browser).then(r => { console.log(`원티드: ${r.length}건 수집`); return r; }),
     scrapeSaramin(browser).then(r => { console.log(`사람인: ${r.length}건 수집`); return r; }),
     scrapeJobkorea(browser).then(r => { console.log(`잡코리아: ${r.length}건 수집`); return r; }),
+    scrapeRemember().then(r => { console.log(`리멤버: ${r.length}건 수집`); return r; }),
   ]);
 
   await browser.close();
@@ -422,6 +530,7 @@ ${sectionHTML(t1, 1, '참고')}
     ...w.map(j => ({ ...j, source: '원티드' })),
     ...s.map(j => ({ ...j, source: '사람인' })),
     ...jk.map(j => ({ ...j, source: '잡코리아' })),
+    ...rm.map(j => ({ ...j, source: '리멤버' })),
   ]).filter(j => !isExpired(j.deadline));
 
   const scored = all
@@ -433,7 +542,7 @@ ${sectionHTML(t1, 1, '참고')}
   const t2 = scored.filter(j => getStars(j.score) === '★★');
   const t1 = scored.filter(j => getStars(j.score) === '★');
 
-  const html = generateHTML(t3, t2, t1, w, s, jk, scored, dateStr);
+  const html = generateHTML(t3, t2, t1, w, s, jk, rm, scored, dateStr);
   const out = path.join(__dirname, 'job-report.html');
   fs.writeFileSync(out, html, 'utf-8');
   console.log(`\n저장: ${out}`);
