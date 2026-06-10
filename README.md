@@ -8,7 +8,7 @@
 
 ## Job Search Pipeline
 
-BI / Analytics Engineer 포지션을 타겟으로 원티드·사람인·잡코리아를 매일 자동 크롤링하고, 키워드 스코어링 후 HTML 리포트로 출력하는 파이프라인입니다.
+BI / Analytics Engineer 포지션을 타겟으로 원티드·사람인·잡코리아·리멤버를 매일 자동 크롤링하고, 키워드 스코어링 후 HTML 리포트로 출력하는 파이프라인입니다.
 
 - GitHub Actions로 매일 오전 9시 KST 자동 실행
 - 직무 적합도에 따라 ★★★ / ★★ / ★ 등급 분류
