@@ -270,17 +270,15 @@ function SectionRenderer({ section }: { section: Section }) {
 
 function NarrativeStep({ label, body, showLine }: { label: string; body: string; showLine?: boolean }) {
   return (
-    <li className="grid grid-cols-12 gap-4 items-center">
-      <div className="col-span-12 md:col-span-2 self-stretch relative flex flex-col justify-center">
-        <div className="flex items-center gap-3">
-          <span className="inline-block h-2.5 w-2.5 rounded-full bg-foreground/40 shrink-0" />
-          <p className="text-[10px] uppercase tracking-[0.22em] font-bold text-muted">
-            {label}
-          </p>
-        </div>
+    <li className="grid grid-cols-12 gap-4 items-start">
+      <div className="col-span-12 md:col-span-2 relative flex items-center gap-3">
+        <span className="inline-block h-2.5 w-2.5 rounded-full bg-foreground/40 shrink-0" />
+        <p className="text-[10px] uppercase tracking-[0.22em] font-bold text-muted">
+          {label}
+        </p>
         {showLine && (
           <div
-            className="absolute left-[4px] top-[calc(50%+7px)] bottom-[-28px] w-px"
+            className="absolute left-[4px] top-[18px] bottom-[-28px] w-px"
             style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.15), transparent)" }}
           />
         )}
