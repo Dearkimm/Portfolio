@@ -373,17 +373,6 @@ export const projects: Project[] = [
         ],
       },
       {
-        kind: "kpis",
-        label: "Key Output",
-        items: [
-          { value: "46본", description: "주요 도메인 화면 직접 설계·개발" },
-          { value: "72% 단축", description: "메인 대시보드 로딩 속도 4.8초 → 1.3초" },
-          { value: "80개+", description: "배치 프로시저 구현으로 데이터 자동화" },
-          { value: "236명", description: "Tableau 그룹 기반 권한 설계로 구조 단순화" },
-        ],
-      },
-
-      {
         kind: "code",
         language: "sql",
         filename: "export_sales_unified.sql",
@@ -428,6 +417,16 @@ FROM (
                 AND T5.ACCT_CD IN ('11030151', '55310101', '67450101')
 
 ) A`,
+      },
+      {
+        kind: "kpis",
+        label: "Key Output",
+        items: [
+          { value: "46본", description: "주요 도메인 화면 직접 설계·개발" },
+          { value: "72% 단축", description: "메인 대시보드 로딩 속도 4.8초 → 1.3초" },
+          { value: "80개+", description: "배치 프로시저 구현으로 데이터 자동화" },
+          { value: "236명", description: "Tableau 그룹 기반 권한 설계로 구조 단순화" },
+        ],
       },
       {
         kind: "par",
