@@ -382,39 +382,7 @@ export const projects: Project[] = [
           { value: "236명", description: "Tableau 그룹 기반 권한 설계로 구조 단순화" },
         ],
       },
-      {
-        kind: "gallery",
-        eyebrow: "Reference",
-        title: "Dashboard Screens",
-        note: "※ 실데이터는 보안을 위해 블러처리 하였습니다. ※ 일부 이미지는 기획 단계 Figma 시안으로 더미 데이터를 사용하였습니다.",
-        images: [
-          {
-            src: "/projects/ssangyong-ce/01-main-production-real.png",
-            alt: "쌍용 C&E 메인 대시보드 — 생산·출하 실적",
-            caption: "메인 대시보드 — 생산·출하 실적 (실데이터)",
-          },
-          {
-            src: "/projects/ssangyong-ce/02-hr-headcount-real.png",
-            alt: "쌍용 C&E 인사총무 인원현황",
-            caption: "인사총무 — 인원현황 (실데이터)",
-          },
-          {
-            src: "/projects/ssangyong-ce/03-executive-design.jpg",
-            alt: "쌍용 C&E 메인 대시보드 디자인 — 임원용",
-            caption: "메인 대시보드 디자인 — 생산 주요 관리지표 (임원용)",
-          },
-          {
-            src: "/projects/ssangyong-ce/04-tabpy-real.png",
-            alt: "TabPy 활용 수동 비정기 적재 대시보드",
-            caption: "TabPy 활용 — 수동 비정기 적재 (실데이터)",
-          },
-          {
-            src: "/projects/ssangyong-ce/05-cement-trend.png",
-            alt: "시멘트 생산 THC·TPC·순환자원 Trend",
-            caption: "시멘트 생산 — THC·TPC·순환자원 Trend",
-          },
-        ],
-      },
+
       {
         kind: "code",
         language: "sql",
@@ -506,6 +474,38 @@ FROM (
             body: "매일 프로시저 배치 로그를 확인하고, 오류 발생 시 수동 재적재와 프로시저 수정을 직접 수행하는 루틴을 반복하면서, 문제를 발견하고 원인을 추적해 해결하는 방식을 익혔습니다.",
           },
         ],
+      },      {
+        kind: "gallery",
+        eyebrow: "Reference",
+        title: "Dashboard Screens",
+        note: "※ 실데이터는 보안을 위해 블러처리 하였습니다. ※ 일부 이미지는 기획 단계 Figma 시안으로 더미 데이터를 사용하였습니다.",
+        images: [
+          {
+            src: "/projects/ssangyong-ce/01-main-production-real.png",
+            alt: "쌍용 C&E 메인 대시보드 — 생산·출하 실적",
+            caption: "메인 대시보드 — 생산·출하 실적 (실데이터)",
+          },
+          {
+            src: "/projects/ssangyong-ce/02-hr-headcount-real.png",
+            alt: "쌍용 C&E 인사총무 인원현황",
+            caption: "인사총무 — 인원현황 (실데이터)",
+          },
+          {
+            src: "/projects/ssangyong-ce/03-executive-design.jpg",
+            alt: "쌍용 C&E 메인 대시보드 디자인 — 임원용",
+            caption: "메인 대시보드 디자인 — 생산 주요 관리지표 (임원용)",
+          },
+          {
+            src: "/projects/ssangyong-ce/04-tabpy-real.png",
+            alt: "TabPy 활용 수동 비정기 적재 대시보드",
+            caption: "TabPy 활용 — 수동 비정기 적재 (실데이터)",
+          },
+          {
+            src: "/projects/ssangyong-ce/05-cement-trend.png",
+            alt: "시멘트 생산 THC·TPC·순환자원 Trend",
+            caption: "시멘트 생산 — THC·TPC·순환자원 Trend",
+          },
+        ],
       },
     ],
   },
@@ -580,49 +580,7 @@ FROM (
           },
         ],
       },
-      {
-        kind: "gallery",
-        eyebrow: "Reference",
-        title: "Dashboard Screens",
-        note: "※ 실데이터는 보안을 위해 블러처리 하였습니다. ※ 일부 이미지는 기획 단계 Figma 시안으로 더미 데이터를 사용하였습니다.",
-        images: [
-          {
-            src: "/projects/global-tax-free/01-marketing-internal-real.png",
-            alt: "내부 분석용 마케팅 보고서",
-            caption: "내부 분석용 마케팅 보고서 (실데이터)",
-          },
-          {
-            src: "/projects/global-tax-free/02-map-nation-real.png",
-            alt: "지도 지표 분석 보고서 — 전국",
-            caption: "지도 지표 분석 — 전국 (실데이터)",
-          },
-          {
-            src: "/projects/global-tax-free/03-map-region-real.png",
-            alt: "지도 지표 분석 보고서 — 지역",
-            caption: "지도 지표 분석 — 지역 (실데이터)",
-          },
-          {
-            src: "/projects/global-tax-free/04-summary-design.jpg",
-            alt: "요약 대시보드 디자인",
-            caption: "요약 대시보드",
-          },
-          {
-            src: "/projects/global-tax-free/05-executive-sales-design.jpg",
-            alt: "경영진 매출 동향 디자인",
-            caption: "경영진 매출 동향",
-          },
-          {
-            src: "/projects/global-tax-free/06-marketing-external-design.jpg",
-            alt: "외부 분석용 마케팅 보고서 디자인",
-            caption: "외부 분석용 마케팅 보고서",
-          },
-          {
-            src: "/projects/global-tax-free/07-medical-sales-design.jpg",
-            alt: "의료 매출 보고서 디자인",
-            caption: "의료 매출 보고서",
-          },
-        ],
-      },
+
       {
         kind: "par",
         rows: [
@@ -666,6 +624,48 @@ FROM (
           {
             title: "후속 지원을 통한 신뢰 구축",
             body: "핸즈온 세션에 참여한 현업 담당자들은 BI를 처음 접하는 분들이었습니다. 질문이 들어올 때마다 빠르고 친절하게 응대하며 툴에 잘 적응할 수 있도록 지원했고, 이는 프로젝트 종료 이후에도 개인 문의가 지속되는 신뢰 관계 형성으로 이어졌습니다.",
+          },
+        ],
+      },      {
+        kind: "gallery",
+        eyebrow: "Reference",
+        title: "Dashboard Screens",
+        note: "※ 실데이터는 보안을 위해 블러처리 하였습니다. ※ 일부 이미지는 기획 단계 Figma 시안으로 더미 데이터를 사용하였습니다.",
+        images: [
+          {
+            src: "/projects/global-tax-free/01-marketing-internal-real.png",
+            alt: "내부 분석용 마케팅 보고서",
+            caption: "내부 분석용 마케팅 보고서 (실데이터)",
+          },
+          {
+            src: "/projects/global-tax-free/02-map-nation-real.png",
+            alt: "지도 지표 분석 보고서 — 전국",
+            caption: "지도 지표 분석 — 전국 (실데이터)",
+          },
+          {
+            src: "/projects/global-tax-free/03-map-region-real.png",
+            alt: "지도 지표 분석 보고서 — 지역",
+            caption: "지도 지표 분석 — 지역 (실데이터)",
+          },
+          {
+            src: "/projects/global-tax-free/04-summary-design.jpg",
+            alt: "요약 대시보드 디자인",
+            caption: "요약 대시보드",
+          },
+          {
+            src: "/projects/global-tax-free/05-executive-sales-design.jpg",
+            alt: "경영진 매출 동향 디자인",
+            caption: "경영진 매출 동향",
+          },
+          {
+            src: "/projects/global-tax-free/06-marketing-external-design.jpg",
+            alt: "외부 분석용 마케팅 보고서 디자인",
+            caption: "외부 분석용 마케팅 보고서",
+          },
+          {
+            src: "/projects/global-tax-free/07-medical-sales-design.jpg",
+            alt: "의료 매출 보고서 디자인",
+            caption: "의료 매출 보고서",
           },
         ],
       },
@@ -751,29 +751,7 @@ FROM (
           { value: "2본", description: "Tableau 핵심 화면 직접 담당" },
         ],
       },
-      {
-        kind: "gallery",
-        eyebrow: "Reference",
-        title: "Dashboard Screens",
-        note: "※ 모든 이미지는 기획 단계 Figma 시안으로 더미 데이터를 사용하였습니다.",
-        images: [
-          {
-            src: "/projects/asics-ecommerce/01-arr-analysis.jpg",
-            alt: "A-R-R Analysis 대시보드",
-            caption: "A-R-R Analysis — 신규·재구매 회원 전환 흐름",
-          },
-          {
-            src: "/projects/asics-ecommerce/02-rfm-analysis.jpg",
-            alt: "RFM Analysis 대시보드",
-            caption: "RFM Analysis — 10개 세그먼트 분류",
-          },
-          {
-            src: "/projects/asics-ecommerce/03-sub-categories.jpg",
-            alt: "세부 카테고리 분석",
-            caption: "세부 카테고리 — 교차 구매 TOP 5",
-          },
-        ],
-      },
+
       {
         kind: "par",
         rows: [
@@ -817,6 +795,28 @@ FROM (
           {
             title: "신뢰 형성 커뮤니케이션",
             body: "고객사와의 소통 과정에서 개인의 응대 방식이 곧 회사의 신뢰도로 이어진다는 인식을 갖고 프로젝트에 임했습니다. 요구사항의 맥락을 정확히 파악하고, 이슈 발생 시 원인·결과·수정 내용을 구조화해 전달하는 커뮤니케이션 방식의 중요성을 배웠습니다.",
+          },
+        ],
+      },      {
+        kind: "gallery",
+        eyebrow: "Reference",
+        title: "Dashboard Screens",
+        note: "※ 모든 이미지는 기획 단계 Figma 시안으로 더미 데이터를 사용하였습니다.",
+        images: [
+          {
+            src: "/projects/asics-ecommerce/01-arr-analysis.jpg",
+            alt: "A-R-R Analysis 대시보드",
+            caption: "A-R-R Analysis — 신규·재구매 회원 전환 흐름",
+          },
+          {
+            src: "/projects/asics-ecommerce/02-rfm-analysis.jpg",
+            alt: "RFM Analysis 대시보드",
+            caption: "RFM Analysis — 10개 세그먼트 분류",
+          },
+          {
+            src: "/projects/asics-ecommerce/03-sub-categories.jpg",
+            alt: "세부 카테고리 분석",
+            caption: "세부 카테고리 — 교차 구매 TOP 5",
           },
         ],
       },
@@ -948,49 +948,7 @@ FROM (
           { value: "추가 수주", description: "높은 완성도와 신뢰도로 Tableau 신규 프로젝트 연결" },
         ],
       },
-      {
-        kind: "gallery",
-        eyebrow: "Reference",
-        title: "Dashboard Screens",
-        note: "※ 모든 이미지는 기획 단계 Figma 시안으로 더미 데이터를 사용하였습니다.",
-        images: [
-          {
-            src: "/projects/daesang-welllife/01-integrated-customer.jpg",
-            alt: "통합 고객 Profile",
-            caption: "통합 고객 Profile",
-          },
-          {
-            src: "/projects/daesang-welllife/02-mall-customer.jpg",
-            alt: "자사몰 고객 Profile",
-            caption: "자사몰 고객 Profile",
-          },
-          {
-            src: "/projects/daesang-welllife/03-mall-product.jpg",
-            alt: "자사몰 제품 Profile",
-            caption: "자사몰 제품 Profile",
-          },
-          {
-            src: "/projects/daesang-welllife/04-mall-journey.jpg",
-            alt: "자사몰 여정 모니터링 — 방문 분석",
-            caption: "자사몰 여정 모니터링 — 방문 분석",
-          },
-          {
-            src: "/projects/daesang-welllife/05-campaign.jpg",
-            alt: "캠페인 통합 관리",
-            caption: "캠페인 통합 관리",
-          },
-          {
-            src: "/projects/daesang-welllife/06-agent-dashboard.jpg",
-            alt: "상담원 대시보드",
-            caption: "상담원 대시보드",
-          },
-          {
-            src: "/projects/daesang-welllife/07-agent-performance.jpg",
-            alt: "상담원 실적 관리",
-            caption: "상담원 실적 관리",
-          },
-        ],
-      },
+
       {
         kind: "par",
         rows: [
@@ -1030,6 +988,48 @@ FROM (
           {
             title: "자기주도적 문제 해결",
             body: "막히는 상황에서 질문에 의존하기보다 스스로 문제를 파악하고 해결 방안을 찾는 과정을 반복하면서, 맡은 영역을 끝까지 책임지고 완성하는 태도를 갖게 된 프로젝트였습니다.",
+          },
+        ],
+      },      {
+        kind: "gallery",
+        eyebrow: "Reference",
+        title: "Dashboard Screens",
+        note: "※ 모든 이미지는 기획 단계 Figma 시안으로 더미 데이터를 사용하였습니다.",
+        images: [
+          {
+            src: "/projects/daesang-welllife/01-integrated-customer.jpg",
+            alt: "통합 고객 Profile",
+            caption: "통합 고객 Profile",
+          },
+          {
+            src: "/projects/daesang-welllife/02-mall-customer.jpg",
+            alt: "자사몰 고객 Profile",
+            caption: "자사몰 고객 Profile",
+          },
+          {
+            src: "/projects/daesang-welllife/03-mall-product.jpg",
+            alt: "자사몰 제품 Profile",
+            caption: "자사몰 제품 Profile",
+          },
+          {
+            src: "/projects/daesang-welllife/04-mall-journey.jpg",
+            alt: "자사몰 여정 모니터링 — 방문 분석",
+            caption: "자사몰 여정 모니터링 — 방문 분석",
+          },
+          {
+            src: "/projects/daesang-welllife/05-campaign.jpg",
+            alt: "캠페인 통합 관리",
+            caption: "캠페인 통합 관리",
+          },
+          {
+            src: "/projects/daesang-welllife/06-agent-dashboard.jpg",
+            alt: "상담원 대시보드",
+            caption: "상담원 대시보드",
+          },
+          {
+            src: "/projects/daesang-welllife/07-agent-performance.jpg",
+            alt: "상담원 실적 관리",
+            caption: "상담원 실적 관리",
           },
         ],
       },
